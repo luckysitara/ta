@@ -36,6 +36,7 @@ pub struct SniperSettings {
     pub stop_loss_pct: f64,  // e.g. -25%
     pub break_even_mult: Option<f64>, // Break-even stop trigger: locks in 1.02x floor when peak >= e.g. 1.10x
     pub min_curve_pct: Option<f64>, // Item 3: Require minimum bonding curve progress % (e.g. 10.0%)
+    pub max_curve_pct: Option<f64>, // Sweet Spot Cap: Maximum bonding curve progress % to enter (e.g. 25.0%)
     pub min_dev_buy_sol: Option<f64>, // Item 3: Require minimum dev initial buy in SOL (e.g. 0.40 SOL)
     pub min_unique_buyers: usize, // Upgrade 2: Minimum unique buyer wallets required before momentum entry
 }
@@ -57,6 +58,7 @@ impl Default for SniperSettings {
             stop_loss_pct: -10.0,
             break_even_mult: Some(1.10),
             min_curve_pct: None,
+            max_curve_pct: None,
             min_dev_buy_sol: None,
             min_unique_buyers: 0,
         }
@@ -319,9 +321,14 @@ impl SolanaSniperEngine {
         // Item 3: If minimum curve % completion is configured, defer entry until confirmed momentum
         if let Some(min_pct) = self.settings.min_curve_pct {
             if min_pct > 0.0 && is_pump {
+                let curve_range_str = if let Some(max_pct) = self.settings.max_curve_pct {
+                    format!("{:.1}%–{:.1}%", min_pct, max_pct)
+                } else {
+                    format!("≥{:.1}%", min_pct)
+                };
                 println!(
-                    "   👀 [WATCHLIST ACTIVE] Pool registered for ≥{:.1}% curve momentum breakout: {} (Dev Buy: {:.2} SOL)",
-                    min_pct,
+                    "   👀 [WATCHLIST ACTIVE] Pool registered for {} curve momentum breakout: {} (Dev Buy: {:.2} SOL)",
+                    curve_range_str,
                     event.token_mint,
                     event.dev_buy_sol.unwrap_or(0.0)
                 );
@@ -1206,7 +1213,8 @@ impl SolanaSniperEngine {
 
         // Pump.fun bonding curves cap at 85 SOL real reserves (migration to Raydium)
         let curve_pct = (state.real_sol_reserves as f64 / 85_000_000_000.0) * 100.0;
-        if curve_pct < min_curve_pct || curve_pct > 65.0 {
+        let max_curve_pct = self.settings.max_curve_pct.unwrap_or(25.0);
+        if curve_pct < min_curve_pct || curve_pct > max_curve_pct {
             return;
         }
 
@@ -1700,6 +1708,86 @@ mod tests {
         assert_eq!(positions[0].pool_address, "MomentumCurve111111111111111111111111111111");
         assert!((positions[0].entry_price_sol - 0.000000041).abs() < 1e-12);
         assert_eq!(positions[0].current_multiplier, 1.0);
+    }
+
+    #[test]
+    fn test_momentum_entry_rejected_if_above_max_curve_pct() {
+        let settings = SniperSettings {
+            total_budget_sol: 0.5,
+            buy_amount_sol: 0.05,
+            is_paper_trading: true,
+            jito_tip_sol: 0.0003,
+            min_liquidity_sol: 0.5,
+            live_reserves: true,
+            min_curve_pct: Some(15.0),
+            max_curve_pct: Some(25.0), // Rejects entries above 25% curve (Sweet Spot Cap)
+            ..Default::default()
+        };
+
+        let engine = SolanaSniperEngine::new(settings);
+
+        let event = PoolCreationEvent {
+            protocol: DexProtocol::PumpFun,
+            signature: "sig_late_curve".to_string(),
+            slot: 200,
+            token_mint: "LateCurveMint111111111111111111111111111111".to_string(),
+            pool_address: "LateCurvePool111111111111111111111111111111".to_string(),
+            creator: None,
+            initial_sol_liquidity: Some(30.0),
+            dev_buy_sol: Some(0.1),
+            metadata_uri: None,
+            has_socials: true,
+            timestamp_ms: 1730000000000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+
+        let report = engine.process_detected_pool(&event);
+        assert!(report.is_none());
+
+        // Curve update arrives at 35% curve progress (29.75 SOL real reserves) -> REJECTED!
+        let state_35pct = BondingCurveState {
+            pool_address: "LateCurvePool111111111111111111111111111111".to_string(),
+            virtual_token_reserves: 800_000_000_000_000,
+            virtual_sol_reserves: 59_750_000_000,
+            real_token_reserves: 500_000_000_000_000,
+            real_sol_reserves: 29_750_000_000, // 35.0% curve completion (> 25% max)
+            price_sol: 0.000000075,
+            complete: false,
+        };
+        engine.update_bonding_curve_reserve("LateCurvePool111111111111111111111111111111", &state_35pct);
+        assert_eq!(engine.get_active_positions().len(), 0);
+
+        // Another curve update arrives at 20% curve progress (17 SOL real reserves) -> ACCEPTED!
+        let event2 = PoolCreationEvent {
+            protocol: DexProtocol::PumpFun,
+            signature: "sig_sweet_spot".to_string(),
+            slot: 201,
+            token_mint: "SweetSpotMint111111111111111111111111111111".to_string(),
+            pool_address: "SweetSpotPool111111111111111111111111111111".to_string(),
+            creator: None,
+            initial_sol_liquidity: Some(30.0),
+            dev_buy_sol: Some(0.1),
+            metadata_uri: None,
+            has_socials: true,
+            timestamp_ms: 1730000000000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+        engine.process_detected_pool(&event2);
+
+        let state_20pct = BondingCurveState {
+            pool_address: "SweetSpotPool111111111111111111111111111111".to_string(),
+            virtual_token_reserves: 900_000_000_000_000,
+            virtual_sol_reserves: 47_000_000_000,
+            real_token_reserves: 600_000_000_000_000,
+            real_sol_reserves: 17_000_000_000, // 20.0% curve completion (within 15%-25%)
+            price_sol: 0.000000052,
+            complete: false,
+        };
+        engine.update_bonding_curve_reserve("SweetSpotPool111111111111111111111111111111", &state_20pct);
+        assert_eq!(engine.get_active_positions().len(), 1);
+        assert_eq!(engine.get_active_positions()[0].token_mint, "SweetSpotMint111111111111111111111111111111");
     }
 
     #[test]

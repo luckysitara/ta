@@ -108,6 +108,10 @@ struct Args {
     #[arg(long)]
     min_curve_pct: Option<f64>,
 
+    /// Sweet Spot Cap: Maximum bonding curve progress % to enter (e.g. 25.0 for 25% curve cap)
+    #[arg(long)]
+    max_curve_pct: Option<f64>,
+
     /// Upgrade 2: Minimum unique buyer wallets required before momentum entry
     #[arg(long)]
     min_unique_buyers: Option<usize>,
@@ -214,6 +218,10 @@ enum Commands {
         #[arg(long)]
         min_curve_pct: Option<f64>,
 
+        /// Sweet Spot Cap: Maximum bonding curve progress % to enter (e.g. 25.0 for 25% curve cap)
+        #[arg(long)]
+        max_curve_pct: Option<f64>,
+
         /// Upgrade 2: Minimum unique buyer wallets required before momentum entry (Anti-Insider Whale Filter)
         #[arg(long)]
         min_unique_buyers: Option<usize>,
@@ -302,6 +310,7 @@ async fn main() -> anyhow::Result<()> {
         max_dev_buy,
         min_dev_buy,
         min_curve_pct,
+        max_curve_pct,
         min_unique_buyers,
         tp1,
         tp2,
@@ -340,6 +349,7 @@ async fn main() -> anyhow::Result<()> {
             max_dev_buy,
             min_dev_buy,
             min_curve_pct,
+            max_curve_pct,
             min_unique_buyers,
             tp1,
             tp2,
@@ -375,6 +385,7 @@ async fn main() -> anyhow::Result<()> {
             args.max_dev_buy,
             args.min_dev_buy,
             args.min_curve_pct,
+            args.max_curve_pct,
             args.min_unique_buyers,
             args.tp1,
             args.tp2,
@@ -595,6 +606,7 @@ async fn run_sniper(
     max_dev_buy: Option<f64>,
     min_dev_buy: Option<f64>,
     min_curve_pct: Option<f64>,
+    max_curve_pct: Option<f64>,
     min_unique_buyers: Option<usize>,
     tp1: Option<f64>,
     tp2: Option<f64>,
@@ -610,8 +622,8 @@ async fn run_sniper(
 ) -> anyhow::Result<()> {
     let is_paper = !onchain && paper;
 
-    let (mut eff_live_reserves, mut eff_require_socials, mut eff_max_dev_buy, mut eff_min_dev_buy, mut eff_min_curve_pct, mut eff_min_unique_buyers) =
-        (live_reserves, require_socials, max_dev_buy, min_dev_buy, min_curve_pct, min_unique_buyers);
+    let (mut eff_live_reserves, mut eff_require_socials, mut eff_max_dev_buy, mut eff_min_dev_buy, mut eff_min_curve_pct, mut eff_max_curve_pct, mut eff_min_unique_buyers) =
+        (live_reserves, require_socials, max_dev_buy, min_dev_buy, min_curve_pct, max_curve_pct, min_unique_buyers);
 
     if let Some(ref m) = mode {
         match m.trim().to_lowercase().as_str() {
@@ -621,6 +633,7 @@ async fn run_sniper(
                 eff_max_dev_buy = None;
                 eff_min_dev_buy = None;
                 eff_min_curve_pct = None;
+                eff_max_curve_pct = None;
                 eff_min_unique_buyers = None;
             }
             "2" | "opt1" | "reserves" | "live-reserves" => {
@@ -659,6 +672,9 @@ async fn run_sniper(
                 if eff_min_curve_pct.is_none() {
                     eff_min_curve_pct = Some(15.0);
                 }
+                if eff_max_curve_pct.is_none() {
+                    eff_max_curve_pct = Some(25.0);
+                }
                 if eff_max_dev_buy.is_none() {
                     eff_max_dev_buy = Some(0.25);
                 }
@@ -693,12 +709,13 @@ async fn run_sniper(
         jito_tip
     };
 
-    let mode_desc = match (eff_live_reserves, eff_require_socials, eff_min_curve_pct) {
-        (_, _, Some(pct)) => format!("5. Balanced Scalper Mode (≥{:.0}% Curve Completion)", pct).bold().magenta(),
-        (true, true, None) => "4. High-Conviction Mode (Option 1 + Option 2 Combined)".bold().magenta(),
-        (true, false, None) => "2. Option 1 Only (Live On-Chain Bonding Curve Reserves)".bold().cyan(),
-        (false, true, None) => "3. Option 2 Only (Strict Anti-Rug & Social Verification)".bold().yellow(),
-        (false, false, None) => "1. Standard Mode (Fast Mempool Defaults)".bold().green(),
+    let mode_desc = match (eff_live_reserves, eff_require_socials, eff_min_curve_pct, eff_max_curve_pct) {
+        (_, _, Some(min_pct), Some(max_pct)) => format!("5. Balanced Scalper Mode ({:.0}%–{:.0}% Curve Sweet Spot)", min_pct, max_pct).bold().magenta(),
+        (_, _, Some(pct), None) => format!("5. Balanced Scalper Mode (≥{:.0}% Curve Completion)", pct).bold().magenta(),
+        (true, true, None, _) => "4. High-Conviction Mode (Option 1 + Option 2 Combined)".bold().magenta(),
+        (true, false, None, _) => "2. Option 1 Only (Live On-Chain Bonding Curve Reserves)".bold().cyan(),
+        (false, true, None, _) => "3. Option 2 Only (Strict Anti-Rug & Social Verification)".bold().yellow(),
+        (false, false, None, _) => "1. Standard Mode (Fast Mempool Defaults)".bold().green(),
     };
 
     println!("{}", "================================================================================".cyan());
@@ -724,7 +741,11 @@ async fn run_sniper(
         println!("  [OPT 2] Dev Skin-in-Game: Min {} SOL buy required (Anti-Spam)", min_dev.to_string().bold().green());
     }
     if let Some(min_curve) = eff_min_curve_pct {
-        println!("  [OPT 1] Curve Momentum:  Requires ≥ {:.1}% curve completion (≥ {:.1} SOL reserves)", min_curve, (85.0 * min_curve) / 100.0);
+        if let Some(max_curve) = eff_max_curve_pct {
+            println!("  [OPT 1] Curve Momentum:  Requires {:.1}%–{:.1}% curve sweet spot ({:.1}–{:.1} SOL reserves)", min_curve, max_curve, (85.0 * min_curve) / 100.0, (85.0 * max_curve) / 100.0);
+        } else {
+            println!("  [OPT 1] Curve Momentum:  Requires ≥ {:.1}% curve completion (≥ {:.1} SOL reserves)", min_curve, (85.0 * min_curve) / 100.0);
+        }
     }
     if let Some(min_buyers) = eff_min_unique_buyers {
         println!("  [OPT 3] Unique Buyers:   Requires ≥ {} unique wallets (Anti-Insider Whale Filter)", min_buyers.to_string().bold().green());
@@ -857,6 +878,7 @@ async fn run_sniper(
         stop_loss_pct: eff_stop_loss,
         break_even_mult: eff_break_even_mult,
         min_curve_pct: eff_min_curve_pct,
+        max_curve_pct: eff_max_curve_pct,
         min_dev_buy_sol: eff_min_dev_buy,
         min_unique_buyers: eff_min_unique_buyers.unwrap_or(0),
         ..Default::default()
