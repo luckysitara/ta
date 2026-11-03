@@ -1,0 +1,21 @@
+[
+  {
+    "round_type": "15-minute",
+    "start_time": "2026-10-24T11:14:57.844930+00:00",
+    "start_price": 101.52,
+    "predicted_side": "UP (YES)",
+    "contract_price_usd": 0.52,
+    "allocation_usdc": 50.0,
+    "contracts_count": 96.15,
+    "potential_payout_usdc": 96.15,
+    "potential_net_profit_usdc": 46.15,
+    "reasoning": "15-Minute Structural Analysis: Price has formed a quadruple-bottom at the $101.48 - $101.50 support level with declining sell volume. 15-minute RSI is sitting at 33.2 (near oversold). Over the longer 15-minute horizon, mean-reversion pressure toward the 20-period moving average ($101.75) provides asymmetric upside probability.",
+    "settlement_time": "2026-10-24T11:29:59.116909+00:00",
+    "settlement_price": 101.3,
+    "price_delta": -0.22,
+    "actual_direction": "DOWN",
+    "result": "LOSS",
+    "payout_usdc": 0.0,
+    "net_pnl_usdc": -50.0
+  }
+]
