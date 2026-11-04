@@ -39,6 +39,9 @@ pub struct SniperSettings {
     pub max_curve_pct: Option<f64>, // Sweet Spot Cap: Maximum bonding curve progress % to enter (e.g. 25.0%)
     pub min_dev_buy_sol: Option<f64>, // Item 3: Require minimum dev initial buy in SOL (e.g. 0.40 SOL)
     pub min_unique_buyers: usize, // Upgrade 2: Minimum unique buyer wallets required before momentum entry
+    pub min_buys_recent: Option<usize>, // Buy Velocity Filter: Minimum buys in recent window
+    pub max_sells_recent: Option<usize>, // Buy Velocity Filter: Max sells permitted in recent window
+    pub velocity_window_secs: Option<u64>, // Buy Velocity Filter: Rolling window in seconds
 }
 
 impl Default for SniperSettings {
@@ -61,6 +64,9 @@ impl Default for SniperSettings {
             max_curve_pct: None,
             min_dev_buy_sol: None,
             min_unique_buyers: 0,
+            min_buys_recent: None,
+            max_sells_recent: None,
+            velocity_window_secs: None,
         }
     }
 }
@@ -140,6 +146,7 @@ pub struct SolanaSniperEngine {
     known_pools: Arc<Mutex<HashMap<String, PoolCreationEvent>>>,
     entered_pools: Arc<Mutex<HashSet<String>>>,
     pub pool_buyers: Arc<Mutex<HashMap<String, HashSet<String>>>>,
+    pub pool_trades: Arc<Mutex<HashMap<String, Vec<(std::time::Instant, bool)>>>>,
     pub pool_dev_dumped: Arc<Mutex<HashSet<String>>>,
 }
 
@@ -172,17 +179,27 @@ impl SolanaSniperEngine {
             known_pools: Arc::new(Mutex::new(HashMap::new())),
             entered_pools: Arc::new(Mutex::new(HashSet::new())),
             pool_buyers: Arc::new(Mutex::new(HashMap::new())),
+            pool_trades: Arc::new(Mutex::new(HashMap::new())),
             pool_dev_dumped: Arc::new(Mutex::new(HashSet::new())),
         }
     }
 
-    /// Record live trade activity (buys/sells) to track unique buyers and detect developer dumps
+    /// Record live trade activity (buys/sells) to track unique buyers, buy velocity, and detect developer dumps
     pub fn record_trade_activity(&self, trade: &super::yellowstone::TradeActivityEvent) {
         if trade.is_buy {
             let mut pb = self.pool_buyers.lock().unwrap();
             pb.entry(trade.pool_address.clone())
                 .or_insert_with(HashSet::new)
                 .insert(trade.user_wallet.clone());
+        }
+
+        {
+            let mut pt = self.pool_trades.lock().unwrap();
+            let records = pt.entry(trade.pool_address.clone()).or_insert_with(Vec::new);
+            records.push((std::time::Instant::now(), trade.is_buy));
+            if records.len() > 100 {
+                records.retain(|(t, _)| t.elapsed() < std::time::Duration::from_secs(60));
+            }
         }
         if trade.is_sell {
             let is_dev = {
@@ -292,6 +309,20 @@ impl SolanaSniperEngine {
     pub fn is_dev_dumped(&self, pool_address: &str) -> bool {
         let dumped = self.pool_dev_dumped.lock().unwrap();
         dumped.contains(pool_address)
+    }
+
+    /// Get recent buy and sell count within a specified time window
+    pub fn get_recent_trade_velocity(&self, pool_address: &str, window_secs: u64) -> (usize, usize) {
+        let mut pt = self.pool_trades.lock().unwrap();
+        if let Some(records) = pt.get_mut(pool_address) {
+            records.retain(|(t, _)| t.elapsed() < std::time::Duration::from_secs(60));
+            let window = std::time::Duration::from_secs(window_secs);
+            let buys = records.iter().filter(|(t, is_buy)| *is_buy && t.elapsed() <= window).count();
+            let sells = records.iter().filter(|(t, is_buy)| !*is_buy && t.elapsed() <= window).count();
+            (buys, sells)
+        } else {
+            (0, 0)
+        }
     }
 
     /// Sync live on-chain wallet balance from Solana RPC directly into portfolio state
@@ -1245,6 +1276,16 @@ impl SolanaSniperEngine {
             }
         }
 
+        // 1d. Buy Velocity Filter - require active recent buying acceleration
+        if let Some(min_buys) = self.settings.min_buys_recent {
+            let window_secs = self.settings.velocity_window_secs.unwrap_or(15);
+            let (recent_buys, recent_sells) = self.get_recent_trade_velocity(pool_address, window_secs);
+            let max_sells = self.settings.max_sells_recent.unwrap_or(0);
+            if recent_buys < min_buys || recent_sells > max_sells {
+                return;
+            }
+        }
+
         // 2. Check active positions limit and verify not already open
         {
             let positions = self.positions.lock().unwrap();
@@ -1317,6 +1358,20 @@ impl SolanaSniperEngine {
                 )
                 .bold()
                 .green()
+            );
+        }
+
+        if let Some(_) = self.settings.min_buys_recent {
+            let window_secs = self.settings.velocity_window_secs.unwrap_or(15);
+            let (recent_buys, recent_sells) = self.get_recent_trade_velocity(pool_address, window_secs);
+            println!(
+                "   {}",
+                format!(
+                    "⚡ [BUY VELOCITY CONFIRMED] Pool {} has {} buys and {} sells in the last {}s!",
+                    pool_address, recent_buys, recent_sells, window_secs
+                )
+                .bold()
+                .cyan()
             );
         }
 
@@ -2120,5 +2175,87 @@ mod tests {
 
         let positions_after = engine.get_active_positions();
         assert!(positions_after[0].is_closed, "Position should be closed at break-even floor 1.02x rather than falling to stop-loss");
+    }
+
+    #[test]
+    fn test_buy_velocity_filter_momentum_entry() {
+        use super::super::yellowstone::TradeActivityEvent;
+
+        let settings = SniperSettings {
+            min_curve_pct: Some(15.0),
+            max_curve_pct: Some(25.0),
+            min_unique_buyers: 2,
+            min_buys_recent: Some(3),
+            max_sells_recent: Some(0),
+            velocity_window_secs: Some(15),
+            ..Default::default()
+        };
+
+        let engine = SolanaSniperEngine::new(settings);
+        let pool_addr = "VelocityPool11111111111111111111111111111".to_string();
+
+        let event = PoolCreationEvent {
+            protocol: DexProtocol::PumpFun,
+            signature: "sig_vel_1".to_string(),
+            slot: 100,
+            token_mint: "VelocityMint11111111111111111111111111111".to_string(),
+            pool_address: pool_addr.clone(),
+            creator: Some("Creator111111111111111111111111111111111111".to_string()),
+            initial_sol_liquidity: Some(30.0),
+            dev_buy_sol: Some(0.1),
+            metadata_uri: None,
+            has_socials: false,
+            timestamp_ms: 1000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+
+        engine.process_detected_pool(&event);
+        assert_eq!(engine.get_active_positions().len(), 0, "Should not enter initially on creation");
+
+        // Add 2 buyers (meets min_unique_buyers = 2)
+        engine.record_trade_activity(&TradeActivityEvent {
+            signature: "s1".to_string(),
+            pool_address: pool_addr.clone(),
+            user_wallet: "Buyer1".to_string(),
+            is_buy: true,
+            is_sell: false,
+            slot: 101,
+        });
+        engine.record_trade_activity(&TradeActivityEvent {
+            signature: "s2".to_string(),
+            pool_address: pool_addr.clone(),
+            user_wallet: "Buyer2".to_string(),
+            is_buy: true,
+            is_sell: false,
+            slot: 102,
+        });
+
+        // Curve reaches 21% (between 15% and 25%), but only 2 buys recorded (requires 3!)
+        let state_curve_21 = BondingCurveState {
+            pool_address: pool_addr.clone(),
+            virtual_token_reserves: 1_000_000_000_000_000,
+            virtual_sol_reserves: 35_000_000_000,
+            real_token_reserves: 500_000_000_000_000,
+            real_sol_reserves: 17_850_000_000, // 21% of 85 SOL
+            complete: false,
+            price_sol: 0.00000007,
+        };
+        engine.update_bonding_curve_reserve(&pool_addr, &state_curve_21);
+        assert_eq!(engine.get_active_positions().len(), 0, "Rejected because only 2 buys occurred (needs 3)");
+
+        // Add 3rd buy
+        engine.record_trade_activity(&TradeActivityEvent {
+            signature: "s3".to_string(),
+            pool_address: pool_addr.clone(),
+            user_wallet: "Buyer3".to_string(),
+            is_buy: true,
+            is_sell: false,
+            slot: 103,
+        });
+
+        // Now update curve reserve again: should trigger momentum entry!
+        engine.update_bonding_curve_reserve(&pool_addr, &state_curve_21);
+        assert_eq!(engine.get_active_positions().len(), 1, "Entered because 3 buys occurred in window with 0 sells!");
     }
 }

@@ -116,6 +116,18 @@ struct Args {
     #[arg(long)]
     min_unique_buyers: Option<usize>,
 
+    /// Buy Velocity Filter: Minimum buy transactions required within velocity window
+    #[arg(long)]
+    min_buys_recent: Option<usize>,
+
+    /// Buy Velocity Filter: Maximum sell transactions permitted within velocity window
+    #[arg(long)]
+    max_sells_recent: Option<usize>,
+
+    /// Buy Velocity Filter: Window duration in seconds (e.g. 15 for 15s window)
+    #[arg(long)]
+    velocity_window_secs: Option<u64>,
+
     /// Take-profit 1 multiplier (e.g. 1.25 for +25% scalping)
     #[arg(long)]
     tp1: Option<f64>,
@@ -226,6 +238,18 @@ enum Commands {
         #[arg(long)]
         min_unique_buyers: Option<usize>,
 
+        /// Buy Velocity Filter: Minimum buy transactions required within velocity window
+        #[arg(long)]
+        min_buys_recent: Option<usize>,
+
+        /// Buy Velocity Filter: Maximum sell transactions permitted within velocity window
+        #[arg(long)]
+        max_sells_recent: Option<usize>,
+
+        /// Buy Velocity Filter: Window duration in seconds (e.g. 15 for 15s window)
+        #[arg(long)]
+        velocity_window_secs: Option<u64>,
+
         /// Take-profit 1 multiplier (e.g. 1.25 for +25% scalping)
         #[arg(long)]
         tp1: Option<f64>,
@@ -312,6 +336,9 @@ async fn main() -> anyhow::Result<()> {
         min_curve_pct,
         max_curve_pct,
         min_unique_buyers,
+        min_buys_recent,
+        max_sells_recent,
+        velocity_window_secs,
         tp1,
         tp2,
         stop_loss,
@@ -351,6 +378,9 @@ async fn main() -> anyhow::Result<()> {
             min_curve_pct,
             max_curve_pct,
             min_unique_buyers,
+            min_buys_recent,
+            max_sells_recent,
+            velocity_window_secs,
             tp1,
             tp2,
             stop_loss,
@@ -387,6 +417,9 @@ async fn main() -> anyhow::Result<()> {
             args.min_curve_pct,
             args.max_curve_pct,
             args.min_unique_buyers,
+            args.min_buys_recent,
+            args.max_sells_recent,
+            args.velocity_window_secs,
             args.tp1,
             args.tp2,
             args.stop_loss,
@@ -608,6 +641,9 @@ async fn run_sniper(
     min_curve_pct: Option<f64>,
     max_curve_pct: Option<f64>,
     min_unique_buyers: Option<usize>,
+    min_buys_recent: Option<usize>,
+    max_sells_recent: Option<usize>,
+    velocity_window_secs: Option<u64>,
     tp1: Option<f64>,
     tp2: Option<f64>,
     stop_loss: Option<f64>,
@@ -622,8 +658,8 @@ async fn run_sniper(
 ) -> anyhow::Result<()> {
     let is_paper = !onchain && paper;
 
-    let (mut eff_live_reserves, mut eff_require_socials, mut eff_max_dev_buy, mut eff_min_dev_buy, mut eff_min_curve_pct, mut eff_max_curve_pct, mut eff_min_unique_buyers) =
-        (live_reserves, require_socials, max_dev_buy, min_dev_buy, min_curve_pct, max_curve_pct, min_unique_buyers);
+    let (mut eff_live_reserves, mut eff_require_socials, mut eff_max_dev_buy, mut eff_min_dev_buy, mut eff_min_curve_pct, mut eff_max_curve_pct, mut eff_min_unique_buyers, mut eff_min_buys_recent, mut eff_max_sells_recent, mut eff_velocity_window_secs) =
+        (live_reserves, require_socials, max_dev_buy, min_dev_buy, min_curve_pct, max_curve_pct, min_unique_buyers, min_buys_recent, max_sells_recent, velocity_window_secs);
 
     if let Some(ref m) = mode {
         match m.trim().to_lowercase().as_str() {
@@ -635,6 +671,9 @@ async fn run_sniper(
                 eff_min_curve_pct = None;
                 eff_max_curve_pct = None;
                 eff_min_unique_buyers = None;
+                eff_min_buys_recent = None;
+                eff_max_sells_recent = None;
+                eff_velocity_window_secs = None;
             }
             "2" | "opt1" | "reserves" | "live-reserves" => {
                 eff_live_reserves = true;
@@ -670,7 +709,7 @@ async fn run_sniper(
             "5" | "momentum" | "breakout" | "balanced" | "scalper" => {
                 eff_live_reserves = true;
                 if eff_min_curve_pct.is_none() {
-                    eff_min_curve_pct = Some(15.0);
+                    eff_min_curve_pct = Some(20.0);
                 }
                 if eff_max_curve_pct.is_none() {
                     eff_max_curve_pct = Some(25.0);
@@ -680,6 +719,15 @@ async fn run_sniper(
                 }
                 if eff_min_unique_buyers.is_none() {
                     eff_min_unique_buyers = Some(12);
+                }
+                if eff_min_buys_recent.is_none() {
+                    eff_min_buys_recent = Some(3);
+                }
+                if eff_max_sells_recent.is_none() {
+                    eff_max_sells_recent = Some(0);
+                }
+                if eff_velocity_window_secs.is_none() {
+                    eff_velocity_window_secs = Some(15);
                 }
             }
             other => {
@@ -749,6 +797,9 @@ async fn run_sniper(
     }
     if let Some(min_buyers) = eff_min_unique_buyers {
         println!("  [OPT 3] Unique Buyers:   Requires ≥ {} unique wallets (Anti-Insider Whale Filter)", min_buyers.to_string().bold().green());
+    }
+    if let Some(min_buys) = eff_min_buys_recent {
+        println!("  [OPT 1] Buy Velocity:    Requires ≥ {} buys & ≤ {} sells in last {}s (Anti-Stall Filter)", min_buys.to_string().bold().green(), eff_max_sells_recent.unwrap_or(0).to_string().bold().green(), eff_velocity_window_secs.unwrap_or(15).to_string().bold().green());
     }
     if let Some(dur) = duration_secs {
         println!("  Session Timer:       {} seconds ({} min auto-stop & audit)", dur, dur / 60);
@@ -881,6 +932,9 @@ async fn run_sniper(
         max_curve_pct: eff_max_curve_pct,
         min_dev_buy_sol: eff_min_dev_buy,
         min_unique_buyers: eff_min_unique_buyers.unwrap_or(0),
+        min_buys_recent: eff_min_buys_recent,
+        max_sells_recent: eff_max_sells_recent,
+        velocity_window_secs: eff_velocity_window_secs,
         ..Default::default()
     };
 
