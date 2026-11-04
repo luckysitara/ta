@@ -256,7 +256,13 @@ impl YellowstoneListener {
                 };
             }
 
-            builder = builder.connect_timeout(Duration::from_secs(5));
+            builder = builder
+                .connect_timeout(Duration::from_secs(5))
+                .tcp_keepalive(Some(Duration::from_secs(10)))
+                .http2_keep_alive_interval(Duration::from_secs(10))
+                .keep_alive_timeout(Duration::from_secs(5))
+                .keep_alive_while_idle(true)
+                .tcp_nodelay(true);
 
             let mut client = match builder.connect().await {
                 Ok(c) => {
@@ -355,6 +361,11 @@ impl YellowstoneListener {
                                 break;
                             }
                         }
+                    }
+                    _ = tokio::time::sleep(Duration::from_secs(20)) => {
+                        warn!("Yellowstone stream heartbeat timeout (no activity for 20s). Reconnecting...");
+                        println!("   ⚠ [YELLOWSTONE HEARTBEAT] No activity for 20s. Auto-reconnecting gRPC stream...");
+                        break;
                     }
                 }
             }
