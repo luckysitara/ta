@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#106)
+### 1. Executive Status & Live Balance Checkpoint (#107 — 4-Hour Milestone)
 
-At the **238-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **599,500+ transactions** in this tightened cycle.
+At the **240-minute checkpoint (4 hours continuous)**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **614,400+ transactions** in this tightened cycle.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon `task-9212` terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log))
@@ -24,12 +24,12 @@ At the **238-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Watchlist Candidates Tracked**: Actively filtering emerging curves awaiting strict $\ge 15$ buyer and velocity criteria, while successfully blacklisting dev dump `HY5EktZS...`.
+- **Watchlist Candidates Tracked**: Actively filtering emerging curves (`F7tN2Auh...`) awaiting strict $\ge 15$ buyer and velocity criteria.
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
 ### 3. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 9 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 68.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>9.56 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **6,980+** creator dumps neutralized in real time before capital could be trapped.
+- **All-Time Mempool Ingestion**: **>9.58 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **6,982+** creator dumps neutralized in real time before capital could be trapped.
