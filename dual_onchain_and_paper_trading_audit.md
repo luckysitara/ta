@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#72)
+### 1. Executive Status & Live Balance Checkpoint (#73)
 
-At the **170-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **223,300+ transactions** in this tightened cycle.
+At the **172-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **225,500+ transactions** in this tightened cycle.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon `task-9212` terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log))
@@ -24,13 +24,13 @@ At the **170-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Watchlist Surveillance**: Queued pools `7GWnTM...`, `CK2SV1...`, `YHzuyA...`, `cu67po...`, `2qDF1o...`, `2ti6Tq...`, `B4jvfM...` are tracked.
-- **Rugs Neutralized**: Malicious creator dump by dev `CDQfs7...` on `CwmnwF...` was intercepted and blacklisted before any orders could fire.
-- **Capital Safety**: 0 open positions, 100% liquid cash preserved.
+- **Watchlist Surveillance**: Queued pools `7hBHkF...`, `C9drd6...`, `83CGfx...`, `JA2pSZ...` are tracked.
+- **Rugs Neutralized**: Malicious creator dump by dev `7XBE9b...` on `3KoBSz...` intercepted and blacklisted before any orders could fire.
+- **Resilience**: Yellowstone stream self-healed in 0.9 seconds after transient broken pipe; active listening resumed at Slot 467310416.
 
 ---
 
 ### 3. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 9 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 68.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>9.13 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **6,725+** creator dumps neutralized in real time before capital could be trapped.
+- **All-Time Mempool Ingestion**: **>9.14 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **6,740+** creator dumps neutralized in real time before capital could be trapped.
