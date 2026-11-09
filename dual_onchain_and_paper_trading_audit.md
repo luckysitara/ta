@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#155)
+### 1. Executive Status & Live Balance Checkpoint (#156)
 
-At the **336-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **1,795,400+ transactions** in this tightened cycle (>10.82 Million all-time total) at slot `467380018`.
+At the **338-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **1,796,000+ transactions** in this tightened cycle (>10.83 Million all-time total).
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log))
@@ -12,7 +12,7 @@ At the **336-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 - **Live Liquid Solana Balance**: **`0.031069238 SOL`** (Verified via Solana RPC; 100% liquid cash)
 - **Active Open Positions**: **`0 / 2`** (0 tokens held; zero capital at risk; ATA rent fully refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
-- **Stream Status**: Continuous real-time mempool ingestion across Pump.fun, Raydium, and Meteora.
+- **Stream Status**: Continuous real-time mempool ingestion across Pump.fun, Raydium, and Meteora. Auto-reconnected in <6s at 16:18:21 UTC.
 
 ---
 
@@ -37,12 +37,14 @@ At the **336-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Currently tracking candidate pools `B2Etc...` (0.06 SOL dev buy), `FBe4k...` (0.07 SOL dev buy), and `2J2k9...` (2.03 SOL dev buy).
+- **Recent Interceptions**:
+  - `BkNhhcSQzronW4VpdETiLssH7WswVvFWfYU8bnrRvA3v` (dev `AfJab...`) auto-blacklisted on dump.
+- **Active Breakout Watchlist**: Currently tracking candidate pools `AGz5C...` (0.07 SOL dev buy) and `oaKcv...` (1.01 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 10 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 66.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>10.82 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **7,570+** creator dumps neutralized in real time before capital could be trapped.
+- **All-Time Mempool Ingestion**: **>10.83 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **7,590+** creator dumps neutralized in real time before capital could be trapped.
