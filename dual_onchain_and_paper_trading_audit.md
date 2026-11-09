@@ -4,7 +4,7 @@
 
 ### 1. Executive Summary & Configuration Upgrade
 
-At the **121-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **2,145 pools** have been evaluated and **451 creator rug-pulls** blacklisted in this upgraded run alone.
+At the **123-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **2,210 pools** have been evaluated and **465 creator rug-pulls** blacklisted in this upgraded run alone.
 
 Live wallet balance is verified via RPC at **`0.033007109 SOL`** with 0 active positions (100% liquid cash).
 
@@ -18,7 +18,7 @@ Live wallet balance is verified via RPC at **`0.033007109 SOL`** with 0 active p
 
 ---
 
-### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #48)
+### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #49)
 
 | Metric | 🔴 Live On-Chain Stream ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) | 🟢 Continuous Paper Stream ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) |
 | :--- | :--- | :--- |
@@ -26,9 +26,9 @@ Live wallet balance is verified via RPC at **`0.033007109 SOL`** with 0 active p
 | **Current Available Cash** | **`0.033007109 SOL`** (100% liquid cash) | **`0.049100000 SOL`** (**`+0.0024 SOL` Profit**) |
 | **Buy Amount** | **`0.010 SOL`** | **`0.010 SOL`** |
 | **Max Concurrent Orders** | **`2`** | **`2`** |
-| **Active Session Txs** | **587,400+** (+13,100 in 2m) | **579,100+** (+13,100 in 2m) |
-| **Watchlist Pools Screened** | **2,145+ pools** (+65 new pools) | **2,108+ pools** (+66 new pools) |
-| **Creator Rugs Neutralized** | **451 dumps blacklisted** in real time (+13 rugs) | **431 dumps blacklisted** in real time (+13 rugs) |
+| **Active Session Txs** | **598,300+** (+10,900 in 2m) | **590,300+** (+11,200 in 2m) |
+| **Watchlist Pools Screened** | **2,210+ pools** (+65 new pools) | **2,175+ pools** (+67 new pools) |
+| **Creator Rugs Neutralized** | **465 dumps blacklisted** in real time (+14 rugs) | **445 dumps blacklisted** in real time (+14 rugs) |
 | **Snipes in this Run** | **2** (Protected via break-even exits) | **1** (**100% Win Rate, TP1 at 1.33x**) |
 | **Active Open Positions** | **0 / 2** (100% Liquid) | **0 / 2** (100% Liquid) |
 
@@ -37,8 +37,8 @@ Live wallet balance is verified via RPC at **`0.033007109 SOL`** with 0 active p
 ### 3. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 8 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 70.7% wallet capital preserved).
 - **All-Time Paper Record**: 5 snipes (3 wins, 2 break-even stops, **60% win rate, net positive ROI**).
-- **All-Time Ingestion**: **>8.76 Million** Solana mainnet transactions across all sessions.
-- **Rug-Pull Shielding**: Over **6,421+** creator dumps neutralized across all sessions before capital could be trapped.
+- **All-Time Ingestion**: **>8.78 Million** Solana mainnet transactions across all sessions.
+- **Rug-Pull Shielding**: Over **6,435+** creator dumps neutralized across all sessions before capital could be trapped.
 
 ---
 
