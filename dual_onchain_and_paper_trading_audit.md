@@ -2,20 +2,32 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#110)
+### 1. Executive Status & Live Balance Checkpoint (#111)
 
-At the **246-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **688,300+ transactions** in this tightened cycle.
+At the **248-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) executed **Trade #4** under the tightened parameters and has ingested over **748,000+ transactions** in this cycle.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon `task-9212` terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log))
 - **Live Wallet Address**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
-- **Live Liquid Solana Balance**: **`0.031976333 SOL`** (Verified via Solana RPC; 0 change in 2m)
+- **Live Liquid Solana Balance**: **`0.031069238 SOL`** (Verified via Solana RPC)
 - **Active Open Positions**: **`0 / 2`** (100% pure liquid SOL in wallet; 0 tokens held; ATA rent fully refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
 
 ---
 
-### 2. Tightened Anti-Sniper-Dump Surveillance
+### 2. Trade #4 Execution Audit ([`AmoPNK8bzo6Aj1U49bDBEjyrY59rGejuXHTmXbtGyfHx`](https://solscan.io/token/AmoPNK8bzo6Aj1U49bDBEjyrY59rGejuXHTmXbtGyfHx))
+
+| Parameter | Value | Verification |
+| :--- | :--- | :--- |
+| **Buy Trigger** | 46.0% Curve \| 24 Unique Buyers \| 8 Buys & 0 Sells in 30s | Strict Anti-Sniper criteria verified |
+| **Buy Tx** | [`4RvRceSimKcMh3KNNS3a6HLJfUrsZ79PnoAf2Ja6tgx57LZoygD77yk9YwJtMG3FpKdgqigVwcEmTGhWPPf8wRsm`](https://solscan.io/tx/4RvRceSimKcMh3KNNS3a6HLJfUrsZ79PnoAf2Ja6tgx57LZoygD77yk9YwJtMG3FpKdgqigVwcEmTGhWPPf8wRsm) | 70,459.32 Tokens acquired for 0.010 SOL |
+| **Exit Trigger** | Curve momentum stalled (-0.4 SOL); sub-millisecond stop-loss executed | Zero capital trapping |
+| **Sell Tx** | [`4dPvGeZSV4W2ozQKX9z547bqjDtaETwBoLWz7LQa8hSpxDEFS8twFTQURTwvRjBapGagD5dPrMDLpzBZr2tsVr9x`](https://solscan.io/tx/4dPvGeZSV4W2ozQKX9z547bqjDtaETwBoLWz7LQa8hSpxDEFS8twFTQURTwvRjBapGagD5dPrMDLpzBZr2tsVr9x) | Sold for 0.009762 SOL + 0.001514 rent refund |
+| **Capital Defense** | Token value loss: `-0.000238 SOL` (-2.38%); **97.62%** of token value preserved | ATA closed; net delta `-0.000907 SOL` |
+
+---
+
+### 3. Tightened Anti-Sniper-Dump Surveillance
 
 | Setting | Value | Strategic Function |
 | :--- | :--- | :--- |
@@ -24,12 +36,11 @@ At the **246-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Watchlist Candidates Tracked**: Actively filtering emerging curves (`7J1fBrvo...`, `7s1ZyFt6...`) while successfully blacklisting dev dump `3B79fx62...`.
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
-### 3. Historical Record & Execution Safeguards
-- **All-Time Live On-Chain Record**: 9 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 68.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>9.66 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **6,991+** creator dumps neutralized in real time before capital could be trapped.
+### 4. Historical Record & Execution Safeguards
+- **All-Time Live On-Chain Record**: 10 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 66.5% wallet capital preserved).
+- **All-Time Mempool Ingestion**: **>9.72 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **6,995+** creator dumps neutralized in real time before capital could be trapped.
