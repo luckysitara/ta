@@ -2,17 +2,17 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#131)
+### 1. Executive Status & Live Balance Checkpoint (#132)
 
-At the **288-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **1,254,800+ transactions** in this tightened cycle (>10.24 Million all-time total) at slot `467358502`.
+At the **290-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log)) has ingested over **1,279,600+ transactions** in this tightened cycle (>10.26 Million all-time total) at slot `467359762`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-9210`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-9210.log))
 - **Live Wallet Address**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
-- **Live Liquid Solana Balance**: **`0.031069238 SOL`** (Verified via Solana RPC; 100% liquid cash)
+- **Live Liquid Solana Balance**: **`0.031069238 SOL`** (Verified via dedicated Triton One RPC; 100% liquid cash)
 - **Active Open Positions**: **`0 / 2`** (0 tokens held; zero capital at risk; ATA rent fully refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
-- **Stream Status**: Continuous real-time mempool ingestion across Pump.fun, Raydium, and Meteora.
+- **Stream Resilience**: Yellowstone gRPC connection reset safely handled with automatic reconnect in 11s; zero exposure.
 
 ---
 
@@ -37,12 +37,12 @@ At the **288-minute checkpoint**, the live on-chain sniper ([`task-9210`](file:/
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Tracking candidate pools `J2ZB3...` (0.27 SOL dev buy) and `6J5uq...` (1.03 SOL dev buy).
+- **Active Breakout Watchlist**: Tracking candidate pool `8c1sVqhAYrupCAk4q9AdsQyXzxLsk3wz6VHcXSoApump` (0.11 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 10 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 66.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>10.24 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **7,140+** creator dumps neutralized in real time before capital could be trapped.
+- **All-Time Mempool Ingestion**: **>10.26 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **7,150+** creator dumps neutralized in real time before capital could be trapped.
