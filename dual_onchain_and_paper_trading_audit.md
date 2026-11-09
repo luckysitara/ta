@@ -4,7 +4,7 @@
 
 ### 1. Executive Summary & Configuration Upgrade
 
-At the **89-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **1,243 pools** have been evaluated and **200 creator rug-pulls** blacklisted in this upgraded run alone.
+At the **91-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **1,286 pools** have been evaluated and **210 creator rug-pulls** blacklisted in this upgraded run alone.
 
 Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are capped at 2. Live wallet balance is verified via RPC at **`0.035587566 SOL`** with 0 active positions (100% liquid cash).
 
@@ -17,7 +17,7 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 
 ---
 
-### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #33)
+### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #34)
 
 | Metric | 🔴 Live On-Chain Stream ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) | 🟢 Continuous Paper Stream ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) |
 | :--- | :--- | :--- |
@@ -25,9 +25,9 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 | **Current Available Cash** | **`0.035587566 SOL`** (100% liquid cash) | **`0.046700000 SOL`** |
 | **Buy Amount** | **`0.010 SOL`** | **`0.010 SOL`** |
 | **Max Concurrent Orders** | **`2`** | **`2`** |
-| **Active Session Txs** | **368,100+** | **369,900+** |
-| **Watchlist Pools Screened** | **1,243+ pools** (+36 new pools) | **1,248+ pools** (+60 new pools) |
-| **Creator Rugs Neutralized** | **200 dumps blacklisted** in real time (+8 rugs) | **202 dumps blacklisted** in real time (+19 rugs) |
+| **Active Session Txs** | **378,500+** | **380,200+** |
+| **Watchlist Pools Screened** | **1,286+ pools** (+43 new pools) | **1,291+ pools** (+43 new pools) |
+| **Creator Rugs Neutralized** | **210 dumps blacklisted** in real time (+10 rugs) | **212 dumps blacklisted** in real time (+10 rugs) |
 | **Snipes in this Run** | **1** ([`6qWgxY...pump`](https://solscan.io/token/6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS8cpump), Break-Even Exit) | **0** |
 | **Active Open Positions** | **0 / 2** (100% Liquid) | **0 / 2** (100% Liquid) |
 
@@ -53,8 +53,8 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 7 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 76.2% wallet capital preserved).
 - **All-Time Paper Record**: 4 snipes (2 wins, 2 break-even stops, **50% win rate, net positive ROI**).
-- **All-Time Ingestion**: **>8.47 Million** Solana mainnet transactions across all sessions.
-- **Rug-Pull Shielding**: Over **6,170+** creator dumps neutralized across all sessions before capital could be trapped.
+- **All-Time Ingestion**: **>8.48 Million** Solana mainnet transactions across all sessions.
+- **Rug-Pull Shielding**: Over **6,180+** creator dumps neutralized across all sessions before capital could be trapped.
 
 ---
 
