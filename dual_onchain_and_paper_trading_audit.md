@@ -4,7 +4,7 @@
 
 ### 1. Executive Summary & Configuration Upgrade
 
-At the **107-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **1,694 pools** have been evaluated and **335 creator rug-pulls** blacklisted in this upgraded run alone.
+At the **109-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **1,754 pools** have been evaluated and **347 creator rug-pulls** blacklisted in this upgraded run alone.
 
 Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are capped at 2. Live wallet balance is verified via RPC at **`0.035587566 SOL`** with 0 active positions (100% liquid cash).
 
@@ -17,7 +17,7 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 
 ---
 
-### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #42)
+### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #43)
 
 | Metric | 🔴 Live On-Chain Stream ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) | 🟢 Continuous Paper Stream ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) |
 | :--- | :--- | :--- |
@@ -25,9 +25,9 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 | **Current Available Cash** | **`0.035587566 SOL`** (100% liquid cash) | **`0.046700000 SOL`** |
 | **Buy Amount** | **`0.010 SOL`** | **`0.010 SOL`** |
 | **Max Concurrent Orders** | **`2`** | **`2`** |
-| **Active Session Txs** | **480,200+** | **480,800+** |
-| **Watchlist Pools Screened** | **1,694+ pools** (+78 new pools) | **1,693+ pools** (+64 new pools) |
-| **Creator Rugs Neutralized** | **335 dumps blacklisted** in real time (+18 rugs) | **332 dumps blacklisted** in real time (+13 rugs) |
+| **Active Session Txs** | **493,000+** | **493,700+** |
+| **Watchlist Pools Screened** | **1,754+ pools** (+60 new pools) | **1,753+ pools** (+60 new pools) |
+| **Creator Rugs Neutralized** | **347 dumps blacklisted** in real time (+12 rugs) | **344 dumps blacklisted** in real time (+12 rugs) |
 | **Snipes in this Run** | **1** ([`6qWgxY...pump`](https://solscan.io/token/6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS8cpump), Break-Even Exit) | **0** |
 | **Active Open Positions** | **0 / 2** (100% Liquid) | **0 / 2** (100% Liquid) |
 
@@ -53,8 +53,8 @@ Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are c
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 7 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 76.2% wallet capital preserved).
 - **All-Time Paper Record**: 4 snipes (2 wins, 2 break-even stops, **50% win rate, net positive ROI**).
-- **All-Time Ingestion**: **>8.63 Million** Solana mainnet transactions across all sessions.
-- **Rug-Pull Shielding**: Over **6,305+** creator dumps neutralized across all sessions before capital could be trapped.
+- **All-Time Ingestion**: **>8.64 Million** Solana mainnet transactions across all sessions.
+- **Rug-Pull Shielding**: Over **6,317+** creator dumps neutralized across all sessions before capital could be trapped.
 
 ---
 
