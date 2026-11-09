@@ -4,9 +4,9 @@
 
 ### 1. Executive Summary & Configuration Upgrade
 
-At the **75-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **975 pools** have been evaluated and **150 creator rug-pulls** blacklisted in this upgraded run alone.
+At the **77-minute checkpoint post-configuration upgrade**, both the **Live On-Chain Engine** ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) and **Continuous Paper Benchmark** ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) continue streaming live Solana mainnet mempool data at sub-millisecond latency. Over **1,046 pools** have been evaluated and **160 creator rug-pulls** blacklisted in this upgraded run alone.
 
-A live on-chain snipe was executed for **`6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS8cpump`** following strict Mode 5 validation (23.0% curve, 38 unique buyers, 3 buys / 0 sells in 15s). When upside momentum cooled, the autonomous engine dispatched an emergency break-even exit bundle, preserving **100% of the invested capital** (`+0.000 SOL` net token PnL) and reclaiming 100% of the ATA rent. Live wallet balance is verified via RPC at **`0.035587566 SOL`** with 0 active positions (100% liquid cash).
+Fixed Jito fee drag remains halved at ~8.3%, and maximum concurrent orders are capped at 2. Live wallet balance is verified via RPC at **`0.035587566 SOL`** with 0 active positions (100% liquid cash).
 
 - **Live Wallet Address**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
 - **Live Solana Mainnet Balance**: `0.035587566 SOL` (Verified via Solana RPC)
@@ -17,7 +17,7 @@ A live on-chain snipe was executed for **`6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS
 
 ---
 
-### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #26)
+### 2. Dual Stream Telemetry Comparison (Upgrade Checkpoint #27)
 
 | Metric | 🔴 Live On-Chain Stream ([`task-8366`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8366.log)) | 🟢 Continuous Paper Stream ([`task-8368`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-8368.log)) |
 | :--- | :--- | :--- |
@@ -25,9 +25,9 @@ A live on-chain snipe was executed for **`6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS
 | **Current Available Cash** | **`0.035587566 SOL`** (100% liquid cash) | **`0.046700000 SOL`** |
 | **Buy Amount** | **`0.010 SOL`** | **`0.010 SOL`** |
 | **Max Concurrent Orders** | **`2`** | **`2`** |
-| **Active Session Txs** | **305,800+** | **303,100+** |
-| **Watchlist Pools Screened** | **975+ pools** (+135 new pools) | **961+ pools** (+129 new pools) |
-| **Creator Rugs Neutralized** | **150 dumps blacklisted** in real time (+12 rugs) | **143 dumps blacklisted** in real time (+10 rugs) |
+| **Active Session Txs** | **323,600+** | **319,700+** |
+| **Watchlist Pools Screened** | **1,046+ pools** (+71 new pools) | **1,029+ pools** (+68 new pools) |
+| **Creator Rugs Neutralized** | **160 dumps blacklisted** in real time (+10 rugs) | **152 dumps blacklisted** in real time (+9 rugs) |
 | **Snipes in this Run** | **1** ([`6qWgxY...pump`](https://solscan.io/token/6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS8cpump), Break-Even Exit) | **0** |
 | **Active Open Positions** | **0 / 2** (100% Liquid) | **0 / 2** (100% Liquid) |
 
@@ -53,8 +53,8 @@ A live on-chain snipe was executed for **`6qWgxYzdnjT6dhYXrfRv1Qhx78etcSdLEUwNwS
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 7 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 76.2% wallet capital preserved).
 - **All-Time Paper Record**: 4 snipes (2 wins, 2 break-even stops, **50% win rate, net positive ROI**).
-- **All-Time Ingestion**: **>8.39 Million** Solana mainnet transactions across all sessions.
-- **Rug-Pull Shielding**: Over **6,120+** creator dumps neutralized across all sessions before capital could be trapped.
+- **All-Time Ingestion**: **>8.41 Million** Solana mainnet transactions across all sessions.
+- **Rug-Pull Shielding**: Over **6,130+** creator dumps neutralized across all sessions before capital could be trapped.
 
 ---
 
