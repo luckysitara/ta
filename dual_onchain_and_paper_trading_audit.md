@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#212 — 567K+ Revived Session / 8,200 Rugs Milestone)
+### 1. Executive Status & Live Balance Checkpoint (#213 — 577K+ Revived Session / >12.07M Milestone)
 
-At **Checkpoint #212**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has ingested over **567,800+ transactions** in this revived session (**>12.06 Million** all-time total) at slot `467677264`.
+At **Checkpoint #213**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has ingested over **577,300+ transactions** in this revived session (**>12.07 Million** all-time total) at slot `467678064`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log))
@@ -37,12 +37,12 @@ At **Checkpoint #212**, the live on-chain tightened sniper ([`task-10925`](file:
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Currently tracking candidate pools `7yjAjr69UdRn6bDiknumcJqYhkGdi19EbURtiwGopump` (1.01 SOL dev buy), `87XpFYs9yHJhY78LtviEYjf3tsuu2T6JVGgE6b5apump` (0.26 SOL dev buy), and `AArD6vTeoawrinpKSPqkiPn78k2m3imy2ufwza5xpump`.
+- **Active Breakout Watchlist**: Currently tracking candidate pools `4XB7HPAn7S8t69723N3i7PVoUfyYyte1rvqhxapppump` (2.06 SOL dev buy), `EGzsPb4PnmcGiFynmgCxbUmEzmLbEvt4WPvezH1ypump` (0.26 SOL dev buy), and `3ThMjCmYn571sAFzxcGvmnN5G6AhNPYXHahdhPZdyzks` (0.52 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 10 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 66.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>12.06 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **8,200+** creator dumps neutralized in real time before capital could be trapped (444 in current session).
+- **All-Time Mempool Ingestion**: **>12.07 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **8,206+** creator dumps neutralized in real time before capital could be trapped (450 in current session).
