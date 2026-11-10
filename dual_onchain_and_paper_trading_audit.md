@@ -2,18 +2,18 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#222 — Profitable Trade #5 Verified & Balance Increased!)
+### 1. Executive Status & Live Balance Checkpoint (#223 — >1.08M Session Milestone / 0.03300 SOL Confirmed)
 
-At **Checkpoint #222**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) executed **Trade #5** on token [`789Ax1Ugr7URbsmT7qcW7dkU259qEkfSL2Vmr44Lpump`](https://solscan.io/token/789Ax1Ugr7URbsmT7qcW7dkU259qEkfSL2Vmr44Lpump), hitting **Take Profit 1 at 1.32x (+32%)**, closing all token accounts, and **increasing the wallet balance from `0.031069238 SOL` to `0.033005398 SOL` (+0.001936160 SOL net real profit)**!
+At **Checkpoint #223**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has crossed **1,084,100+ transactions** in this revived session (**>12.57 Million** all-time total) at slot `467704819`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log))
 - **Live Wallet Address**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
-- **Live Liquid Solana Balance**: **`0.033005398 SOL`** (Verified on Solana Mainnet; **+0.001936160 SOL / +6.23% net gain**)
+- **Live Liquid Solana Balance**: **`0.033005398 SOL`** (Verified on Solana Mainnet; **+0.001936160 SOL / +6.23% net gain preserved**)
 - **Active Open Positions**: **`0 / 2`** (0 tokens held; zero capital at risk; ATA rent fully refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
-- **Transactions Ingested**: **728,900+** in revived session (**>12.22 Million** all-time total)
-- **Creator Rugs Neutralized**: Over **8,271+** creator dumps neutralized in real time before capital could be trapped.
+- **Transactions Ingested**: **1,084,100+** in revived session (**>12.57 Million** all-time total)
+- **Creator Rugs Neutralized**: Over **8,640+** creator dumps neutralized in real time before capital could be trapped (884 in this revived session).
 
 ---
 
@@ -30,8 +30,22 @@ At **Checkpoint #222**, the live on-chain tightened sniper ([`task-10925`](file:
 
 ---
 
-### 3. Historical Record & Execution Safeguards
+### 3. Tightened Anti-Sniper-Dump Surveillance
+
+| Setting | Value | Strategic Function |
+| :--- | :--- | :--- |
+| **Bonding Curve Target** | **30.0% – 50.0%** (`25.5 – 42.5 SOL`) | Enters only after initial sniper pump-and-dump cycle has played out |
+| **Unique Buyer Filter** | **$\ge 15$ Unique Buyers** | Rejects insider clusters and multi-wallet dev sweeps |
+| **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
+| **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
+
+- **Active Breakout Watchlist**: Currently tracking candidate pools `ESt4N8jYPnzdkx9AooKzLqeEBB4Jfzfq79HGwaVxpump` (10.98 SOL dev buy), `XZZe4sQDwNWJZ7V11qhJmJoPyBaHnxV3MmgnJinpump` (1.13 SOL dev buy), and `9YwTb4W6N9TcRDvJL4tufyTpqr6NDMBrP6Z6n86WFSuU` (3.11 SOL dev buy).
+- **Capital Safety**: 0 open positions, 100% liquid cash preserved.
+
+---
+
+### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 11 snipes.
 - **Capital Defense & Profit**: Net wallet balance grown to **`0.033005398 SOL`**, overcoming transaction fees and Jito tips with real net profit!
-- **All-Time Mempool Ingestion**: **>12.22 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **8,271+** creator dumps neutralized in real time before capital could be trapped (515 in current session).
+- **All-Time Mempool Ingestion**: **>12.57 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **8,640+** creator dumps neutralized in real time before capital could be trapped (884 in current session).
