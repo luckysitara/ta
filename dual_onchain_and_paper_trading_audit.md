@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#194)
+### 1. Executive Status & Live Balance Checkpoint (#195)
 
-At **Checkpoint #194**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has ingested over **222,700+ transactions** in this revived session (>11.73 Million all-time total) at slot `467661611`.
+At **Checkpoint #195**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has ingested over **235,000+ transactions** in this revived session (>11.75 Million all-time total) at slot `467662367`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log))
@@ -37,12 +37,12 @@ At **Checkpoint #194**, the live on-chain tightened sniper ([`task-10925`](file:
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Currently tracking candidate pools `BmRQr3uZkPUG8DiftZXMoGsxK2eqk21Pr4aPRPaRpump` (0.07 SOL dev buy) and `FF8ACoR7hSLTNpUhkJLfPffcaF5nuSStNqZFACUZpump` (0.07 SOL dev buy).
+- **Active Breakout Watchlist**: Currently tracking candidate pools `6rp16v3pLCjiYiYfkFfrBwc3hm6347dtLQXP1Mwnpump` (3.11 SOL dev buy) and `Gi2za7bENRkFxmAAK89x73WR7uE6DHouQw7hRJURpump` (2.88 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
 
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 10 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops, 66.5% wallet capital preserved).
-- **All-Time Mempool Ingestion**: **>11.73 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **7,861+** creator dumps neutralized in real time before capital could be trapped.
+- **All-Time Mempool Ingestion**: **>11.75 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **7,863+** creator dumps neutralized in real time before capital could be trapped.
