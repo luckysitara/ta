@@ -930,3 +930,22 @@ flowchart TD
     - Pool `9ipUVSti...` (**1.49 SOL dev buy**) -> withheld until 0% creator balance confirmed.
     - Pool `92CHyqTx...` (**1.21 SOL dev buy**) -> withheld until 0% creator balance confirmed.
 - **Watchlist Growth**: 740+ pools monitored across sweet spots. Complete capital preservation maintained.
+
+---
+
+### 48. Checkpoint #295 — 190-Minute Dual-Engine Stream Report (2.266M+ Transactions Milestone)
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running stably for **190+ minutes continuous (3 hr 10 min)**.
+- **Transactions Ingested**: **2,266,300+** transactions in current session (**>15.35 Million** all-time total) at slot `467799396`.
+- **Live Solana Balance**: **`0.020610716 SOL`** (100% pure liquid SOL; 0 open positions; 0 balance degradation).
+- **Option 2 Rug Prevention Evidence (1,064+ Total Dev Rug Dumps Defended)**:
+  - Intercepted over **1,064 separate creator dumping attacks** in real-time.
+  - Recent creator dump samples caught & blacklisted:
+    1. Pool `3YrjWws4...` (Creator `5zwN9NQe...` dumped) -> `Blacklisted`.
+    2. Pool `94Jw7hvo...` (Creator `dtrzJPj7...` dumped) -> `Blacklisted`.
+    3. Pool `FEwcHHCt...` (Creator `2DM9mLVG...` dumped) -> `Blacklisted`.
+  - Filtered entry watchlist:
+    - Pool `2asTUiPx...` (**0.11 SOL dev buy**) -> monitored, withheld from entry.
+    - Pool `DX55HQX3...` (**0.11 SOL dev buy**) -> monitored, withheld from entry.
+    - Pool `5feaYi4j...` (**0.01 SOL dev buy**) -> monitored, withheld from entry.
+- **Watchlist Growth**: 750+ pools monitored across sweet spots. Complete capital preservation maintained.
