@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#237 — >1.32M Session Milestone / 0.03121 SOL Confirmed)
+### 1. Executive Status & Live Balance Checkpoint (#238 — >1.34M Session Milestone / 0.03121 SOL Confirmed)
 
-At **Checkpoint #237**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has crossed **1,326,300+ transactions** in this revived session (**>12.83 Million** all-time total) at slot `467716385`.
+At **Checkpoint #238**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has crossed **1,343,000+ transactions** in this revived session (**>12.85 Million** all-time total) at slot `467717715`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log))
@@ -12,8 +12,8 @@ At **Checkpoint #237**, the live on-chain tightened sniper ([`task-10925`](file:
 - **Live Liquid Solana Balance**: **`0.031211010 SOL`** (Verified on Solana Mainnet; remains **net positive vs 0.031069238 SOL starting baseline**)
 - **Active Open Positions**: **`0 / 2`** (0 tokens held; zero capital at risk; all ATAs closed and rent refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
-- **Transactions Ingested**: **1,326,300+** in revived session (**>12.83 Million** all-time total)
-- **Creator Rugs Neutralized**: Over **8,828+** creator dumps neutralized in real time before capital could be trapped (1,072 in this revived session).
+- **Transactions Ingested**: **1,343,000+** in revived session (**>12.85 Million** all-time total)
+- **Creator Rugs Neutralized**: Over **8,854+** creator dumps neutralized in real time before capital could be trapped (1,098 in this revived session).
 
 ---
 
@@ -49,7 +49,7 @@ At **Checkpoint #237**, the live on-chain tightened sniper ([`task-10925`](file:
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Currently tracking candidate pools `6h13d2fpmfdM5XX6zPksyg8hrWgUGYmZii1LmP1qpump` (0.11 SOL dev buy) and `pb7KYgY29x99cL6gXwRKwpump` (0.13 SOL dev buy).
+- **Active Breakout Watchlist**: Currently tracking candidate pools `BeydW8uMD59zz9YDi5dRBUgo8LdQwhkVHKHezgGFpump` (0.32 SOL dev buy), `GaeCGQzEcwJpFw8XXHHVX2BaAxgEv3prYRz5aZ8Ktcft` (0.29 SOL dev buy), and `6tvkq6AZNjjPKr5NmUB7cm8hYd7oGNxiN9atGYNzpump` (0.11 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
@@ -57,5 +57,5 @@ At **Checkpoint #237**, the live on-chain tightened sniper ([`task-10925`](file:
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 13 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops).
 - **Capital Preservation**: Wallet balance stands at **`0.031211010 SOL`**, maintaining positive gain vs `0.031069238 SOL` initial balance.
-- **All-Time Mempool Ingestion**: **>12.83 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **8,828+** creator dumps neutralized in real time before capital could be trapped (1,072 in current session).
+- **All-Time Mempool Ingestion**: **>12.85 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **8,854+** creator dumps neutralized in real time before capital could be trapped (1,098 in current session).
