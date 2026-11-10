@@ -125,3 +125,24 @@ flowchart TD
     7. Pool `5A6gkDD` (Creator `CsjgVKq` dumped) -> `Blacklisted`.
   - All 13 dev dumps that occurred across the entire session were completely neutralized by the Option 2 filter before any capital was committed.
 - **Raydium Graduation Pipeline (Option 3)**: Standby active for Raydium CPMM migration transactions with 100% locked LP.
+
+---
+
+### 7. Checkpoint #254 — 8-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running.
+- **Transactions Ingested**: **140,800+** transactions (**>13.22 Million** all-time total) at slot `467750983`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% pure liquid SOL; 0 open positions; 0 losses).
+- **Self-Healing Stream**:
+  - Connection experienced an upstream broken pipe (`h2 protocol error`).
+  - Auto-reconnect loop engaged instantly and re-established full gRPC mempool subscription in **under 3.5 seconds** without dropping engine state.
+- **Option 2 Rug Prevention Evidence (6 More Dumps Defended / 19 Total)**:
+  - In the latest 2-minute cycle, **6 additional dev dumps** were detected and avoided:
+    1. Pool `7BdrnoG` (Creator `4HXb7iv` dumped) -> `Blacklisted`.
+    2. Pool `DGG63CP` (Creator `7K8L6eg` dumped) -> `Blacklisted`.
+    3. Pool `GtxE3xg` (Creator `CVeA9Yk` dumped) -> `Blacklisted`.
+    4. Pool `4qHVwzV` (Creator `H4mBozm` dumped) -> `Blacklisted`.
+    5. Pool `emef43C` (Creator `5yzhXg4` dumped) -> `Blacklisted`.
+    6. Pool `579Gd11` (Creator `38kxcdM` dumped) -> `Blacklisted`.
+  - **19 total dev dumps** across the session have been blocked before entry.
+- **Dual Engine Readiness**: Ready for zero-dev fair launches and Raydium CPMM locked-LP graduations.
