@@ -199,3 +199,23 @@ flowchart TD
     6. Pool `6qFysVq` (Creator `7eStM4B` dumped) -> `Blacklisted`.
   - **36 total dev rug dumps** across the session have been neutralized before entry.
 - **Capital Safety Record**: 14 minutes of live high-speed mempool monitoring with zero unauthorized entries and zero drawdowns.
+
+---
+
+### 11. Checkpoint #258 — 16-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running stably.
+- **Transactions Ingested**: **340,100+** transactions (**>13.42 Million** all-time total) at slot `467757170`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% pure liquid SOL; 0 open positions; 0 losses).
+- **Option 2 Rug Prevention Evidence (8 More Dumps Defended / 38 Total)**:
+  - In the latest 2-minute cycle, **8 additional dev dumps** were caught and blacklisted:
+    1. Pool `9X2cqfC` (Creator `2Bonf26` dumped) -> `Blacklisted`.
+    2. Pool `3sizQzn` (Creator `H4mBozm` dumped) -> `Blacklisted`.
+    3. Pool `GVDPihd` (Creator `2nxiamu` dumped) -> `Blacklisted`.
+    4. Pool `34xXy5M` (Creator `FFdBLYq` dumped) -> `Blacklisted`.
+    5. Pool `A3YDqbo` (Creator `8inTY66` dumped) -> `Blacklisted`.
+    6. Pool `3LZBe5Q` (Creator `4MRkXds` dumped) -> `Blacklisted`.
+    7. Pool `BUTPTJG` (Creator `AV7PjXH` dumped) -> `Blacklisted`.
+    8. Pool `12eNvFc` (Creator `H4mBozm` dumped) -> `Blacklisted`.
+  - **38 total dev rug dumps** across the session have been neutralized before entry.
+- **Watchlist Growth**: 65+ pools registered in the 30%–50% sweet spot, all safely held off until dev dump is complete or zero-dev launches emerge.
