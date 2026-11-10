@@ -146,3 +146,19 @@ flowchart TD
     6. Pool `579Gd11` (Creator `38kxcdM` dumped) -> `Blacklisted`.
   - **19 total dev dumps** across the session have been blocked before entry.
 - **Dual Engine Readiness**: Ready for zero-dev fair launches and Raydium CPMM locked-LP graduations.
+
+---
+
+### 8. Checkpoint #255 — 10-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running stably.
+- **Transactions Ingested**: **157,000+** transactions (**>13.24 Million** all-time total) at slot `467753053`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% pure liquid SOL; 0 open positions; 0 losses).
+- **Option 2 Rug Prevention Evidence (4 More Dumps Defended / 23 Total)**:
+  - In the latest 2-minute cycle, **4 additional dev dumps** were caught and blacklisted:
+    1. Pool `2VbkYFn` (Creator `H4mBozm` dumped) -> `Blacklisted`.
+    2. Pool `FmLqwZM` (Creator `bwamJzz` dumped) -> `Blacklisted`.
+    3. Pool `GAX45tg` (Creator `8s927nF` dumped) -> `Blacklisted`.
+    4. Pool `8imG7kT` (Creator `A3wnkkV` dumped) -> `Blacklisted`.
+  - **23 total dev rug dumps** across the session have been neutralized before entry.
+- **Watchlist Health**: 35+ pools registered in the 30%–50% sweet spot, all safely held off until dev dump is complete or zero-dev launches emerge.
