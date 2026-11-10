@@ -75,3 +75,16 @@ flowchart TD
      - `test_raydium_graduation_detection`: verified Raydium pool detection and entry execution.
    - Built optimized binary: `cargo build --release`.
    - Live Wallet Balance: **`0.023037869 SOL`** (pure liquid SOL; 0 open positions).
+
+---
+
+### 4. Checkpoint #251 — 2-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running.
+- **Transactions Ingested**: **10,800+** in 2.5 minutes (**>13.09 Million** all-time total) at slot `467746615`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% liquid; 0 open positions).
+- **Option 2 Enforcement in Action**:
+  - Live Parser caught dev dump in real-time: `🚨 [DEV DUMP DETECTED] Creator 2uxGG... dumped tokens for pool 2FpYF... Blacklisting pool.`
+  - 8 new bonding curve pools entered watchlist (`Ae6NLiY`, `4PPH8vY`, `9hDhqpV`, `7C5Tf8D`, `Awd4fY4`, `4fSV34M`, `9xQSRG1`).
+  - All 8 pools held by creators are blocked from entry under Option 2 anti-rug rule until dev 100% dumps or fair launches emerge.
+- **Option 3 Dual Protocol**: Actively monitoring Raydium AMM v4 and CPMM migration events.
