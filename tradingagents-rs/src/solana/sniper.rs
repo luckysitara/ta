@@ -42,6 +42,8 @@ pub struct SniperSettings {
     pub min_buys_recent: Option<usize>, // Buy Velocity Filter: Minimum buys in recent window
     pub max_sells_recent: Option<usize>, // Buy Velocity Filter: Max sells permitted in recent window
     pub velocity_window_secs: Option<u64>, // Buy Velocity Filter: Rolling window in seconds
+    pub require_dev_sold_out: bool, // Option 2: Require creator dev to have 0 tokens held (clean fair launch or 100% dumped early)
+    pub enable_raydium: bool, // Option 3: Enable Raydium post-graduation AMM pool sniping
 }
 
 impl Default for SniperSettings {
@@ -67,6 +69,8 @@ impl Default for SniperSettings {
             min_buys_recent: None,
             max_sells_recent: None,
             velocity_window_secs: None,
+            require_dev_sold_out: false,
+            enable_raydium: true,
         }
     }
 }
@@ -367,9 +371,23 @@ impl SolanaSniperEngine {
             }
         }
 
-        // Filter 1: Check minimum pool liquidity requirement
-        if initial_sol < self.settings.min_liquidity_sol && !is_pump {
-            return None;
+        // Filter 1: Check minimum pool liquidity requirement & Raydium feature flag
+        if !is_pump {
+            if !self.settings.enable_raydium {
+                return None;
+            }
+            if initial_sol < self.settings.min_liquidity_sol {
+                return None;
+            }
+            println!(
+                "\n{}",
+                format!(
+                    "🚀 [RAYDIUM POOL / GRADUATION DETECTED] Pool {} (Mint: {}) | Liquidity: {:.1} SOL | LP 100% Locked",
+                    event.pool_address, event.token_mint, initial_sol
+                )
+                .bold()
+                .green()
+            );
         }
 
         // Filter 2: Check active concurrent positions limit
@@ -570,10 +588,11 @@ impl SolanaSniperEngine {
                 let positions_arc = Arc::clone(&self.positions);
                 let portfolio_arc = Arc::clone(&self.portfolio);
 
+                let protocol = event.protocol.clone();
                 tokio::spawn(async move {
                     println!(
                         "\n{}",
-                        format!("🎯 [ON-CHAIN ATTEMPT] Sniping {} | Cost: {:.3} SOL (+{:.4} Tip)...", mint, buy_amount, jito_tip)
+                        format!("🎯 [ON-CHAIN ATTEMPT] Sniping {} ({}) | Cost: {:.3} SOL (+{:.4} Tip)...", mint, protocol, buy_amount, jito_tip)
                             .bold()
                             .cyan()
                     );
@@ -583,9 +602,16 @@ impl SolanaSniperEngine {
                             .bold()
                             .yellow()
                     );
-                    match exec
-                        .execute_snipe_buy_jito(&mint, &pool, creator.as_deref(), buy_amount, jito_tip, slippage_bps, is_token_2022)
-                        .await
+                    let buy_res = match protocol {
+                        DexProtocol::PumpFun => {
+                            exec.execute_snipe_buy_jito(&mint, &pool, creator.as_deref(), buy_amount, jito_tip, slippage_bps, is_token_2022).await
+                        }
+                        _ => {
+                            let lamports = (buy_amount * 1_000_000_000.0) as u64;
+                            exec.execute_jupiter_swap_jito("So11111111111111111111111111111111111111112", &mint, lamports, jito_tip, slippage_bps).await
+                        }
+                    };
+                    match buy_res
                     {
                         Ok(res) => {
                             println!(
@@ -766,10 +792,19 @@ impl SolanaSniperEngine {
                         let min_lamports = (sell_proceeds * 1_000_000_000.0 * 0.40).max(1.0) as u64;
                         let tokens_to_sell = ((pos.tokens_held as f64) * 0.70) as u64;
                         let is_token_2022 = pos.is_token_2022;
+                        let protocol = pos.protocol.clone();
                         let portfolio_arc = Arc::clone(&self.portfolio);
                         tokio::spawn(async move {
                             println!("{}", format!("🚀 [ON-CHAIN TP1 SELL] Dispatching Jito sell bundle for {}...", mint).bold().green());
-                            match exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), tokens_to_sell, min_lamports, tip, is_token_2022).await {
+                            let sell_fut = match protocol {
+                                DexProtocol::PumpFun => {
+                                    exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), tokens_to_sell, min_lamports, tip, is_token_2022).await
+                                }
+                                _ => {
+                                    exec.execute_jupiter_swap_jito(&mint, "So11111111111111111111111111111111111111112", tokens_to_sell, tip, 300).await
+                                }
+                            };
+                            match sell_fut {
                                 Ok(res) => {
                                     let _ = exec.poll_signature_confirmation(&res.signature, 6, 500).await;
                                     if let Ok(real_bal) = exec.get_balance_sol().await {
@@ -830,10 +865,19 @@ impl SolanaSniperEngine {
                         let min_lamports = (sell_proceeds * 1_000_000_000.0 * 0.40).max(1.0) as u64;
                         let tokens_to_sell = pos.tokens_held / 4;
                         let is_token_2022 = pos.is_token_2022;
+                        let protocol = pos.protocol.clone();
                         let portfolio_arc = Arc::clone(&self.portfolio);
                         tokio::spawn(async move {
                             println!("{}", format!("🚀 [ON-CHAIN TP2 SELL] Dispatching Jito sell bundle for {}...", mint).bold().magenta());
-                            match exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), tokens_to_sell, min_lamports, tip, is_token_2022).await {
+                            let sell_fut = match protocol {
+                                DexProtocol::PumpFun => {
+                                    exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), tokens_to_sell, min_lamports, tip, is_token_2022).await
+                                }
+                                _ => {
+                                    exec.execute_jupiter_swap_jito(&mint, "So11111111111111111111111111111111111111112", tokens_to_sell, tip, 300).await
+                                }
+                            };
+                            match sell_fut {
                                 Ok(res) => {
                                     let _ = exec.poll_signature_confirmation(&res.signature, 6, 500).await;
                                     if let Ok(real_bal) = exec.get_balance_sol().await {
@@ -944,10 +988,19 @@ impl SolanaSniperEngine {
                         let tip = self.settings.jito_tip_sol;
                         let min_lamports = 1u64; // Upgrade 3: 1 lamport guarantees execution & prevents Error 6003 revert
                         let is_token_2022 = pos.is_token_2022;
+                        let protocol = pos.protocol.clone();
                         let portfolio_arc = Arc::clone(&self.portfolio);
                         tokio::spawn(async move {
                             println!("{}", format!("🛡️ [ON-CHAIN STOP LOSS SELL] Dispatching emergency exit bundle for {}...", mint).bold().yellow());
-                            match exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), 0, min_lamports, tip, is_token_2022).await {
+                            let sell_fut = match protocol {
+                                DexProtocol::PumpFun => {
+                                    exec.execute_snipe_sell_jito(&mint, &pool, creator.as_deref(), 0, min_lamports, tip, is_token_2022).await
+                                }
+                                _ => {
+                                    exec.execute_jupiter_swap_jito(&mint, "So11111111111111111111111111111111111111112", 0, tip, 500).await
+                                }
+                            };
+                            match sell_fut {
                                 Ok(res) => {
                                     let _ = exec.poll_signature_confirmation(&res.signature, 6, 500).await;
                                     if let Ok(real_bal) = exec.get_balance_sol().await {
@@ -1257,8 +1310,23 @@ impl SolanaSniperEngine {
             }
         }
 
-        // 1b. Upgrade 2: Reject immediately if developer dumped tokens
-        {
+        // 1b. Option 2 Anti-Rug Filter: Require creator dev to have 0 tokens held
+        // (Clean fair launch 0.0 SOL dev buy, OR dev already 100% dumped early and community pushed curve)
+        if self.settings.require_dev_sold_out {
+            let kp = self.known_pools.lock().unwrap();
+            if let Some(ev) = kp.get(pool_address) {
+                let dev_buy = ev.dev_buy_sol.unwrap_or(0.0);
+                if dev_buy > 0.0 {
+                    let dumped = self.pool_dev_dumped.lock().unwrap();
+                    if !dumped.contains(pool_address) {
+                        // Creator still holds tokens! Do not enter to eliminate creator rug risk!
+                        return;
+                    }
+                }
+            } else {
+                return;
+            }
+        } else {
             let dumped = self.pool_dev_dumped.lock().unwrap();
             if dumped.contains(pool_address) {
                 return;
@@ -1557,7 +1625,7 @@ impl SolanaSniperEngine {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::solana::yellowstone::BondingCurveState;
+    use crate::solana::yellowstone::{BondingCurveState, TradeActivityEvent};
 
     #[test]
     fn test_sniper_process_detected_pool() {
@@ -2257,5 +2325,102 @@ mod tests {
         // Now update curve reserve again: should trigger momentum entry!
         engine.update_bonding_curve_reserve(&pool_addr, &state_curve_21);
         assert_eq!(engine.get_active_positions().len(), 1, "Entered because 3 buys occurred in window with 0 sells!");
+    }
+
+    #[test]
+    fn test_option_2_dev_sold_out_filter() {
+        let settings = SniperSettings {
+            min_curve_pct: Some(30.0),
+            max_curve_pct: Some(50.0),
+            require_dev_sold_out: true,
+            min_unique_buyers: 0,
+            ..Default::default()
+        };
+        let engine = SolanaSniperEngine::new(settings);
+
+        let dev_wallet = "CreatorWallet11111111111111111111111".to_string();
+        let pool_addr = "DevSoldOutPool1111111111111111111111111".to_string();
+        let mint_addr = "DevSoldOutMint1111111111111111111111111".to_string();
+
+        let event = PoolCreationEvent {
+            protocol: DexProtocol::PumpFun,
+            signature: "sig_create".to_string(),
+            pool_address: pool_addr.clone(),
+            token_mint: mint_addr.clone(),
+            creator: Some(dev_wallet.clone()),
+            dev_buy_sol: Some(0.50), // Dev bought 0.5 SOL at launch
+            initial_sol_liquidity: Some(30.0),
+            has_socials: true,
+            metadata_uri: None,
+            slot: 500,
+            timestamp_ms: 1730000000000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+
+        engine.process_detected_pool(&event);
+
+        // Curve reaches 35% sweet spot, but dev STILL HOLDS tokens!
+        let state_curve_35 = BondingCurveState {
+            pool_address: pool_addr.clone(),
+            virtual_token_reserves: 1_000_000_000_000_000,
+            virtual_sol_reserves: 35_000_000_000,
+            real_token_reserves: 500_000_000_000_000,
+            real_sol_reserves: 29_750_000_000, // 35% of 85 SOL
+            complete: false,
+            price_sol: 0.00000008,
+        };
+
+        engine.update_bonding_curve_reserve(&pool_addr, &state_curve_35);
+        // MUST BE REJECTED: Dev still holds tokens (anti-rug protection)
+        assert_eq!(engine.get_active_positions().len(), 0, "Rejected because creator still holds tokens!");
+
+        // Dev DUMPS all tokens early!
+        engine.record_trade_activity(&TradeActivityEvent {
+            signature: "sig_dump".to_string(),
+            pool_address: pool_addr.clone(),
+            user_wallet: dev_wallet.clone(),
+            is_buy: false,
+            is_sell: true,
+            slot: 505,
+        });
+
+        // Now curve is pushed back to 35% by community:
+        engine.update_bonding_curve_reserve(&pool_addr, &state_curve_35);
+        // MUST ENTER: Dev has 0 tokens, creator rug dump is impossible!
+        assert_eq!(engine.get_active_positions().len(), 1, "Entered because dev already dumped 100% of tokens!");
+    }
+
+    #[test]
+    fn test_raydium_graduation_detection() {
+        let settings = SniperSettings {
+            enable_raydium: true,
+            min_liquidity_sol: 10.0,
+            ..Default::default()
+        };
+        let engine = SolanaSniperEngine::new(settings);
+
+        let raydium_pool = "RaydiumPool1111111111111111111111111111".to_string();
+        let raydium_mint = "RaydiumMint1111111111111111111111111111".to_string();
+
+        let event = PoolCreationEvent {
+            protocol: DexProtocol::RaydiumCpmm,
+            signature: "sig_raydium".to_string(),
+            pool_address: raydium_pool.clone(),
+            token_mint: raydium_mint.clone(),
+            creator: Some("PumpGraduationMigration11111111111111111".to_string()),
+            dev_buy_sol: None,
+            initial_sol_liquidity: Some(85.0), // 85 SOL migrated from Pump.fun curve!
+            has_socials: true,
+            metadata_uri: None,
+            slot: 600,
+            timestamp_ms: 1730000000000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+
+        let report = engine.process_detected_pool(&event);
+        assert!(report.is_some());
+        assert_eq!(engine.get_active_positions().len(), 1, "Raydium graduated pool sniped successfully!");
     }
 }

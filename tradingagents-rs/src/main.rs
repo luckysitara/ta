@@ -163,6 +163,14 @@ struct Args {
     /// Strategy Mode: 1 (Standard), 2 (Option 1: Live Reserves), 3 (Option 2: Strict Anti-Rug), 4 (High-Conviction)
     #[arg(long)]
     mode: Option<String>,
+
+    /// Require dev holding to be 0% or dev already dumped all tokens before entry
+    #[arg(long)]
+    require_dev_sold_out: Option<bool>,
+
+    /// Enable Raydium pool / graduation sniping alongside Pump.fun
+    #[arg(long)]
+    enable_raydium: Option<bool>,
 }
 
 #[derive(clap::Subcommand, Debug)]
@@ -290,6 +298,14 @@ enum Commands {
         #[arg(long)]
         mode: Option<String>,
 
+        /// Require dev holding to be 0% or dev already dumped all tokens before entry
+        #[arg(long)]
+        require_dev_sold_out: Option<bool>,
+
+        /// Enable Raydium pool / graduation sniping alongside Pump.fun
+        #[arg(long)]
+        enable_raydium: Option<bool>,
+
         /// Simulate Yellowstone stream events for testing
         #[arg(long)]
         simulate: bool,
@@ -349,6 +365,8 @@ async fn main() -> anyhow::Result<()> {
         rpc_url,
         jito_url,
         mode,
+        require_dev_sold_out,
+        enable_raydium,
         simulate,
     }) = args.command
     {
@@ -391,6 +409,8 @@ async fn main() -> anyhow::Result<()> {
             rpc_url,
             jito_url,
             mode,
+            require_dev_sold_out,
+            enable_raydium,
             simulate,
         )
         .await;
@@ -430,6 +450,8 @@ async fn main() -> anyhow::Result<()> {
             args.rpc_url,
             args.jito_url,
             args.mode,
+            args.require_dev_sold_out,
+            args.enable_raydium,
             false,
         )
         .await;
@@ -654,6 +676,8 @@ async fn run_sniper(
     rpc_url: Option<String>,
     jito_url: Option<String>,
     mode: Option<String>,
+    require_dev_sold_out: Option<bool>,
+    enable_raydium: Option<bool>,
     simulate: bool,
 ) -> anyhow::Result<()> {
     let is_paper = !onchain && paper;
@@ -801,6 +825,8 @@ async fn run_sniper(
     if let Some(min_buys) = eff_min_buys_recent {
         println!("  [OPT 1] Buy Velocity:    Requires ≥ {} buys & ≤ {} sells in last {}s (Anti-Stall Filter)", min_buys.to_string().bold().green(), eff_max_sells_recent.unwrap_or(0).to_string().bold().green(), eff_velocity_window_secs.unwrap_or(15).to_string().bold().green());
     }
+    println!("  [OPT 2] Dev Sold Out:    {}", if require_dev_sold_out.unwrap_or(true) { "ENABLED (0% Dev Holding or Dev Already Dumped)".bold().green() } else { "DISABLED".yellow() });
+    println!("  [OPT 3] Dual Protocol:   {}", if enable_raydium.unwrap_or(true) { "ENABLED (Pump.fun Curves + Raydium Graduations via Jupiter/Jito)".bold().green() } else { "Pump.fun Only".yellow() });
     if let Some(dur) = duration_secs {
         println!("  Session Timer:       {} seconds ({} min auto-stop & audit)", dur, dur / 60);
     }
@@ -935,6 +961,8 @@ async fn run_sniper(
         min_buys_recent: eff_min_buys_recent,
         max_sells_recent: eff_max_sells_recent,
         velocity_window_secs: eff_velocity_window_secs,
+        require_dev_sold_out: require_dev_sold_out.unwrap_or(true),
+        enable_raydium: enable_raydium.unwrap_or(true),
         ..Default::default()
     };
 

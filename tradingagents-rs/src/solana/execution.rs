@@ -962,6 +962,157 @@ impl OnChainExecutor {
             signature,
         })
     }
+
+    /// Execute a DEX swap via Jupiter API (supporting Raydium AMM v4, Raydium CPMM, Meteora) bundled with Jito MEV tip
+    pub async fn execute_jupiter_swap_jito(
+        &self,
+        input_mint_str: &str,
+        output_mint_str: &str,
+        amount_units: u64,
+        jito_tip_sol: f64,
+        slippage_bps: u16,
+    ) -> Result<BundleSubmissionResult> {
+        let tip_lamports = (jito_tip_sol * 1_000_000_000.0) as u64;
+
+        // Resolve 0 amount to full ATA balance
+        let real_amount = if amount_units == 0 {
+            let input_mint = Pubkey::from_str(input_mint_str)?;
+            let token_program = Pubkey::from_str(TOKEN_PROGRAM)?;
+            let ata_program = Pubkey::from_str(ASSOCIATED_TOKEN_PROGRAM)?;
+            let (user_ata, _) = Pubkey::find_program_address(
+                &[&self.pubkey().to_bytes(), &token_program.to_bytes(), &input_mint.to_bytes()],
+                &ata_program,
+            );
+            let bal = self.get_token_balance(&user_ata).await.unwrap_or(0);
+            if bal == 0 {
+                let token_2022_program = Pubkey::from_str("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")?;
+                let (user_ata_2022, _) = Pubkey::find_program_address(
+                    &[&self.pubkey().to_bytes(), &token_2022_program.to_bytes(), &input_mint.to_bytes()],
+                    &ata_program,
+                );
+                self.get_token_balance(&user_ata_2022).await.unwrap_or(0)
+            } else {
+                bal
+            }
+        } else {
+            amount_units
+        };
+
+        if real_amount == 0 {
+            return Err(anyhow!("No tokens available to swap for {}", input_mint_str));
+        }
+
+        // 1. Fetch swap quote from Jupiter API
+        let quote_url = format!(
+            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}",
+            input_mint_str, output_mint_str, real_amount, slippage_bps
+        );
+        let quote_resp = self.client.get(&quote_url).send().await?;
+        if !quote_resp.status().is_success() {
+            return Err(anyhow!("Jupiter quote failed: HTTP {}", quote_resp.status()));
+        }
+        let quote_json: serde_json::Value = quote_resp.json().await?;
+
+        // 2. Fetch swap instructions from Jupiter API
+        let swap_url = "https://api.jup.ag/swap/v1/swap-instructions";
+        let body = serde_json::json!({
+            "userPublicKey": self.pubkey().to_string(),
+            "quoteResponse": quote_json
+        });
+        let swap_resp = self.client.post(swap_url).json(&body).send().await?;
+        if !swap_resp.status().is_success() {
+            return Err(anyhow!("Jupiter swap instructions failed: HTTP {}", swap_resp.status()));
+        }
+        let swap_data: serde_json::Value = swap_resp.json().await?;
+
+        // 3. Helper to parse Jupiter instruction JSON into solana_sdk::instruction::Instruction
+        use base64::Engine;
+        let parse_ix = |val: &serde_json::Value| -> Result<Instruction> {
+            let prog_str = val["programId"].as_str().ok_or_else(|| anyhow!("Missing programId"))?;
+            let program_id = Pubkey::from_str(prog_str)?;
+            let mut accounts = Vec::new();
+            if let Some(accs) = val["accounts"].as_array() {
+                for a in accs {
+                    let pk_str = a["pubkey"].as_str().ok_or_else(|| anyhow!("Missing pubkey"))?;
+                    let pk = Pubkey::from_str(pk_str)?;
+                    let is_signer = a["isSigner"].as_bool().unwrap_or(false);
+                    let is_writable = a["isWritable"].as_bool().unwrap_or(false);
+                    if is_writable {
+                        accounts.push(AccountMeta::new(pk, is_signer));
+                    } else {
+                        accounts.push(AccountMeta::new_readonly(pk, is_signer));
+                    }
+                }
+            }
+            let data_b64 = val["data"].as_str().unwrap_or("");
+            let data = base64::engine::general_purpose::STANDARD.decode(data_b64)?;
+            Ok(Instruction { program_id, accounts, data })
+        };
+
+        let mut instructions = Vec::new();
+
+        // Compute budget: 400k CU limit + priority fee
+        let compute_limit_ix = ComputeBudgetInstruction::set_compute_unit_limit(400_000);
+        let compute_price_ix = ComputeBudgetInstruction::set_compute_unit_price(25_000);
+        instructions.push(compute_limit_ix);
+        instructions.push(compute_price_ix);
+
+        // Setup instructions (e.g. create ATA)
+        if let Some(setup_ixs) = swap_data["setupInstructions"].as_array() {
+            for six in setup_ixs {
+                instructions.push(parse_ix(six)?);
+            }
+        }
+
+        // Swap instruction
+        if let Some(six) = swap_data.get("swapInstruction") {
+            if !six.is_null() {
+                instructions.push(parse_ix(six)?);
+            }
+        }
+
+        // Cleanup instruction (if any)
+        if let Some(cix) = swap_data.get("cleanupInstruction") {
+            if !cix.is_null() {
+                instructions.push(parse_ix(cix)?);
+            }
+        }
+
+        // Jito Tip instruction
+        let (tip_ix, tip_acc_str) = self.build_jito_tip_ix(tip_lamports)?;
+        instructions.push(tip_ix);
+
+        let blockhash = self.get_latest_blockhash().await?;
+        let tx = Transaction::new_signed_with_payer(
+            &instructions,
+            Some(&self.pubkey()),
+            &[&self.keypair],
+            blockhash,
+        );
+
+        let signature = tx.signatures[0].to_string();
+
+        // Dual-path execution
+        let jito_fut = self.submit_jito_bundle(vec![tx.clone()]);
+        let rpc_fut = self.send_transaction_rpc(&tx);
+
+        let (bundle_res, rpc_res) = tokio::join!(jito_fut, rpc_fut);
+
+        let bundle_id = match (bundle_res, rpc_res) {
+            (Ok(bid), Ok(rpc_sig)) => format!("Jito: {} | TPU: {}", &bid[..16.min(bid.len())], &rpc_sig[..16.min(rpc_sig.len())]),
+            (Ok(bid), Err(_)) => format!("Jito: {}", bid),
+            (Err(_), Ok(rpc_sig)) => format!("TPU: {}", rpc_sig),
+            (Err(e1), Err(e2)) => return Err(anyhow!("Jupiter swap submission failed: Jito ({}) | TPU ({})", e1, e2)),
+        };
+
+        Ok(BundleSubmissionResult {
+            bundle_id,
+            status: "SUBMITTED_TO_VALIDATORS".to_string(),
+            tip_account: tip_acc_str,
+            tip_lamports,
+            signature,
+        })
+    }
 }
 
 #[cfg(test)]
