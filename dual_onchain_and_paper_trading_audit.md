@@ -754,3 +754,23 @@ flowchart TD
     8. Pool `AX5aMbC...` (Creator `F4W7jK3...` dumped) -> `Blacklisted`.
   - **444+ total dev rug dumps** neutralized across the session before any capital could be trapped.
 - **Watchlist Growth**: 545+ pools monitored across sweet spots. Massive creator holdings automatically filtered out: `7Ptqust...` (**6.14 SOL dev buy**) and `8ksbNqn...` (**4.06 SOL dev buy**) held in waiting with zero buy triggers allowed. New additions: `rK4CFeS...` (Dev: 0.26 SOL), `7tT2zLa...` (Dev: 1.02 SOL).
+
+---
+
+### 40. Checkpoint #287 — 130-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running stably for **130+ minutes continuous (2 hr 10 min)**.
+- **Transactions Ingested**: **1,719,800+** transactions in current session (**>14.81 Million** all-time total) at slot `467782876`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% pure liquid SOL; 0 open positions; 0 balance degradation).
+- **Option 2 Rug Prevention Evidence (8 More Dumps Defended / 452+ Total)**:
+  - In the latest 2-minute cycle, **8 additional dev rug dumps** were intercepted and blacklisted:
+    1. Pool `FsgPpxr...` (Creator `gVDXhoG...` dumped) -> `Blacklisted`.
+    2. Pool `DoBQJMg...` (Creator `25jZ7Ew...` dumped) -> `Blacklisted`.
+    3. Pool `GgQNnCT...` (Creator `8Kg8ccD...` dumped) -> `Blacklisted`.
+    4. Pool `8gmSsDa...` (Creator `9KGv1vh...` dumped) -> `Blacklisted`.
+    5. Pool `7D2Hxds...` (Creator `FFdBLYq...` dumped) -> `Blacklisted`.
+    6. Pool `AkeFK5C...` (Creator `bwamJzz...` dumped) -> `Blacklisted`.
+    7. Pool `3hWgcQz...` (Creator `F34Pd6D...` dumped) -> `Blacklisted`.
+    8. Pool `BcAviyj...` (Creator `GpTXmkd...` dumped) -> `Blacklisted`.
+  - **452+ total dev rug dumps** neutralized across the session before any capital could be trapped.
+- **Watchlist Growth**: 560+ pools monitored across sweet spots. Filtered pools awaiting dev sold out: `8kk63Rt...` (Dev: 0.11 SOL), `HTKpwKK...` (Dev: 0.02 SOL). Capital 100% protected.
