@@ -106,3 +106,22 @@ flowchart TD
     6. Pool `EWtW11hz` (Creator `CwJ7F6DA` dumped all tokens) -> `Blacklisted`.
   - Prior to Option 2, any of these pools crossing 30% curve could have triggered a buy and caused a dev rug loss. With Option 2 active, **zero capital was risked**, completely insulating the wallet.
 - **Watchlist Activity**: 20+ pools registered in the 30%–50% sweet spot, all safely filtered until dev dump/exit is complete or 0% dev launches appear.
+
+---
+
+### 6. Checkpoint #253 — 6-Minute Dual-Engine Stream Report
+
+- **Task Status**: Active Daemon [`task-12321`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-12321.log) running continuously.
+- **Transactions Ingested**: **114,100+** transactions (**>13.19 Million** all-time total) at slot `467750369`.
+- **Live Solana Balance**: **`0.023037869 SOL`** (100% liquid; 0 open positions; 0 losses).
+- **Option 2 Rug Prevention Evidence (7 More Dumps Defended / 13 Total)**:
+  - In the latest 2-minute cycle, **7 additional dev dumps** were detected and blacklisted:
+    1. Pool `kYtJKWC` (Creator `FyfZXGT` dumped) -> `Blacklisted`.
+    2. Pool `GNRgdZQ` (Creator `99JWxnE` dumped) -> `Blacklisted`.
+    3. Pool `Bbrs44h` (Creator `CYP5MAh` dumped) -> `Blacklisted`.
+    4. Pool `9Bjs3HB` (Creator `4yGZkBn` dumped) -> `Blacklisted`.
+    5. Pool `G9NgmgE` (Creator `H4mBozm` dumped) -> `Blacklisted`.
+    6. Pool `GxQ417n` (Creator `CTNEt7w` dumped) -> `Blacklisted`.
+    7. Pool `5A6gkDD` (Creator `CsjgVKq` dumped) -> `Blacklisted`.
+  - All 13 dev dumps that occurred across the entire session were completely neutralized by the Option 2 filter before any capital was committed.
+- **Raydium Graduation Pipeline (Option 3)**: Standby active for Raydium CPMM migration transactions with 100% locked LP.
