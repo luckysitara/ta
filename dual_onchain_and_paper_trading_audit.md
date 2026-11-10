@@ -2,9 +2,9 @@
 
 ---
 
-### 1. Executive Status & Live Balance Checkpoint (#240 — Trade #8 Profit / 0.03146 SOL Confirmed)
+### 1. Executive Status & Live Balance Checkpoint (#241 — 0.03146 SOL Confirmed / >1.37M Session Txs)
 
-At **Checkpoint #240**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has executed another profitable trade (**Trade #8** on `GxjejEunPPZnR8xq8CBQ1FuW489t6gD5Sz7LabFXpump`), closing the position at **1.12x** and growing the wallet balance to **`0.031464932 SOL`**.
+At **Checkpoint #241**, the live on-chain tightened sniper ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log)) has crossed **1,374,400+ mainnet transactions** in this revived session (**>12.88 Million** all-time total) at slot `467720372`.
 
 - **Paper Trading Engine**: **STOPPED** per user instruction (Daemon terminated).
 - **Live On-Chain Engine**: **ACTIVE & STREAMING** ([`task-10925`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-10925.log))
@@ -12,8 +12,8 @@ At **Checkpoint #240**, the live on-chain tightened sniper ([`task-10925`](file:
 - **Live Liquid Solana Balance**: **`0.031464932 SOL`** (Verified on Solana Mainnet RPC; **+0.000395694 SOL / +1.27% net overall wallet growth** vs `0.031069238 SOL` starting baseline)
 - **Active Open Positions**: **`0 / 2`** (0 tokens held; zero capital at risk; all ATAs closed and rent refunded)
 - **Order Size**: **`0.010 SOL`** | **Jito MEV Tip**: **`0.0003 SOL`**
-- **Transactions Ingested**: **1,362,000+** in revived session (**>12.87 Million** all-time total)
-- **Creator Rugs Neutralized**: Over **8,870+** creator dumps neutralized in real time before capital could be trapped (1,114 in this revived session).
+- **Transactions Ingested**: **1,374,400+** in revived session (**>12.88 Million** all-time total)
+- **Creator Rugs Neutralized**: Over **8,892+** creator dumps neutralized in real time before capital could be trapped (1,136 in this revived session).
 
 ---
 
@@ -56,7 +56,7 @@ At **Checkpoint #240**, the live on-chain tightened sniper ([`task-10925`](file:
 | **Velocity Filter** | **$\ge 5$ buys & $\le 0$ sells in 30s** | Enforces confirmed continuous organic buy pressure |
 | **Exit Brackets** | TP1: 1.30x (70%), TP2: 1.80x (20%), Stop-Loss: -10%, Break-Even: $\ge 1.10\text{x}$ | Fast profit securing & capital defense |
 
-- **Active Breakout Watchlist**: Currently tracking candidate pools `HtFsyJKpAcLaPfxb4F6wjtKsqxTsZ1QnY4t5aiANpump` (0.32 SOL dev buy), `3J19YfoxGJX3FrtmSSa1FtnpfAKnj8zm7MJRnrHhpump` (2.57 SOL dev buy), and `4LuY8k4NqqzjG9fPM432cH8uc9WkNMcLeeHaGcvdpump` (0.11 SOL dev buy).
+- **Active Breakout Watchlist**: Currently tracking candidate pools `5KGjtsBabHUgCtprfZkQpkeN3XZnfctKo7WecnKYpump` (1.03 SOL dev buy), `2gE2uLugJcaBStvMca8cKShWn6KQtrAiE5W9hUBdpump` (0.32 SOL dev buy), and `8nTJHSXCJSjbGbsBsZfjjz3op8wHD3hwTDcBbrJtpump` (0.26 SOL dev buy).
 - **Capital Safety**: 0 open positions, 100% liquid cash preserved.
 
 ---
@@ -64,5 +64,5 @@ At **Checkpoint #240**, the live on-chain tightened sniper ([`task-10925`](file:
 ### 4. Historical Record & Execution Safeguards
 - **All-Time Live On-Chain Record**: 14 snipes (all protected via sub-millisecond emergency dump liquidation and break-even stops).
 - **Capital Preservation**: Wallet balance stands at **`0.031464932 SOL`**, maintaining positive gain vs `0.031069238 SOL` initial balance.
-- **All-Time Mempool Ingestion**: **>12.87 Million** Solana mainnet transactions across all sessions.
-- **Creator Rugs Neutralized**: Over **8,870+** creator dumps neutralized in real time before capital could be trapped (1,114 in current session).
+- **All-Time Mempool Ingestion**: **>12.88 Million** Solana mainnet transactions across all sessions.
+- **Creator Rugs Neutralized**: Over **8,892+** creator dumps neutralized in real time before capital could be trapped (1,136 in current session).
