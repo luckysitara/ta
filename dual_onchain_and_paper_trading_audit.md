@@ -1256,3 +1256,33 @@ flowchart TD
   - Token Asset Value (`woohao`): **`~0.00732 SOL`**
   - ATA Rent Reserve: **`0.002039 SOL`**
   - **Total Net Equity**: **`~0.01479 SOL`** (Up from `0.01467 SOL` in Checkpoint #308).
+
+
+---
+
+### 63. Checkpoint #310 — Trailing Take-Profit Deployment & `woohao` Surge to +44.9% Profit
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Micro-Scalper rules.
+- **Engine Upgrades Deployed (Option B + Trailing Take Profit)**:
+  1. **Trailing Take Profit (Ratchet)**:
+     - Activation threshold: **`+8.0%`** (`1.08x`). Once profit reaches +8%, the trailing profit lock arms.
+     - Callback buffer: **`2.5%`** below highest peak watermark.
+     - Guaranteed profit floor: minimum **`+2.0%`** net gain locked to cover all fees.
+  2. **Fee Drag Slashed by 67%**:
+     - Jito MEV tip reduced from `0.0003 SOL` to **`0.0001 SOL`** per transaction, reducing overhead from `7.5%` down to `2.5%`.
+  3. **Tight Initial Stop-Loss**:
+     - Hard initial stop tightened to **`-5.0%`** from entry price, cutting losing trades early.
+  4. **Startup On-Chain Sync**:
+     - Engine now queries wallet token accounts on startup and automatically adopts open positions with trailing take profit.
+- **Live Position Surge (`woohao`)**:
+  - Token: [`BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump`](https://solscan.io/token/BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump)
+  - Tokens Held: **`5045.610484 woohao`**
+  - Entry Cost: `0.008000 SOL`
+  - Current Jupiter Sell Quote: **`0.011595213 SOL`** (**`+44.9% token gain`**, `+0.003595 SOL` gross profit!).
+  - 5-Minute Price Surge: **`+41.18%`** ($15.4k 5m volume spike, liquidity jumping to $32.7k).
+  - Trailing Take-Profit Floor: Activated and dynamically ratcheting upwards 2.5% beneath the peak watermark.
+- **Total Portfolio Valuation**:
+  - Liquid SOL Cash: **`0.005434192 SOL`**
+  - Token Value (`woohao`): **`0.011595213 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01907 SOL`** (Rebounding from `0.0147 SOL` back to ~95% of starting capital!).

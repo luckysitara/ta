@@ -330,8 +330,8 @@ enum Commands {
         #[arg(long, default_value_t = 2)]
         max_positions: usize,
 
-        /// Jito MEV tip amount in SOL (default: 0.0003 SOL)
-        #[arg(long, default_value_t = 0.0003)]
+        /// Jito MEV tip amount in SOL (default: 0.0001 SOL)
+        #[arg(long, default_value_t = 0.0001)]
         jito_tip: f64,
 
         /// Minimum pool liquidity in USD (default: $25,000)
@@ -366,12 +366,24 @@ enum Commands {
         #[arg(long, default_value_t = 50.0)]
         max_price_change_1h: f64,
 
-        /// Trailing stop loss percentage from peak watermark (default: -15.0 for -15%)
-        #[arg(long, default_value_t = -15.0)]
+        /// Tight stop loss percentage from entry price (default: -5.0 for -5%)
+        #[arg(long, default_value_t = -5.0)]
+        stop_loss_pct: f64,
+
+        /// Trailing take profit activation percentage (default: 8.0 for +8%)
+        #[arg(long, default_value_t = 8.0)]
+        trailing_take_profit_activation_pct: f64,
+
+        /// Trailing take profit callback buffer from peak (default: 2.5 for 2.5%)
+        #[arg(long, default_value_t = 2.5)]
+        trailing_take_profit_callback_pct: f64,
+
+        /// Trailing stop loss percentage from peak watermark (default: -10.0 for -10%)
+        #[arg(long, default_value_t = -10.0)]
         trailing_stop_pct: f64,
 
-        /// Break-even floor trigger multiplier (default: 1.25 for +25%)
-        #[arg(long, default_value_t = 1.25)]
+        /// Break-even floor trigger multiplier (default: 1.08 for +8%)
+        #[arg(long, default_value_t = 1.08)]
         break_even_mult: f64,
 
         /// Polling interval in seconds (default: 10s)
@@ -511,6 +523,9 @@ async fn main() -> anyhow::Result<()> {
         min_price_change_5m,
         max_price_change_24h,
         max_price_change_1h,
+        stop_loss_pct,
+        trailing_take_profit_activation_pct,
+        trailing_take_profit_callback_pct,
         trailing_stop_pct,
         break_even_mult,
         poll_interval_secs,
@@ -533,6 +548,9 @@ async fn main() -> anyhow::Result<()> {
             min_price_change_5m,
             max_price_change_24h,
             max_price_change_1h,
+            stop_loss_pct,
+            trailing_take_profit_activation_pct,
+            trailing_take_profit_callback_pct,
             trailing_stop_pct,
             break_even_mult,
             poll_interval_secs,
@@ -1421,6 +1439,9 @@ async fn run_breakout_scanner(
     min_price_change_5m: f64,
     max_price_change_24h: f64,
     max_price_change_1h: f64,
+    stop_loss_pct: f64,
+    trailing_take_profit_activation_pct: f64,
+    trailing_take_profit_callback_pct: f64,
     trailing_stop_pct: f64,
     break_even_mult: f64,
     poll_interval_secs: u64,
@@ -1431,20 +1452,23 @@ async fn run_breakout_scanner(
 ) -> anyhow::Result<()> {
     println!("\n{}", "===============================================================".bold().cyan());
     println!("{}", "   🚀 SOLANA SECONDARY MARKET DEX BREAKOUT & MOMENTUM ENGINE   ".bold().green());
-    println!("{}", "      Uncapped Upside | Wide Trailing Stop | Catching 10x+      ".bold().yellow());
+    println!("{}", "      Uncapped Upside | Trailing Take-Profit | Fee-Optimized    ".bold().yellow());
     println!("{}", "===============================================================\n".bold().cyan());
 
     let is_paper = !onchain;
-    println!("  Execution Mode:      {}", if is_paper { "PAPER TRADING (Zero Financial Risk)".bold().green() } else { "LIVE ON-CHAIN (Real SOL Execution via Jupiter & Jito MEV)".bold().red() });
-    println!("  Budget / Allocation: Total: {:.4} SOL | Size: {:.4} SOL per trade", budget, buy_amount);
-    println!("  Max Open Positions:  {}", max_positions);
-    println!("  Liquidity Floor:     ≥ ${:.1}k USD (Meteora DLMM / Raydium / PumpSwap / Orca)", min_liquidity_usd / 1000.0);
-    println!("  Volume Surge Filter: ≥ ${:.1}k (24h) | ≥ ${:.1}k (5m)", min_volume_24h_usd / 1000.0, min_volume_5m_usd / 1000.0);
-    println!("  Buy Pressure Filter: ≥ {} buys in 5m | ≥ {:.0}% buy dominance", min_buys_5m, min_buy_ratio_5m * 100.0);
-    println!("  Momentum Trigger:    ≥ +{:.1}% in 5m candle", min_price_change_5m);
-    println!("  Anti-FOMO Ceiling:   Max 24h: +{:.0}% | Max 1h: +{:.0}% (Rejects late exhaustion)", max_price_change_24h, max_price_change_1h);
-    println!("  Trailing Stop Loss:  {:.1}% from peak watermark (Break-Even Floor: ≥{:.2}x)", trailing_stop_pct, break_even_mult);
-    println!("  Scanner Interval:    Every {} seconds\n", poll_interval_secs);
+    println!("  Execution Mode:       {}", if is_paper { "PAPER TRADING (Zero Financial Risk)".bold().green() } else { "LIVE ON-CHAIN (Real SOL Execution via Jupiter & Jito MEV)".bold().red() });
+    println!("  Budget / Allocation:  Total: {:.4} SOL | Size: {:.4} SOL per trade", budget, buy_amount);
+    println!("  Max Open Positions:   {}", max_positions);
+    println!("  Jito MEV Tip:         {:.4} SOL (Optimized for minimal fee drag)", jito_tip);
+    println!("  Liquidity Floor:      ≥ ${:.1}k USD (Meteora DLMM / Raydium / PumpSwap / Orca)", min_liquidity_usd / 1000.0);
+    println!("  Volume Surge Filter:  ≥ ${:.1}k (24h) | ≥ ${:.1}k (5m)", min_volume_24h_usd / 1000.0, min_volume_5m_usd / 1000.0);
+    println!("  Buy Pressure Filter:  ≥ {} buys in 5m | ≥ {:.0}% buy dominance", min_buys_5m, min_buy_ratio_5m * 100.0);
+    println!("  Momentum Trigger:     ≥ +{:.1}% in 5m candle", min_price_change_5m);
+    println!("  Anti-FOMO Ceiling:    Max 24h: +{:.0}% | Max 1h: +{:.0}% (Rejects late exhaustion)", max_price_change_24h, max_price_change_1h);
+    println!("  Trailing Take-Profit: Active at ≥+{:.1}% | Trails {:.1}% from peak | Min Floor: +2.0%", trailing_take_profit_activation_pct, trailing_take_profit_callback_pct);
+    println!("  Tight Stop Loss:      {:.1}% from entry (Tight Capital Protection)", stop_loss_pct);
+    println!("  Fallback Stop:        {:.1}% from peak watermark (Break-Even Floor: ≥{:.2}x)", trailing_stop_pct, break_even_mult);
+    println!("  Scanner Interval:     Every {} seconds\n", poll_interval_secs);
 
     let executor = if !is_paper {
         let key_path = keypair_path.unwrap_or_else(|| {
@@ -1477,6 +1501,9 @@ async fn run_breakout_scanner(
         max_price_change_24h: Some(max_price_change_24h),
         max_price_change_1h: Some(max_price_change_1h),
         min_price_change_24h: Some(0.0),
+        stop_loss_pct,
+        trailing_take_profit_activation_pct,
+        trailing_take_profit_callback_pct,
         trailing_stop_pct,
         break_even_mult,
         is_paper_trading: is_paper,
@@ -1485,6 +1512,11 @@ async fn run_breakout_scanner(
 
     let engine = Arc::new(solana::breakout::BreakoutEngine::new(settings, executor));
     let engine_clone = Arc::clone(&engine);
+
+    // Sync any open wallet positions on startup
+    if let Err(e) = engine_clone.sync_open_positions_from_wallet().await {
+        eprintln!("  ✖ Warning: Error syncing open wallet positions: {e}");
+    }
 
     let start_time = std::time::Instant::now();
     println!("  ⚡ Starting live DEX breakout scanner... (Press Ctrl+C to stop)\n");

@@ -26,6 +26,9 @@ pub struct BreakoutSettings {
     pub max_price_change_24h: Option<f64>,
     pub max_price_change_1h: Option<f64>,
     pub min_price_change_24h: Option<f64>,
+    pub stop_loss_pct: f64,
+    pub trailing_take_profit_activation_pct: f64,
+    pub trailing_take_profit_callback_pct: f64,
     pub trailing_stop_pct: f64,
     pub break_even_mult: f64,
     pub is_paper_trading: bool,
@@ -35,10 +38,10 @@ pub struct BreakoutSettings {
 impl Default for BreakoutSettings {
     fn default() -> Self {
         Self {
-            total_budget_sol: 0.02,
+            total_budget_sol: 0.018,
             buy_amount_sol: 0.008,
-            max_concurrent_positions: 2,
-            jito_tip_sol: 0.0003,
+            max_concurrent_positions: 1,
+            jito_tip_sol: 0.0001,
             min_liquidity_usd: 25_000.0,
             min_volume_24h_usd: 100_000.0,
             min_volume_5m_usd: 3_000.0,
@@ -48,8 +51,11 @@ impl Default for BreakoutSettings {
             max_price_change_24h: Some(250.0),
             max_price_change_1h: Some(50.0),
             min_price_change_24h: Some(0.0),
-            trailing_stop_pct: -15.0,
-            break_even_mult: 1.25,
+            stop_loss_pct: -5.0,
+            trailing_take_profit_activation_pct: 8.0,
+            trailing_take_profit_callback_pct: 2.5,
+            trailing_stop_pct: -10.0,
+            break_even_mult: 1.08,
             is_paper_trading: true,
             poll_interval_secs: 10,
         }
@@ -128,6 +134,63 @@ impl BreakoutEngine {
                 .build()
                 .unwrap_or_default(),
         }
+    }
+
+    /// Automatically discover and adopt existing open token positions on wallet startup
+    pub async fn sync_open_positions_from_wallet(&self) -> Result<usize> {
+        if self.settings.is_paper_trading {
+            return Ok(0);
+        }
+        let executor = match self.executor {
+            Some(ref e) => Arc::clone(e),
+            None => return Ok(0),
+        };
+
+        let tokens = executor.get_open_meme_tokens().await.unwrap_or_default();
+        if tokens.is_empty() {
+            return Ok(0);
+        }
+
+        let mints: Vec<String> = tokens.iter().map(|(m, _, _)| m.clone()).collect();
+        let candidates = self.fetch_batch_metrics(&mints).await;
+
+        let mut adopted_cnt = 0;
+        let mut positions = self.positions.lock().unwrap();
+
+        for (mint, units, ui_amt) in tokens {
+            if positions.contains_key(&mint) {
+                continue;
+            }
+            if let Some(cand) = candidates.iter().find(|c| c.token_address == mint) {
+                let stop_price = cand.price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
+                let pos = BreakoutPosition {
+                    token_address: mint.clone(),
+                    symbol: cand.symbol.clone(),
+                    pair_address: cand.pair_address.clone(),
+                    dex_id: cand.dex_id.clone(),
+                    entry_price_usd: cand.price_usd,
+                    entry_price_native: cand.price_native,
+                    entry_timestamp: Utc::now(),
+                    buy_amount_sol: self.settings.buy_amount_sol,
+                    tokens_held: units,
+                    peak_price_usd: cand.price_usd,
+                    current_price_usd: cand.price_usd,
+                    current_multiplier: 1.0,
+                    peak_multiplier: 1.0,
+                    stop_loss_price_usd: stop_price,
+                    is_closed: false,
+                    pnl_sol: 0.0,
+                };
+                positions.insert(mint.clone(), pos);
+                adopted_cnt += 1;
+                println!(
+                    "  ⚡ [STARTUP SYNC] Adopted on-chain token: {} ({:.2} units) | Current: ${:.6} | Trailing Take-Profit & Tight Stop Active",
+                    cand.symbol, ui_amt, cand.price_usd
+                );
+            }
+        }
+
+        Ok(adopted_cnt)
     }
 
     /// Evaluates if a token qualifies as an active DEX volume breakout
@@ -338,7 +401,7 @@ impl BreakoutEngine {
             entered.insert(c.token_address.clone());
         }
 
-        let stop_price = c.price_usd * (1.0 + self.settings.trailing_stop_pct / 100.0);
+        let stop_price = c.price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
         let tokens_est = if c.price_native > 0.0 {
             ((buy_amount / c.price_native) * 1_000_000.0) as u64
         } else {
@@ -499,28 +562,43 @@ impl BreakoutEngine {
                     if cand.price_usd > pos.peak_price_usd {
                         pos.peak_price_usd = cand.price_usd;
                         pos.peak_multiplier = pos.current_multiplier;
+                    }
 
-                        // Recalculate dynamic trailing stop
+                    // 1. Trailing Take-Profit (Ratchet):
+                    // Once peak price reaches the activation threshold (default +8%, 1.08x):
+                    let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
+                    if pos.peak_multiplier >= activation_mult {
+                        // Trail tight callback buffer (default 2.5%) below highest peak watermark
+                        let ttp_floor = pos.peak_price_usd * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
+                        // Guaranteed minimum profit floor (+2.0% above fees)
+                        let min_guaranteed_profit = pos.entry_price_usd * 1.02;
+                        let effective_floor = ttp_floor.max(min_guaranteed_profit);
+
+                        if effective_floor > pos.stop_loss_price_usd {
+                            pos.stop_loss_price_usd = effective_floor;
+                        }
+                    } else if pos.peak_multiplier >= self.settings.break_even_mult {
+                        // 2. Break-Even floor lock when multiplier reaches target (default 1.08x)
+                        let be_floor = pos.entry_price_usd * 1.02; // +2% profit locked
+                        if be_floor > pos.stop_loss_price_usd {
+                            pos.stop_loss_price_usd = be_floor;
+                        }
+                    } else {
+                        // 3. Fallback trailing stop from peak watermark
                         let new_trailing_stop = pos.peak_price_usd * (1.0 + self.settings.trailing_stop_pct / 100.0);
                         if new_trailing_stop > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = new_trailing_stop;
                         }
                     }
 
-                    // Break-Even floor lock when multiplier reaches target (e.g. 1.25x)
-                    if pos.peak_multiplier >= self.settings.break_even_mult {
-                        let be_floor = pos.entry_price_usd * 1.02; // +2% profit locked
-                        if be_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = be_floor;
-                        }
-                    }
-
-                    // Check stop-loss trigger
+                    // Check stop-loss / trailing profit trigger
                     if cand.price_usd <= pos.stop_loss_price_usd {
-                        let reason = if pos.current_multiplier >= 1.0 {
-                            format!("Trailing Stop Profit Lock ({:.2}x)", pos.current_multiplier)
+                        let reason = if pos.current_multiplier >= 1.02 {
+                            format!("Trailing Take-Profit Locked (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
+                        } else if pos.current_multiplier >= 1.0 {
+                            format!("Break-Even Profit Protection ({:.2}x)", pos.current_multiplier)
                         } else {
-                            format!("Stop Loss Protection ({:.2}x)", pos.current_multiplier)
+                            format!("Tight Stop Loss Protection ({:.2}x)", pos.current_multiplier)
                         };
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     }
@@ -818,5 +896,61 @@ mod tests {
         // Must lock in profit above entry!
         assert!(pos.stop_loss_price_usd > pos.entry_price_usd, "Trailing stop must lock in profit at +50% peak");
         assert!((pos.stop_loss_price_usd - 1.275).abs() < 0.001);
+    }
+
+    #[test]
+    fn test_trailing_take_profit_ratchet() {
+        let settings = BreakoutSettings {
+            stop_loss_pct: -5.0,
+            trailing_take_profit_activation_pct: 8.0,
+            trailing_take_profit_callback_pct: 2.5,
+            trailing_stop_pct: -10.0,
+            break_even_mult: 1.08,
+            ..Default::default()
+        };
+        let _engine = BreakoutEngine::new(settings.clone(), None);
+
+        let entry = 1.0;
+        let initial_stop = entry * (1.0 + settings.stop_loss_pct / 100.0); // $0.95 (-5%)
+        assert_eq!(initial_stop, 0.95);
+
+        let mut pos = BreakoutPosition {
+            token_address: "TokenMint111111111111111111111111111111".to_string(),
+            symbol: "TEST".to_string(),
+            pair_address: "pair1".to_string(),
+            dex_id: "pumpswap".to_string(),
+            entry_price_usd: entry,
+            entry_price_native: 0.005,
+            entry_timestamp: Utc::now(),
+            buy_amount_sol: 0.008,
+            tokens_held: 1_000_000,
+            peak_price_usd: entry,
+            current_price_usd: entry,
+            current_multiplier: 1.0,
+            peak_multiplier: 1.0,
+            stop_loss_price_usd: initial_stop,
+            is_closed: false,
+            pnl_sol: 0.0,
+        };
+
+        // 1. Price jumps to +20% ($1.20)
+        let peak_price = 1.20;
+        pos.peak_price_usd = peak_price;
+        pos.peak_multiplier = 1.20;
+
+        let activation_mult = 1.0 + (settings.trailing_take_profit_activation_pct / 100.0);
+        assert!(pos.peak_multiplier >= activation_mult, "Must activate trailing take profit at 1.20x >= 1.08x");
+
+        // Trailing floor = 1.20 * (1.0 - 0.025) = 1.17 (+17% locked!)
+        let ttp_floor = pos.peak_price_usd * (1.0 - settings.trailing_take_profit_callback_pct / 100.0);
+        let min_guaranteed_profit = pos.entry_price_usd * 1.02;
+        let effective_floor = ttp_floor.max(min_guaranteed_profit);
+
+        if effective_floor > pos.stop_loss_price_usd {
+            pos.stop_loss_price_usd = effective_floor;
+        }
+
+        assert_eq!(pos.stop_loss_price_usd, 1.17);
+        assert!(pos.stop_loss_price_usd > pos.entry_price_usd * 1.15, "Locked profit must exceed +15%");
     }
 }

@@ -237,6 +237,33 @@ impl OnChainExecutor {
         Ok(amount_str.parse::<u64>().unwrap_or(0))
     }
 
+    /// Discover open non-SOL/non-USDC token accounts held in the wallet
+    pub async fn get_open_meme_tokens(&self) -> Result<Vec<(String, u64, f64)>> {
+        let mut results = Vec::new();
+        let pubkey_str = self.pubkey().to_string();
+        for prog in &[TOKEN_PROGRAM, "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"] {
+            let res = self.send_rpc_request("getTokenAccountsByOwner", json!([
+                pubkey_str,
+                { "programId": prog },
+                { "encoding": "jsonParsed" }
+            ])).await;
+            if let Ok(json_val) = res {
+                if let Some(accounts) = json_val["result"]["value"].as_array() {
+                    for acc in accounts {
+                        let parsed = &acc["account"]["data"]["parsed"]["info"];
+                        let mint = parsed["mint"].as_str().unwrap_or("").to_string();
+                        let raw_units = parsed["tokenAmount"]["amount"].as_str().and_then(|s| s.parse::<u64>().ok()).unwrap_or(0);
+                        let ui_amount = parsed["tokenAmount"]["uiAmount"].as_f64().unwrap_or(0.0);
+                        if raw_units > 0 && mint != "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" && mint != "So11111111111111111111111111111111111111112" {
+                            results.push((mint, raw_units, ui_amount));
+                        }
+                    }
+                }
+            }
+        }
+        Ok(results)
+    }
+
     /// Fetch the creator of a Pump.fun bonding curve directly from on-chain account data (offset 49..81)
     pub async fn fetch_bonding_curve_creator(&self, bonding_curve: &Pubkey) -> Result<Pubkey> {
         let res_json = self.send_rpc_request("getAccountInfo", json!([bonding_curve.to_string(), {"encoding": "base64"}])).await?;
