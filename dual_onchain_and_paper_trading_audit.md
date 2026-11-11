@@ -2075,3 +2075,28 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Valuation (`DIGS`): `0.008074700 SOL`
   - ATA Rent: `0.002039280 SOL`
   - **Total Net Equity**: **`~0.016578 SOL`** (**`+8.38% Net Account Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+---
+
+### 103. Checkpoint #350 — 2-Minute Cadence Stream Report (Trade #18 DIGS Tight Stop-Loss Armed & Telemetry Stream)
+
+- **Task Status**: Active Live Daemon [`task-14684`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14684.log) running with continuous live position telemetry and Granular 5-Tier Lockbox.
+- **Active Trade #18 (`DIGS`) Telemetry**:
+  - Token: [`9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump`](https://solscan.io/token/9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump)
+  - Tokens Held: `4,013.285761 DIGS`
+  - Current Price: `$0.000161` (`0.000001924 SOL`)
+  - Entry Price: `$0.000168` ($0.008 SOL entry basis)
+  - Current Gain / PnL: **`-3.87%`** (Peak was `+0.54%`)
+  - Stop Floor: **`-5.00%`** (`$0.00016055`)
+  - Protection Status: **`🛡️ CAPITAL DEFENSE ACTIVE`** — If price touches `$0.00016055`, engine triggers market exit via Jupiter DEX and reclaims ATA rent (`+0.002039 SOL`).
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `FLIPIF` (`5jLj1jr2...`): Disqualified by `min_volume_5m_usd >= $3,000` ($0.0k volume) and liquidity ($24.6k < $25k).
+  - `texcat` (`BdXfLfcb...`): Disqualified by low 5m volume ($0.1k).
+  - `forg` (`2HhH7Lwf...`): Disqualified by liquidity ($3.5k < $25k).
+  - Secondary entries deferred while `DIGS` is active (`max_positions = 1`).
+- **Portfolio Valuation & Balances**:
+  - **Liquid Cash**: **`0.006463925 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Token Value (`DIGS`)**: **`0.007721 SOL`**
+  - **ATA Rent Reclaimable**: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.016224 SOL`** (**`+6.07% Net Account Growth`** since `woohao` entry baseline of `0.015296 SOL`).
