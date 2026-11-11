@@ -314,7 +314,7 @@ impl YellowstoneListener {
             };
 
             println!("  ✔ Real-Time Yellowstone Stream Active!");
-            println!("  🎯 Subscribed to Pump.fun, Raydium AMM v4 & Meteora DLMM pool creations.");
+            println!("  🎯 Subscribed to Pump.fun, Raydium AMM v4, Raydium CPMM & Meteora DLMM pool creations.");
             if self.track_onchain_reserves {
                 println!("  ⚡ Subscribed to Live Pump.fun Bonding Curve Account Reserves (Option 1 Active).");
             }
@@ -572,6 +572,59 @@ pub fn parse_transaction_for_pool_creation(
         }
     }
 
+    // 2b. Detect Raydium CPMM pool creation
+    let is_raydium_cpmm_init = log_messages.iter().any(|log: &String| {
+        log.contains("CPMMoo8L3F4NbTegBCKVNunggL7H1ZpdTHKxQB5qKP1C")
+            && (log.contains("Instruction: Initialize") || log.contains("Instruction: initialize"))
+    });
+
+    if is_raydium_cpmm_init {
+        let outer_cpmm = message.instructions.iter().map(|ix| (ix.program_id_index as usize, &ix.accounts[..]));
+        let inner_cpmm = meta.inner_instructions.iter().flat_map(|inner| {
+            inner.instructions.iter().map(|ix| (ix.program_id_index as usize, &ix.accounts[..]))
+        });
+        let cpmm_ix = outer_cpmm.chain(inner_cpmm).find(|&(prog_idx, accounts)| {
+            all_account_keys.get(prog_idx).map(|s| s.as_str()) == Some(RAYDIUM_CPMM_PROGRAM)
+                && accounts.len() >= 6
+        });
+
+        if let Some((_, accounts)) = cpmm_ix {
+            let pool_idx = accounts.get(3).copied().map(|i| i as usize);
+            let token_0_idx = accounts.get(4).copied().map(|i| i as usize);
+            let token_1_idx = accounts.get(5).copied().map(|i| i as usize);
+            let creator_idx = accounts.get(0).copied().map(|i| i as usize);
+
+            let pool_address = pool_idx.and_then(|i| all_account_keys.get(i).cloned()).unwrap_or_default();
+            let token_0 = token_0_idx.and_then(|i| all_account_keys.get(i).cloned()).unwrap_or_default();
+            let token_1 = token_1_idx.and_then(|i| all_account_keys.get(i).cloned()).unwrap_or_default();
+            let creator = creator_idx.and_then(|i| all_account_keys.get(i).cloned());
+
+            let token_mint = if token_0 == WSOL {
+                token_1
+            } else {
+                token_0
+            };
+
+            let initial_sol = calculate_sol_liquidity(meta, 0);
+
+            return Some(PoolCreationEvent {
+                protocol: DexProtocol::RaydiumCpmm,
+                signature,
+                slot,
+                token_mint,
+                pool_address,
+                creator,
+                initial_sol_liquidity: Some(initial_sol),
+                dev_buy_sol: None,
+                metadata_uri: None,
+                has_socials: true,
+                timestamp_ms: chrono::Utc::now().timestamp_millis(),
+                log_snippet: Some("Raydium CPMM Pool Initialized".to_string()),
+                is_token_2022: false,
+            });
+        }
+    }
+
     // 3. Detect Meteora DLMM pool creation
     let is_meteora_init = log_messages.iter().any(|log: &String| {
         log.contains("initializeLbPair")
@@ -724,8 +777,7 @@ fn calculate_sol_liquidity(meta: &TransactionStatusMeta, _account_idx: usize) ->
             return (max_delta as f64) / 1_000_000_000.0;
         }
     }
-    // Pump.fun bonding curves start with 30 SOL virtual reserves
-    30.0
+    0.0
 }
 
 /// Diagnoses connection failures to Yellowstone gRPC endpoints (e.g. Triton, QuickNode, Helius)

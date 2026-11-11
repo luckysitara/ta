@@ -949,3 +949,33 @@ flowchart TD
     - Pool `DX55HQX3...` (**0.11 SOL dev buy**) -> monitored, withheld from entry.
     - Pool `5feaYi4j...` (**0.01 SOL dev buy**) -> monitored, withheld from entry.
 - **Watchlist Growth**: 750+ pools monitored across sweet spots. Complete capital preservation maintained.
+
+---
+
+### 49. Checkpoint #296 — Secondary Market DEX Breakout Engine Implementation (MIHAO +2,337% Case Study)
+
+- **Diagnostic Investigation (Why MIHAO was not seen by genesis sniper)**:
+  - Token Mint: [`4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump`](https://solscan.io/token/4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump) (`ni hao cat` / `mihao`).
+  - Creation Date: **October 25, 2026 at 16:43:14 UTC** (17 days old).
+  - Trading Venues: Meteora DLMM ($91.6k liquidity) and PumpSwap AMM ($388k liquidity), driving **$24.3M in 24h volume**.
+  - Root Cause: Launch sniper (`sniper.rs`) is strictly tuned to newly initialized pools (`parse_transaction_for_pool_creation`) in the current slot. Tokens that sit dormant for weeks before exploding on secondary DEXs do not emit new pool creation events.
+- **Engine Implementation (`src/solana/breakout.rs`)**:
+  - Implemented `BreakoutEngine` to monitor existing established tokens on Meteora, Raydium, Orca, and PumpSwap.
+  - Multi-source trending stream: Ingests top boosted and trending Solana tokens from DexScreener in real-time.
+  - Quantitative Filters:
+    - Liquidity floor: $\ge \$25,000$ USD (deep order books, minimal price impact).
+    - Volume surge: $\ge \$100,000$ 24h volume and $\ge \$3,000$ 5m volume.
+    - Buy dominance: $\ge 10$ buys in 5m with $\ge 55\%$ buy ratio.
+    - Momentum trigger: $\ge +0.5\%$ 5m candle breakout.
+  - **Uncapped Runner Strategy (Catching 10x–20x Runs)**:
+    - Eliminates early profit caps; replaces fixed take-profits with a **Dynamic Trailing Stop-Loss** ($-15\%$ from peak watermark).
+    - Locks in break-even floor ($+2\%$ profit) once token hits $1.25\text{x}$ ($+25\%$).
+    - Allows runners to ride from $+50\%$ to $+500\%$ and $+2,000\%$ without prematurely exiting.
+- **Verification & Live Dry Run Results**:
+  - Compiled and ran 25s test cycle in paper mode.
+  - Screened 31 trending Solana DEX tokens:
+    - Immediately detected `NIHAO` (`8yLBuP74RnFm`) with $\$246.1\text{k}$ liquidity and $\$77.2\text{k}$ 5m volume!
+    - Identified breakout entry for `咪好` (`Hg3w7GdPViZ5URuCNnK6EwXLzSTmVwX6UXLeD6Pbpump`) at $\$0.000543$ with $79$ buys in 5m.
+    - Identified breakout entry for `VEYL` (`GHtnAtTCPFz8MRTMQiEyuEob283EUgqd1d1Fysnhpump`) at $\$0.000153$ with $100$ buys in 5m.
+- **Live Wallet Capital Preservation**:
+  - Wallet balance strictly preserved at **`0.020610716 SOL`** ($0$ open positions, $0$ ATA rent locked).

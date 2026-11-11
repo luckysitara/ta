@@ -1310,25 +1310,25 @@ impl SolanaSniperEngine {
             }
         }
 
-        // 1b. Option 2 Anti-Rug Filter: Require creator dev to have 0 tokens held
-        // (Clean fair launch 0.0 SOL dev buy, OR dev already 100% dumped early and community pushed curve)
+        // 1b. Combined Option B Anti-Rug Defense:
+        // 1. Zero tolerance for dev dumps: permanently reject any pool where the creator ever dumped/sold
+        {
+            let dumped = self.pool_dev_dumped.lock().unwrap();
+            if dumped.contains(pool_address) {
+                return;
+            }
+        }
+
+        // 2. Pure Fair Launch requirement: creator must have bought 0.0 SOL at launch (dev holds 0 tokens)
         if self.settings.require_dev_sold_out {
             let kp = self.known_pools.lock().unwrap();
             if let Some(ev) = kp.get(pool_address) {
                 let dev_buy = ev.dev_buy_sol.unwrap_or(0.0);
                 if dev_buy > 0.0 {
-                    let dumped = self.pool_dev_dumped.lock().unwrap();
-                    if !dumped.contains(pool_address) {
-                        // Creator still holds tokens! Do not enter to eliminate creator rug risk!
-                        return;
-                    }
+                    // Creator bought tokens at launch! Reject to eliminate dev rug dumping risk.
+                    return;
                 }
             } else {
-                return;
-            }
-        } else {
-            let dumped = self.pool_dev_dumped.lock().unwrap();
-            if dumped.contains(pool_address) {
                 return;
             }
         }
@@ -2348,7 +2348,7 @@ mod tests {
             pool_address: pool_addr.clone(),
             token_mint: mint_addr.clone(),
             creator: Some(dev_wallet.clone()),
-            dev_buy_sol: Some(0.50), // Dev bought 0.5 SOL at launch
+            dev_buy_sol: Some(0.50), // Dev bought 0.5 SOL at launch (not pure fair launch)
             initial_sol_liquidity: Some(30.0),
             has_socials: true,
             metadata_uri: None,
@@ -2360,7 +2360,7 @@ mod tests {
 
         engine.process_detected_pool(&event);
 
-        // Curve reaches 35% sweet spot, but dev STILL HOLDS tokens!
+        // Curve reaches 35% sweet spot, but dev bought tokens at launch:
         let state_curve_35 = BondingCurveState {
             pool_address: pool_addr.clone(),
             virtual_token_reserves: 1_000_000_000_000_000,
@@ -2372,8 +2372,8 @@ mod tests {
         };
 
         engine.update_bonding_curve_reserve(&pool_addr, &state_curve_35);
-        // MUST BE REJECTED: Dev still holds tokens (anti-rug protection)
-        assert_eq!(engine.get_active_positions().len(), 0, "Rejected because creator still holds tokens!");
+        // MUST BE REJECTED: Creator bought tokens at launch (Option B pure fair launch rule)
+        assert_eq!(engine.get_active_positions().len(), 0, "Rejected because creator bought tokens at launch!");
 
         // Dev DUMPS all tokens early!
         engine.record_trade_activity(&TradeActivityEvent {
@@ -2387,8 +2387,41 @@ mod tests {
 
         // Now curve is pushed back to 35% by community:
         engine.update_bonding_curve_reserve(&pool_addr, &state_curve_35);
-        // MUST ENTER: Dev has 0 tokens, creator rug dump is impossible!
-        assert_eq!(engine.get_active_positions().len(), 1, "Entered because dev already dumped 100% of tokens!");
+        // MUST STILL BE REJECTED: Zero tolerance for dumped coins/CTO traps (Option B dev dump blacklist)
+        assert_eq!(engine.get_active_positions().len(), 0, "Still rejected because creator dumped tokens!");
+
+        // Test a pure fair launch (creator bought 0.0 SOL at launch, creator never dumped)
+        let fair_pool = "FairLaunchPool111111111111111111111111".to_string();
+        let fair_mint = "FairLaunchMint111111111111111111111111".to_string();
+        let fair_event = PoolCreationEvent {
+            protocol: DexProtocol::PumpFun,
+            signature: "sig_create_fair".to_string(),
+            pool_address: fair_pool.clone(),
+            token_mint: fair_mint.clone(),
+            creator: Some("FairCreator111111111111111111111111".to_string()),
+            dev_buy_sol: Some(0.0), // Pure fair launch!
+            initial_sol_liquidity: Some(30.0),
+            has_socials: true,
+            metadata_uri: None,
+            slot: 510,
+            timestamp_ms: 1730000000000,
+            log_snippet: None,
+            is_token_2022: false,
+        };
+        engine.process_detected_pool(&fair_event);
+
+        let fair_state = BondingCurveState {
+            pool_address: fair_pool.clone(),
+            virtual_token_reserves: 1_000_000_000_000_000,
+            virtual_sol_reserves: 35_000_000_000,
+            real_token_reserves: 500_000_000_000_000,
+            real_sol_reserves: 29_750_000_000,
+            complete: false,
+            price_sol: 0.00000008,
+        };
+        engine.update_bonding_curve_reserve(&fair_pool, &fair_state);
+        // MUST ENTER: Pure fair launch (0.0 dev buy) and dev never dumped!
+        assert_eq!(engine.get_active_positions().len(), 1, "Entered pure fair launch pool successfully!");
     }
 
     #[test]

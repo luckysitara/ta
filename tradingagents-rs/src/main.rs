@@ -19,7 +19,7 @@ use solana::sniper::{SniperSettings, SolanaSniperEngine};
 use solana::yellowstone::{DexProtocol, PoolCreationEvent, YellowstoneListener};
 use std::collections::HashMap;
 use std::sync::Arc;
-use tracing::info;
+use tracing::{info, warn};
 use types::{AnalystType, Portfolio, Rating};
 
 #[derive(Parser, Debug)]
@@ -316,6 +316,76 @@ enum Commands {
         #[arg(long)]
         mint: Option<String>,
     },
+    /// Run real-time Secondary Market DEX Breakout & Volume Surge Scanner (catches tokens like MIHAO)
+    Breakout {
+        /// Total budget in SOL (default: 0.02 SOL)
+        #[arg(long, default_value_t = 0.02)]
+        budget: f64,
+
+        /// Buy amount in SOL per trade (default: 0.008 SOL)
+        #[arg(long, default_value_t = 0.008)]
+        buy_amount: f64,
+
+        /// Maximum concurrent active positions (default: 2)
+        #[arg(long, default_value_t = 2)]
+        max_positions: usize,
+
+        /// Jito MEV tip amount in SOL (default: 0.0003 SOL)
+        #[arg(long, default_value_t = 0.0003)]
+        jito_tip: f64,
+
+        /// Minimum pool liquidity in USD (default: $25,000)
+        #[arg(long, default_value_t = 25000.0)]
+        min_liquidity_usd: f64,
+
+        /// Minimum 24h trading volume in USD (default: $100,000)
+        #[arg(long, default_value_t = 100000.0)]
+        min_volume_24h_usd: f64,
+
+        /// Minimum 5m trading volume in USD (default: $3,000)
+        #[arg(long, default_value_t = 3000.0)]
+        min_volume_5m_usd: f64,
+
+        /// Minimum buy transactions in last 5m (default: 10)
+        #[arg(long, default_value_t = 10)]
+        min_buys_5m: usize,
+
+        /// Minimum buy transaction ratio in last 5m (default: 0.55 for 55%)
+        #[arg(long, default_value_t = 0.55)]
+        min_buy_ratio_5m: f64,
+
+        /// Minimum 5m price change % (default: 0.5 for +0.5%)
+        #[arg(long, default_value_t = 0.5)]
+        min_price_change_5m: f64,
+
+        /// Trailing stop loss percentage from peak watermark (default: -15.0 for -15%)
+        #[arg(long, default_value_t = -15.0)]
+        trailing_stop_pct: f64,
+
+        /// Break-even floor trigger multiplier (default: 1.25 for +25%)
+        #[arg(long, default_value_t = 1.25)]
+        break_even_mult: f64,
+
+        /// Polling interval in seconds (default: 10s)
+        #[arg(long, default_value_t = 10)]
+        poll_interval_secs: u64,
+
+        /// Max run duration in seconds (optional)
+        #[arg(long)]
+        duration_secs: Option<u64>,
+
+        /// Live on-chain execution with real SOL using Jito MEV bundles
+        #[arg(long, default_value_t = false)]
+        onchain: bool,
+
+        /// Path to Solana Keypair JSON file (default: ~/.config/solana/id.json)
+        #[arg(long, env = "KEYPAIR_PATH")]
+        keypair_path: Option<String>,
+
+        /// Solana RPC endpoint URL
+        #[arg(long, env = "SOLANA_RPC_URL")]
+        rpc_url: Option<String>,
+    },
 }
 
 #[tokio::main]
@@ -418,6 +488,48 @@ async fn main() -> anyhow::Result<()> {
 
     if let Some(Commands::Liquidate { mint }) = args.command {
         return run_liquidate(mint).await;
+    }
+
+    if let Some(Commands::Breakout {
+        budget,
+        buy_amount,
+        max_positions,
+        jito_tip,
+        min_liquidity_usd,
+        min_volume_24h_usd,
+        min_volume_5m_usd,
+        min_buys_5m,
+        min_buy_ratio_5m,
+        min_price_change_5m,
+        trailing_stop_pct,
+        break_even_mult,
+        poll_interval_secs,
+        duration_secs,
+        onchain,
+        keypair_path,
+        rpc_url,
+    }) = args.command
+    {
+        return run_breakout_scanner(
+            budget,
+            buy_amount,
+            max_positions,
+            jito_tip,
+            min_liquidity_usd,
+            min_volume_24h_usd,
+            min_volume_5m_usd,
+            min_buys_5m,
+            min_buy_ratio_5m,
+            min_price_change_5m,
+            trailing_stop_pct,
+            break_even_mult,
+            poll_interval_secs,
+            duration_secs,
+            onchain,
+            keypair_path,
+            rpc_url,
+        )
+        .await;
     }
 
     if args.snipe {
@@ -825,8 +937,8 @@ async fn run_sniper(
     if let Some(min_buys) = eff_min_buys_recent {
         println!("  [OPT 1] Buy Velocity:    Requires ≥ {} buys & ≤ {} sells in last {}s (Anti-Stall Filter)", min_buys.to_string().bold().green(), eff_max_sells_recent.unwrap_or(0).to_string().bold().green(), eff_velocity_window_secs.unwrap_or(15).to_string().bold().green());
     }
-    println!("  [OPT 2] Dev Sold Out:    {}", if require_dev_sold_out.unwrap_or(true) { "ENABLED (0% Dev Holding or Dev Already Dumped)".bold().green() } else { "DISABLED".yellow() });
-    println!("  [OPT 3] Dual Protocol:   {}", if enable_raydium.unwrap_or(true) { "ENABLED (Pump.fun Curves + Raydium Graduations via Jupiter/Jito)".bold().green() } else { "Pump.fun Only".yellow() });
+    println!("  [OPT B] Pure Fair Launch: {}", if require_dev_sold_out.unwrap_or(true) { "ENABLED (0.0 SOL Dev Buy Required, 0% Dumped Coins Permitted)".bold().green() } else { "DISABLED".yellow() });
+    println!("  [OPT A] Raydium Sniping:  {}", if enable_raydium.unwrap_or(true) { "ENABLED (Raydium AMM v4 & CPMM Graduations via Jupiter/Jito)".bold().green() } else { "Pump.fun Only".yellow() });
     if let Some(dur) = duration_secs {
         println!("  Session Timer:       {} seconds ({} min auto-stop & audit)", dur, dur / 60);
     }
@@ -1257,6 +1369,107 @@ async fn run_liquidate(mint_filter: Option<String>) -> anyhow::Result<()> {
     let end_bal = executor.get_balance_sol().await.unwrap_or(0.0);
     println!("\n  Final SOL Balance: {:.4} SOL (+{:.4} SOL recovered)", end_bal, end_bal - start_bal);
     println!("{}", "================================================================================".yellow());
+
+    Ok(())
+}
+
+#[allow(clippy::too_many_arguments)]
+async fn run_breakout_scanner(
+    budget: f64,
+    buy_amount: f64,
+    max_positions: usize,
+    jito_tip: f64,
+    min_liquidity_usd: f64,
+    min_volume_24h_usd: f64,
+    min_volume_5m_usd: f64,
+    min_buys_5m: usize,
+    min_buy_ratio_5m: f64,
+    min_price_change_5m: f64,
+    trailing_stop_pct: f64,
+    break_even_mult: f64,
+    poll_interval_secs: u64,
+    duration_secs: Option<u64>,
+    onchain: bool,
+    keypair_path: Option<String>,
+    rpc_url: Option<String>,
+) -> anyhow::Result<()> {
+    println!("\n{}", "===============================================================".bold().cyan());
+    println!("{}", "   🚀 SOLANA SECONDARY MARKET DEX BREAKOUT & MOMENTUM ENGINE   ".bold().green());
+    println!("{}", "      Uncapped Upside | Wide Trailing Stop | Catching 10x+      ".bold().yellow());
+    println!("{}", "===============================================================\n".bold().cyan());
+
+    let is_paper = !onchain;
+    println!("  Execution Mode:      {}", if is_paper { "PAPER TRADING (Zero Financial Risk)".bold().green() } else { "LIVE ON-CHAIN (Real SOL Execution via Jupiter & Jito MEV)".bold().red() });
+    println!("  Budget / Allocation: Total: {:.4} SOL | Size: {:.4} SOL per trade", budget, buy_amount);
+    println!("  Max Open Positions:  {}", max_positions);
+    println!("  Liquidity Floor:     ≥ ${:.1}k USD (Meteora DLMM / Raydium / PumpSwap / Orca)", min_liquidity_usd / 1000.0);
+    println!("  Volume Surge Filter: ≥ ${:.1}k (24h) | ≥ ${:.1}k (5m)", min_volume_24h_usd / 1000.0, min_volume_5m_usd / 1000.0);
+    println!("  Buy Pressure Filter: ≥ {} buys in 5m | ≥ {:.0}% buy dominance", min_buys_5m, min_buy_ratio_5m * 100.0);
+    println!("  Momentum Trigger:    ≥ +{:.1}% in 5m candle", min_price_change_5m);
+    println!("  Trailing Stop Loss:  {:.1}% from peak watermark (Break-Even Floor: ≥{:.2}x)", trailing_stop_pct, break_even_mult);
+    println!("  Scanner Interval:    Every {} seconds\n", poll_interval_secs);
+
+    let executor = if !is_paper {
+        let key_path = keypair_path.unwrap_or_else(|| {
+            let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+            format!("{}/.config/solana/id.json", home)
+        });
+        let rpc = rpc_url.or_else(|| std::env::var("SOLANA_RPC_URL").ok())
+            .unwrap_or_else(|| "https://graceful-oasis-a398.mainnet.rpcpool.com/95794a05-4057-49cb-87e4-42d3d9a46774".to_string());
+        let jito = std::env::var("JITO_BLOCK_ENGINE_URL")
+            .unwrap_or_else(|_| "https://amsterdam.mainnet.block-engine.jito.wtf".to_string());
+        let exec = solana::execution::OnChainExecutor::from_keypair_file(&key_path, Some(rpc), Some(jito))?;
+        let bal = exec.get_balance_sol().await?;
+        println!("  ⚡ [LIVE WALLET] Connected: {} | Balance: {:.4} SOL\n", exec.pubkey(), bal);
+        Some(Arc::new(exec))
+    } else {
+        None
+    };
+
+    let settings = solana::breakout::BreakoutSettings {
+        total_budget_sol: budget,
+        buy_amount_sol: buy_amount,
+        max_concurrent_positions: max_positions,
+        jito_tip_sol: jito_tip,
+        min_liquidity_usd,
+        min_volume_24h_usd,
+        min_volume_5m_usd,
+        min_buys_5m,
+        min_buy_ratio_5m,
+        min_price_change_5m,
+        trailing_stop_pct,
+        break_even_mult,
+        is_paper_trading: is_paper,
+        poll_interval_secs,
+    };
+
+    let engine = Arc::new(solana::breakout::BreakoutEngine::new(settings, executor));
+    let engine_clone = Arc::clone(&engine);
+
+    let start_time = std::time::Instant::now();
+    println!("  ⚡ Starting live DEX breakout scanner... (Press Ctrl+C to stop)\n");
+
+    loop {
+        if let Some(dur) = duration_secs {
+            if start_time.elapsed().as_secs() >= dur {
+                println!("\n⏰ Duration limit reached ({}s). Stopping scanner.", dur);
+                break;
+            }
+        }
+
+        match engine_clone.run_scan_cycle().await {
+            Ok(cnt) => {
+                if cnt > 0 {
+                    info!("Scan cycle completed: {} new breakout positions entered.", cnt);
+                }
+            }
+            Err(e) => {
+                warn!("Scan cycle warning: {e}");
+            }
+        }
+
+        tokio::time::sleep(std::time::Duration::from_secs(poll_interval_secs)).await;
+    }
 
     Ok(())
 }
