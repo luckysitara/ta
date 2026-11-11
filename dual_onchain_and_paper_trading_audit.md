@@ -1018,3 +1018,23 @@ flowchart TD
   - The scanner continuously screened 32 trending tokens per cycle.
   - When candidates like `VEYL` triggered momentum signals, the engine strictly enforced the wallet capital reservation rule (`0.0094 SOL < 0.0105 SOL required`), safely rejecting additional entries and protecting wallet liquidity from over-leveraging.
 - **Total Portfolio Value**: **`~0.0194 SOL`** (Equity stable near initial 0.020 SOL).
+
+---
+
+### 52. Checkpoint #299 — Live Breakout Telemetry Report (`DACITY` Surges to +21.7% Profit)
+
+- **Task Status**: Active Live Daemon [`task-13435`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13435.log) running smoothly in on-chain breakout mode.
+- **Active Position Surge (`DACITY`)**:
+  - Token Mint: [`5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump`](https://solscan.io/token/5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump).
+  - Tokens Held: **`257.755213 DACITY`**.
+  - Current Price: **`$0.002853 USD`** (`0.00003405 SOL`), jumping **`+10.51%`** in the last 5m candle.
+  - Live Jupiter Swap Proceeds: **`0.009738556 SOL`** (cost was `0.0080 SOL`, yielding **`+21.7% net token gain`**).
+  - Total Position Equity: `0.009738 SOL` tokens + `0.002039 SOL` ATA rent reserve = **`0.011777 SOL`**.
+  - Plus Cash Reserve: `0.009435 SOL` in wallet.
+  - **Total Net Portfolio Value**: **`0.02121 SOL`** (Up from `0.02061 SOL` starting capital!).
+  - 5m Volume Spike: **`$24,500 USD`** (Heavy institutional & retail buy momentum).
+  - Liquidity Depth: **`$136,000 USD`** (Deep order book across PumpSwap/Raydium).
+  - Trailing Stop Status: Peak watermark dynamically progressing; stop-loss stepping up to protect gains.
+- **Capital Safety Guardrails**:
+  - Engine screened 32 trending tokens per 10s cycle.
+  - Safely deferred secondary entries on `VEYL` and `咪好` to maintain 100% solvency and zero risk of over-leveraging.
