@@ -1916,6 +1916,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -1979,6 +1999,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -2236,6 +2276,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2299,6 +2359,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -2679,6 +2759,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2742,6 +2842,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -2999,6 +3119,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -3062,6 +3202,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -3441,6 +3601,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -3504,6 +3684,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -3761,6 +3961,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -3824,6 +4044,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -4204,6 +4444,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -4267,6 +4527,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
@@ -4524,6 +4804,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
+
+
+---
+
 ### 98. Checkpoint #345 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Solid +3.74% & Market Telemetry)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -4587,6 +4887,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008387 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01766 SOL`** (**`+15.47% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 100. Checkpoint #347 — Trade #17 `jeff` Position Closed on Instruction & Rent Reclaimed
+
+- **Task Status**: Active Live Daemon [`task-14517`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14517.log) relaunched with tightened Break-Even Lock at $\ge 1.035\text{x}$ (+3.5%) and Trailing Take-Profit at $\ge +6.0\%$.
+- **Trade #17 (`jeff`) Exit Execution**:
+  - **Sell Tx (Jupiter DEX)**: [`62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)
+  - Sold `517.419411 jeff` tokens back into SOL.
+- **SPL ATA Rent Reclamation**:
+  - **Rent Reclaim Tx**: [`5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z`](https://solscan.io/tx/5WR7Lp1D6u6RJekYc3eVSAnyfDSVu9p32nwamv5wnFGCssh6M3MV98UDLUtqUGeyt8yDPwAxkyYZnP8Ej6yaNa4Z)
+  - Reclaimed **`+0.002039280 SOL`** rent directly back to wallet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.016092765 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Open Positions**: **0** (100% pure liquid capital; zero risk).
+  - **Open ATAs**: **0** (All ATAs closed; zero stranded rent).
+- **Cumulative Performance Since `woohao` Baseline (`0.015296 SOL`)**:
+  - **Net Account Growth**: **`+0.000797 SOL`** (**`+5.21% Net Profit`**).
+  - **Available Liquid Cash**: Increased from `0.005434 SOL` to **`0.016093 SOL`** (**`+196.1%` expansion**).
 
 
 ---
