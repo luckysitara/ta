@@ -1370,3 +1370,32 @@ flowchart TD
   3. **`FUCAT` (`2UcqYeGG2waJ...`)**:
      - Evaluation: Disqualified by `min_liquidity_usd = $25,000` (Liquidity `$5.8k`).
 - **Portfolio Summary**: Capital fully secure in SOL; zero exposure; engine waiting for high-conviction deep-liquidity base breakouts.
+
+
+---
+
+### 68. Checkpoint #315 — Trade #15 Live Execution Report (`DIGS` On-Chain Breakout Entry)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Fee Optimization active.
+- **Trade #15 Execution (`DIGS`)**:
+  - **Token**: `DIGS` / `AiDiglet` ([`9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump`](https://solscan.io/token/9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump))
+  - **Buy Tx**: [`3MDHKEnZJvwGCwo2VSkWAyZwgbN5QvupB6AhQHRMt8qYbYExutbtqSG4GjQmVVZqRGRrJEeiEcyJBs1SaJNj9Hqm`](https://solscan.io/tx/3MDHKEnZJvwGCwo2VSkWAyZwgbN5QvupB6AhQHRMt8qYbYExutbtqSG4GjQmVVZqRGRrJEeiEcyJBs1SaJNj9Hqm)
+  - **Status**: Finalized on Solana Mainnet via PumpSwap AMM and Jito MEV bundle.
+  - **Cost**: `0.008000 SOL` + **`0.000100 SOL`** Jito tip (Reduced fee drag active).
+  - **Tokens Acquired**: **`4324.933861 DIGS`**.
+  - **Market Profile & Anti-FOMO Compliance**:
+    - Liquidity Depth: **`$33,705 USD`** (Meets $\ge \$25\text{k}$ safety floor).
+    - 24-Hour Trading Volume: **`$477,571 USD`** (Active market interest).
+    - Retail Buy Dominance: **`68.1%`** (98 buys / 46 sells in 5m, heavy buying pressure).
+    - 24-Hour Price Change: **`+227%`** (Under `max_price_change_24h <= 250%` Anti-FOMO ceiling).
+    - 1-Hour Price Change: **`+25.61%`** (Under `max_price_change_1h <= 50%` Anti-FOMO ceiling).
+- **Active Trade Management**:
+  - Trailing Take-Profit: Arms at $\ge +8.0\%$ gain, trailing 2.5% below highest peak watermark.
+  - Tight Stop Loss: **`-5.0%`** from entry price.
+  - Current Jupiter Sell Quote: **`0.007907 SOL`** (Stable near entry).
+- **Portfolio Valuation**:
+  - Liquid Cash Balance: **`0.007880236 SOL`**
+  - Token Value (`DIGS`): **`0.007907425 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Value**: **`~0.01783 SOL`**
+- **Capital Safety**: Max positions locked at 1; zero concurrent entries permitted while `DIGS` is open.
