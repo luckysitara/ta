@@ -2100,3 +2100,33 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - **Token Value (`DIGS`)**: **`0.007721 SOL`**
   - **ATA Rent Reclaimable**: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.016224 SOL`** (**`+6.07% Net Account Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+---
+
+### 104. Checkpoint #351 — 2-Minute Cadence Stream Report (Trade #18 DIGS Tight Stop Exit, Rent Reclaimed & Trade #19 GATO Entry)
+
+- **Task Status**: Active Live Daemon [`task-14684`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14684.log) managing live on-chain execution with continuous position telemetry.
+- **Trade #18 (`DIGS`) Stop-Loss Exit & ATA Rent Reclamation**:
+  - **Trigger**: `DIGS` price declined to `$0.000159` (`-5.65%`), triggering the hard capital stop floor at `-5.0%`.
+  - **Sell Tx (Jupiter DEX)**: [`S4H8dCKr83pVB2NTSKEPDsevpLcWz65mDqJgH1kZFqx3EtEBVd1yC3C7114z3MPRvULvsQ717kECkhcf75TSmdj`](https://solscan.io/tx/S4H8dCKr83pVB2NTSKEPDsevpLcWz65mDqJgH1kZFqx3EtEBVd1yC3C7114z3MPRvULvsQ717kECkhcf75TSmdj)
+  - Sold `4,013.285761 DIGS` returning `0.007499407 SOL` (loss limited to `-0.000501 SOL` / `-6.26%`, preventing severe downside).
+  - **Rent Reclaim Tx**: [`3v5VXutkWdWU9s33QJwww76mUqxbhf9A39wTLrUiewbK6RyPTi2y3c3EvTMZx5AQ7S3L64EHP4Wh19LCGuCVow1T`](https://solscan.io/tx/3v5VXutkWdWU9s33QJwww76mUqxbhf9A39wTLrUiewbK6RyPTi2y3c3EvTMZx5AQ7S3L64EHP4Wh19LCGuCVow1T)
+  - Reclaimed **`+0.002039280 SOL`** ATA rent back to liquid cash.
+- **Trade #19 (`GATO`) Live Breakout Entry**:
+  - **Token**: `GATO` ([`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`](https://solscan.io/token/HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump))
+  - **Buy Tx**: [`3xv6vkXS42iapDMtSxs9UaBQZrDQ678ttUFnECmNUkj4DdpsgqPiBLmJyo6EZW1MfrYcuewkg48A4TyM97CCctFf`](https://solscan.io/tx/3xv6vkXS42iapDMtSxs9UaBQZrDQ678ttUFnECmNUkj4DdpsgqPiBLmJyo6EZW1MfrYcuewkg48A4TyM97CCctFf)
+  - **Tokens Acquired**: **`79.47379 GATO`**
+  - **Cost Basis**: `0.008000 SOL` (+ `0.000100 SOL` Jito tip)
+  - **Market Depth**: **`$311,201 USD`** deep pool liquidity; 5m volume **`$3,778 USD`** (+3.89%).
+  - **Current Price**: `$0.008533` (`0.0001009 SOL`, up **`+0.51%`** over entry).
+  - **Active Protection**: Granular 5-Tier Lockbox active:
+    - Peak $\ge +3.0\% \to$ Lock stop floor at $+1.2\%$ (Break-Even).
+    - Peak $\ge +4.0\% \to$ Lock stop floor at $+2.0\%$ guaranteed profit.
+    - Peak $\ge +5.0\% \to$ Lock stop floor at $+3.0\%$ guaranteed profit.
+    - Peak $\ge +6.0\% \to$ Lock stop floor at $+4.0\%$ guaranteed profit.
+    - Peak $\ge +7.0\% \to$ Dynamic trailing take-profit ratchet.
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.005835832 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Token Value (`GATO`)**: **`0.008018900 SOL`**
+  - **ATA Rent (`GATO`)**: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.015894 SOL`** (**`+3.91% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
