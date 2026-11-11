@@ -1134,3 +1134,24 @@ flowchart TD
      - Liquidity: `$47.2k` | 5m Vol: `$0.1k`.
      - Evaluation: Disqualified by `min_volume_5m_usd >= $3,000` volume surge floor.
 - **Portfolio Summary**: 100% solvency maintained; zero stranded tokens; `0.018088 SOL` liquid cash intact.
+
+
+---
+
+### 58. Checkpoint #305 — Live Breakout Telemetry Report (`DACITY` Flash Dump Avoidance & Anti-FOMO Telemetry)
+
+- **Task Status**: Active Live Daemon [`task-13708`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13708.log) running smoothly in on-chain breakout mode.
+- **Wallet Connection**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid Balance: **`0.018088851 SOL`**
+  - Open Positions: **0** (100% liquid cash reserves).
+- **Scanner Activity**: Screening 31 trending Solana DEX pairs every 10 seconds.
+- **Market Observations & Guardrail Verification**:
+  1. **`DACITY` Flash Dump Avoidance**:
+     - `DACITY` collapsed an additional **`-22.09%`** in recent 5m candle, with pool liquidity dropping from `$141k` to `$97.5k`.
+     - The automated trailing stop-loss exit at `0.92x` in Checkpoint #300 successfully shielded our portfolio from this severe downward spiral.
+  2. **`咪好` Secondary Spike Rejected**:
+     - `咪好` generated `$5.1k` in 5m volume (+13.03% 5m pump).
+     - The Anti-FOMO rule (`max_price_change_24h <= 250%`) strictly disqualified it, preventing an emotional re-entry into a late-stage +1,800% runner.
+  3. **`VEYL` Filtered**:
+     - `VEYL` spiked +12.21% in 5m ($4.5k vol), but was rejected by the 24h ceiling.
+- **Solvency**: Capital remains 100% secure with zero stranded tokens and zero phantom positions.
