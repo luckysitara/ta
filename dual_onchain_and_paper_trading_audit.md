@@ -1349,3 +1349,24 @@ flowchart TD
   3. **`FUCAT` (`2UcqYeGG2waJ...`)**:
      - Evaluation: Disqualified by `min_liquidity_usd = $25,000` (Liquidity `$5.8k`).
 - **Portfolio Summary**: Capital fully secure in SOL; zero exposure; engine waiting for high-conviction deep-liquidity base breakouts.
+
+
+---
+
+### 67. Checkpoint #314 — Live Telemetry Report (Quality Filtering & Base Breakout Scanning)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Micro-Scalper rules.
+- **Wallet Connection**: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid Balance: **`0.017509076 SOL`**
+  - Open Positions: **0** (100% liquid cash reserves).
+- **Scanner Screening**: Screening 31 trending Solana DEX pairs every 10 seconds.
+- **Filter Telemetry & Quality Screening**:
+  1. **`GTA6KODAK` (`CXz596uKfWb5...`)**:
+     - Liquidity: `$45.5k` | 5m Vol: `$0.4k` (+3.97%).
+     - Evaluation: Disqualified by `min_volume_5m_usd = $3,000` (Low 5m volume indicates lack of fresh retail breakout surge).
+  2. **`Vicemas` (`GWxceEVSTHLv...`)**:
+     - Liquidity: `$12.8k` | 5m Vol: `$0.1k` (+3.38%).
+     - Evaluation: Disqualified by `min_liquidity_usd = $25,000` floor, protecting against illiquid pools.
+  3. **`FUCAT` (`2UcqYeGG2waJ...`)**:
+     - Evaluation: Disqualified by `min_liquidity_usd = $25,000` (Liquidity `$5.8k`).
+- **Portfolio Summary**: Capital fully secure in SOL; zero exposure; engine waiting for high-conviction deep-liquidity base breakouts.
