@@ -1731,6 +1731,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -1749,6 +1772,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008242 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01752 SOL`** (**`+14.52% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -1898,6 +1944,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -1916,6 +1985,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008242 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01752 SOL`** (**`+14.52% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -2064,6 +2156,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2082,6 +2197,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008242 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01752 SOL`** (**`+14.52% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -2231,6 +2369,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2249,3 +2410,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008242 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01752 SOL`** (**`+14.52% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 89. Checkpoint #336 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Holding Green & Quality Filtering)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001330` (`0.00001586 SOL`).
+  - Current Valuation: **`0.008206 SOL`** (**`1.026x`**, **`+2.58%`** unrealized profit above entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 31 DEX pairs screened every 10 seconds.
+  - `greg` (`4Ye6Y6Vaic8c`): Spiked +29% in 5m, disqualified by `min_liquidity_usd >= $25k` (liquidity `$7.3k`).
+  - `GLITCH` (`8Xg89xT8Ve34`): Disqualified by `min_volume_5m_usd >= $3,000` (volume `$1.8k`).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008206 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01748 SOL`** (**`+14.28% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
