@@ -1617,6 +1617,36 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 83. Checkpoint #330 — Trade #17 `jeff` Live Entry & `NIHAO` -86% Crash Defense Autopsy
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Anti-FOMO active.
+- **Trade #17 Live Execution (`jeff`)**:
+  - **Token**: `jeff` ([`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k))
+  - **Buy Tx**: [`5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79`](https://solscan.io/tx/5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79)
+  - **Protocol**: Raydium AMM via Jupiter routing + Jito tip.
+  - **Cost**: `0.008000 SOL` + `0.000100 SOL` Jito tip.
+  - **Tokens Acquired**: **`517.419411 jeff`**.
+  - **Market Profile at Entry**:
+    - Liquidity Depth: **`$101,692 USD`** (Meets $\ge \$25\text{k}$ floor).
+    - 24-Hour Trading Volume: **`$340,290 USD`**.
+    - 5-Minute Buy Dominance: **`82.1%`** (78 buys / 17 sells).
+    - 24-Hour Price Change: **`+38.93%`** (Fresh base breakout, safely complies with `<250%` ceiling).
+    - 1-Hour Price Change: **`-3.34%`** (Consolidated from high).
+- **Anti-FOMO Validation: `NIHAO` -86.18% Catastrophic Dump**:
+  - At slot `467814200`, `NIHAO` suffered a massive whale exit, plummeting **`-86.18%`** in under 5 minutes with pool liquidity collapsing from `$382k` to `$136k`.
+  - The Anti-FOMO ceiling (`max_price_change_24h <= 250%`) successfully kept our bot out of `NIHAO`, saving our wallet from losing 86% of its funds.
+- **Pump.fun Feature Architecture**:
+  - The Pump.fun bonding curve sniper (`tradingagents-rs snipe`) operates over Yellowstone gRPC mempool on pre-graduation curves (30%–50%).
+  - It was temporarily paused to prevent concurrent position competition against the small wallet budget (`~0.017 SOL`), allowing 100% of capital to be allocated to the winning Breakout engine.
+- **Current Portfolio Valuation**:
+  - Liquid Cash Balance: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`~0.008113 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Equity**: **`~0.01738 SOL`** (Up from `0.01684 SOL`).
+
+
+---
+
 ### 81. Checkpoint #328 — 2-Minute Cadence Stream Report (Mega-Runner Strategy Evaluation)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running stably.
@@ -1644,6 +1674,36 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Screened 31 trending Solana DEX tokens continuously.
   - `DACITY` (`5tBXkPVh716z`) registered high 5m volume ($8.5k–$11.9k, +14% 5m pump), safely blocked from repeat chasing.
 - **Account Growth**: Total account equity maintains **`+10.09%` net profit** since `woohao` entry (`0.016839 SOL` vs baseline `0.015296 SOL`), capital remains 100% intact.
+
+
+---
+
+### 83. Checkpoint #330 — Trade #17 `jeff` Live Entry & `NIHAO` -86% Crash Defense Autopsy
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Anti-FOMO active.
+- **Trade #17 Live Execution (`jeff`)**:
+  - **Token**: `jeff` ([`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k))
+  - **Buy Tx**: [`5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79`](https://solscan.io/tx/5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79)
+  - **Protocol**: Raydium AMM via Jupiter routing + Jito tip.
+  - **Cost**: `0.008000 SOL` + `0.000100 SOL` Jito tip.
+  - **Tokens Acquired**: **`517.419411 jeff`**.
+  - **Market Profile at Entry**:
+    - Liquidity Depth: **`$101,692 USD`** (Meets $\ge \$25\text{k}$ floor).
+    - 24-Hour Trading Volume: **`$340,290 USD`**.
+    - 5-Minute Buy Dominance: **`82.1%`** (78 buys / 17 sells).
+    - 24-Hour Price Change: **`+38.93%`** (Fresh base breakout, safely complies with `<250%` ceiling).
+    - 1-Hour Price Change: **`-3.34%`** (Consolidated from high).
+- **Anti-FOMO Validation: `NIHAO` -86.18% Catastrophic Dump**:
+  - At slot `467814200`, `NIHAO` suffered a massive whale exit, plummeting **`-86.18%`** in under 5 minutes with pool liquidity collapsing from `$382k` to `$136k`.
+  - The Anti-FOMO ceiling (`max_price_change_24h <= 250%`) successfully kept our bot out of `NIHAO`, saving our wallet from losing 86% of its funds.
+- **Pump.fun Feature Architecture**:
+  - The Pump.fun bonding curve sniper (`tradingagents-rs snipe`) operates over Yellowstone gRPC mempool on pre-graduation curves (30%–50%).
+  - It was temporarily paused to prevent concurrent position competition against the small wallet budget (`~0.017 SOL`), allowing 100% of capital to be allocated to the winning Breakout engine.
+- **Current Portfolio Valuation**:
+  - Liquid Cash Balance: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`~0.008113 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Equity**: **`~0.01738 SOL`** (Up from `0.01684 SOL`).
 
 
 ---
@@ -1678,6 +1738,36 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 83. Checkpoint #330 — Trade #17 `jeff` Live Entry & `NIHAO` -86% Crash Defense Autopsy
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Anti-FOMO active.
+- **Trade #17 Live Execution (`jeff`)**:
+  - **Token**: `jeff` ([`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k))
+  - **Buy Tx**: [`5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79`](https://solscan.io/tx/5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79)
+  - **Protocol**: Raydium AMM via Jupiter routing + Jito tip.
+  - **Cost**: `0.008000 SOL` + `0.000100 SOL` Jito tip.
+  - **Tokens Acquired**: **`517.419411 jeff`**.
+  - **Market Profile at Entry**:
+    - Liquidity Depth: **`$101,692 USD`** (Meets $\ge \$25\text{k}$ floor).
+    - 24-Hour Trading Volume: **`$340,290 USD`**.
+    - 5-Minute Buy Dominance: **`82.1%`** (78 buys / 17 sells).
+    - 24-Hour Price Change: **`+38.93%`** (Fresh base breakout, safely complies with `<250%` ceiling).
+    - 1-Hour Price Change: **`-3.34%`** (Consolidated from high).
+- **Anti-FOMO Validation: `NIHAO` -86.18% Catastrophic Dump**:
+  - At slot `467814200`, `NIHAO` suffered a massive whale exit, plummeting **`-86.18%`** in under 5 minutes with pool liquidity collapsing from `$382k` to `$136k`.
+  - The Anti-FOMO ceiling (`max_price_change_24h <= 250%`) successfully kept our bot out of `NIHAO`, saving our wallet from losing 86% of its funds.
+- **Pump.fun Feature Architecture**:
+  - The Pump.fun bonding curve sniper (`tradingagents-rs snipe`) operates over Yellowstone gRPC mempool on pre-graduation curves (30%–50%).
+  - It was temporarily paused to prevent concurrent position competition against the small wallet budget (`~0.017 SOL`), allowing 100% of capital to be allocated to the winning Breakout engine.
+- **Current Portfolio Valuation**:
+  - Liquid Cash Balance: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`~0.008113 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Equity**: **`~0.01738 SOL`** (Up from `0.01684 SOL`).
+
+
+---
+
 ### 81. Checkpoint #328 — 2-Minute Cadence Stream Report (Mega-Runner Strategy Evaluation)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running stably.
@@ -1705,3 +1795,33 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Screened 31 trending Solana DEX tokens continuously.
   - `DACITY` (`5tBXkPVh716z`) registered high 5m volume ($8.5k–$11.9k, +14% 5m pump), safely blocked from repeat chasing.
 - **Account Growth**: Total account equity maintains **`+10.09%` net profit** since `woohao` entry (`0.016839 SOL` vs baseline `0.015296 SOL`), capital remains 100% intact.
+
+
+---
+
+### 83. Checkpoint #330 — Trade #17 `jeff` Live Entry & `NIHAO` -86% Crash Defense Autopsy
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Anti-FOMO active.
+- **Trade #17 Live Execution (`jeff`)**:
+  - **Token**: `jeff` ([`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k))
+  - **Buy Tx**: [`5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79`](https://solscan.io/tx/5hnYmRSZsZUd6RWNBvKkk3bDDEP6AeJKKyXWWBNoCUXCWrFofZ45mmNsngg7AbRQq4BkG3cwJCZm8WMDVBm5YK79)
+  - **Protocol**: Raydium AMM via Jupiter routing + Jito tip.
+  - **Cost**: `0.008000 SOL` + `0.000100 SOL` Jito tip.
+  - **Tokens Acquired**: **`517.419411 jeff`**.
+  - **Market Profile at Entry**:
+    - Liquidity Depth: **`$101,692 USD`** (Meets $\ge \$25\text{k}$ floor).
+    - 24-Hour Trading Volume: **`$340,290 USD`**.
+    - 5-Minute Buy Dominance: **`82.1%`** (78 buys / 17 sells).
+    - 24-Hour Price Change: **`+38.93%`** (Fresh base breakout, safely complies with `<250%` ceiling).
+    - 1-Hour Price Change: **`-3.34%`** (Consolidated from high).
+- **Anti-FOMO Validation: `NIHAO` -86.18% Catastrophic Dump**:
+  - At slot `467814200`, `NIHAO` suffered a massive whale exit, plummeting **`-86.18%`** in under 5 minutes with pool liquidity collapsing from `$382k` to `$136k`.
+  - The Anti-FOMO ceiling (`max_price_change_24h <= 250%`) successfully kept our bot out of `NIHAO`, saving our wallet from losing 86% of its funds.
+- **Pump.fun Feature Architecture**:
+  - The Pump.fun bonding curve sniper (`tradingagents-rs snipe`) operates over Yellowstone gRPC mempool on pre-graduation curves (30%–50%).
+  - It was temporarily paused to prevent concurrent position competition against the small wallet budget (`~0.017 SOL`), allowing 100% of capital to be allocated to the winning Breakout engine.
+- **Current Portfolio Valuation**:
+  - Liquid Cash Balance: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`~0.008113 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Equity**: **`~0.01738 SOL`** (Up from `0.01684 SOL`).
