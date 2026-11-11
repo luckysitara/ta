@@ -1038,3 +1038,49 @@ flowchart TD
 - **Capital Safety Guardrails**:
   - Engine screened 32 trending tokens per 10s cycle.
   - Safely deferred secondary entries on `VEYL` and `咪好` to maintain 100% solvency and zero risk of over-leveraging.
+
+
+---
+
+### 53. Checkpoint #300 — Trade #11 Autopsy (`DACITY` Stop-Loss Exit & ATA Rent Recovery)
+
+- **Token**: `DACITY` ([`5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump`](https://solscan.io/token/5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump))
+- **Buy Tx**: [`4X74RKa1CVxVnzfjswXkpX6yhEHNNeFepxFdQVB2vtugDVnRmPjWSrrHLK9VtomLo9RYdsf5dCH1p1uq2YkVaEPo`](https://solscan.io/tx/4X74RKa1CVxVnzfjswXkpX6yhEHNNeFepxFdQVB2vtugDVnRmPjWSrrHLK9VtomLo9RYdsf5dCH1p1uq2YkVaEPo)
+  - Cost: `0.008000 SOL` + `0.000300 SOL` Jito tip. Acquired `257.755213 DACITY`.
+- **Peak Reached**: Peak price jumped to `+21.7%` (`0.009738 SOL` quote). However, because `DACITY` was already up `+6,045%` in 24 hours, early whales began aggressive profit-taking.
+- **Sell Tx**: [`54fjZAjyaNNtVT8b9nTmpjfQxZ3xbQ9CozEjnwFLGBZ7AqxrtiHi6FfMmuw8fGEGtCanTu3dsB9vxVgtxBcda14D`](https://solscan.io/tx/54fjZAjyaNNtVT8b9nTmpjfQxZ3xbQ9CozEjnwFLGBZ7AqxrtiHi6FfMmuw8fGEGtCanTu3dsB9vxVgtxBcda14D)
+  - Dynamic stop-loss triggered at `0.92x` (-8%), saving the wallet from `DACITY`'s subsequent `-37.57%` flash crash.
+  - Return: `0.006912 SOL` gross (`0.006597 SOL` net after `0.0003 SOL` tip). Realized loss: `-0.001718 SOL` (-$0.36 USD).
+- **ATA Rent Recovery Tx**: [`4g32MWoAPG4X2XShaYGmyUyZF5emsfKYRoaFmu3GHJLkgKVqFL381yPrqQgjPCSn4a5hXFGYehaiU45KY6sVZhHD`](https://solscan.io/tx/4g32MWoAPG4X2XShaYGmyUyZF5emsfKYRoaFmu3GHJLkgKVqFL381yPrqQgjPCSn4a5hXFGYehaiU45KY6sVZhHD)
+  - Reclaimed `+0.002039 SOL` rent directly back into wallet [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re), restoring liquid SOL to `0.007705 SOL`.
+
+---
+
+### 54. Checkpoint #301 — Trade #12 Execution (`咪好` Take-Profit & Token-2022 ATA Rent Recovery)
+
+- **Token**: `咪好` / `你好猫` ([`Hg3w7GdPViZ5URuCNnK6EwXLzSTmVwX6UXLeD6Pbpump`](https://solscan.io/token/Hg3w7GdPViZ5URuCNnK6EwXLzSTmVwX6UXLeD6Pbpump))
+- **Buy Tx**: [`3zLQf6ES2cagFWrwrSW5eij5rEuCcAPmgfi8LYrTYhB2SVDvcrpuxztGc1EuYiGC4zXR2ketJ3WL84AGSxkKif9y`](https://solscan.io/tx/3zLQf6ES2cagFWrwrSW5eij5rEuCcAPmgfi8LYrTYhB2SVDvcrpuxztGc1EuYiGC4zXR2ketJ3WL84AGSxkKif9y)
+  - Cost: `0.008000 SOL` + `0.000300 SOL` tip. Acquired `973.46783 咪好` tokens.
+- **Sell Tx (Jupiter DEX)**: [`MG4hLHLzHTUsVKY7JofTaZ8fYWD54WhmbY3HERtcwxzURKwY179nY39VFfcNp5KXvS7oMBG52aQfCwZtv1tdhNH`](https://solscan.io/tx/MG4hLHLzHTUsVKY7JofTaZ8fYWD54WhmbY3HERtcwxzURKwY179nY39VFfcNp5KXvS7oMBG52aQfCwZtv1tdhNH)
+  - Sold `973.46783 咪好` tokens back to SOL via Jupiter swap at **`+11.4% gross profit`** (`0.008912 SOL` gross, `+0.000312 SOL` pure net profit after all tips and fees).
+- **Token-2022 ATA Rent Recovery Tx**: [`4tsqueJHxvHrkxMAQxSQgS3jVVyKDJT8P6qMzjDWzz5crARe6xxPp9kcFEUwbrqoERiwAJT4mKLUxXaiY3U7Z5Kb`](https://solscan.io/tx/4tsqueJHxvHrkxMAQxSQgS3jVVyKDJT8P6qMzjDWzz5crARe6xxPp9kcFEUwbrqoERiwAJT4mKLUxXaiY3U7Z5Kb)
+  - Reclaimed `+0.002039 SOL` Token-2022 ATA rent directly back to wallet.
+  - Final Liquid SOL Balance Restored: **`0.018088851 SOL`** (Preserving ~91% of total starting capital with zero stranded tokens).
+
+---
+
+### 55. Checkpoint #302 — Anti-FOMO Guardrail Deployment & Live Daemon Launch
+
+- **The Problem Identified**:
+  - The user observed: *"should it be buying when it is already high? like the token is already +6045"*.
+  - Parabolic exhaustion: tokens up thousands of percent in 24 hours are at the end of their momentum cycle; early holders dump, leading to immediate -15% to -40% pullbacks.
+- **Anti-FOMO Guardrails Added**:
+  1. `max_price_change_24h = 250.0%`: strictly rejects any token up more than +250% over the last 24h.
+  2. `max_price_change_1h = 50.0%`: rejects parabolic 1-hour spikes to prevent entering tops.
+  3. `min_price_change_24h = 0.0%`: prevents entering decaying dumpers.
+  4. Unit test `test_anti_fomo_rejects_extended_tops` added to verify rejection logic.
+- **Live Daemon Launch**:
+  - Task ID: [`task-13708`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13708.log)
+  - Execution Mode: Live On-Chain (Real SOL via Jupiter & Jito MEV bundles).
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re) (Balance: `0.0181 SOL`).
+  - Strict Anti-FOMO active: screening 32 trending DEX tokens every 10s for early base breakouts.

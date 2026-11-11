@@ -23,6 +23,9 @@ pub struct BreakoutSettings {
     pub min_buys_5m: usize,
     pub min_buy_ratio_5m: f64,
     pub min_price_change_5m: f64,
+    pub max_price_change_24h: Option<f64>,
+    pub max_price_change_1h: Option<f64>,
+    pub min_price_change_24h: Option<f64>,
     pub trailing_stop_pct: f64,
     pub break_even_mult: f64,
     pub is_paper_trading: bool,
@@ -42,6 +45,9 @@ impl Default for BreakoutSettings {
             min_buys_5m: 10,
             min_buy_ratio_5m: 0.55,
             min_price_change_5m: 0.5,
+            max_price_change_24h: Some(250.0),
+            max_price_change_1h: Some(50.0),
+            min_price_change_24h: Some(0.0),
             trailing_stop_pct: -15.0,
             break_even_mult: 1.25,
             is_paper_trading: true,
@@ -64,6 +70,7 @@ pub struct BreakoutCandidate {
     pub volume_5m_usd: f64,
     pub price_change_5m: f64,
     pub price_change_1h: f64,
+    pub price_change_24h: f64,
     pub buys_5m: usize,
     pub sells_5m: usize,
     pub score: f64,
@@ -148,6 +155,26 @@ impl BreakoutEngine {
         // 4. Momentum check: Price must be breaking out positively in 5m
         if c.price_change_5m < self.settings.min_price_change_5m {
             return false;
+        }
+
+        // 4b. Anti-FOMO Guardrails: Must be an early-stage base breakout, NOT a late-stage parabolic top!
+        if let Some(max_24h) = self.settings.max_price_change_24h {
+            if c.price_change_24h > max_24h {
+                // Reject: Already up e.g. >250% (like DACITY +6,000%), extreme risk of buying the top!
+                return false;
+            }
+        }
+        if let Some(min_24h) = self.settings.min_price_change_24h {
+            if c.price_change_24h < min_24h {
+                // Reject: Negative 24h trend / dying dump
+                return false;
+            }
+        }
+        if let Some(max_1h) = self.settings.max_price_change_1h {
+            if c.price_change_1h > max_1h {
+                // Reject: Vertical 1h blow-off spike (>50%)
+                return false;
+            }
         }
 
         // 5. Must not be already entered or active
@@ -240,6 +267,7 @@ impl BreakoutEngine {
                 let volume_5m_usd = p["volume"]["m5"].as_f64().unwrap_or(0.0);
                 let price_change_5m = p["priceChange"]["m5"].as_f64().unwrap_or(0.0);
                 let price_change_1h = p["priceChange"]["h1"].as_f64().unwrap_or(0.0);
+                let price_change_24h = p["priceChange"]["h24"].as_f64().unwrap_or(0.0);
                 let buys_5m = p["txns"]["m5"]["buys"].as_u64().unwrap_or(0) as usize;
                 let sells_5m = p["txns"]["m5"]["sells"].as_u64().unwrap_or(0) as usize;
 
@@ -256,6 +284,7 @@ impl BreakoutEngine {
                     volume_5m_usd,
                     price_change_5m,
                     price_change_1h,
+                    price_change_24h,
                     buys_5m,
                     sells_5m,
                     score: 0.0,
@@ -584,8 +613,10 @@ impl BreakoutEngine {
                     }
                 }
 
-                // 2. Automatically close token account to reclaim 0.002039 SOL rent
-                let _ = exec.close_token_account_jito(token_address, tip, false).await;
+                // 2. Automatically close token account to reclaim 0.002039 SOL rent (try standard SPL then Token-2022)
+                if exec.close_token_account_jito(token_address, tip, false).await.is_err() {
+                    let _ = exec.close_token_account_jito(token_address, tip, true).await;
+                }
 
                 // 3. Sync live balance
                 if let Ok(real_bal) = exec.get_balance_sol().await {
@@ -665,6 +696,7 @@ mod tests {
             volume_5m_usd: 10_000.0,
             price_change_5m: 5.0,
             price_change_1h: 20.0,
+            price_change_24h: 30.0,
             buys_5m: 30,
             sells_5m: 5,
             score: 8.5,
@@ -688,11 +720,58 @@ mod tests {
             volume_5m_usd: 22_000.0, // $22k in 5m
             price_change_5m: 3.5, // +3.5% moving up
             price_change_1h: 15.0,
+            price_change_24h: 85.0, // Healthy early breakout from base (< 250%)
             buys_5m: 135, // 135 buys
             sells_5m: 35, // 35 sells -> 79% buy ratio!
             score: 9.2,
         };
-        assert!(engine.evaluate_candidate(&mihao_candidate), "Must qualify MIHAO breakout!");
+        assert!(engine.evaluate_candidate(&mihao_candidate), "Must qualify early base breakout!");
+    }
+
+    #[test]
+    fn test_anti_fomo_rejects_extended_tops() {
+        let engine = BreakoutEngine::new(BreakoutSettings::default(), None);
+        // Candidate 1: Extended 24h runner (+6,045%, like DACITY blow-off top)
+        let extended_top = BreakoutCandidate {
+            token_address: "ExtendedTopToken11111111111111111111111111".to_string(),
+            name: "Parabolic Runner".to_string(),
+            symbol: "TOP".to_string(),
+            pair_address: "pair_top".to_string(),
+            dex_id: "pumpswap".to_string(),
+            price_usd: 0.0028,
+            price_native: 0.000034,
+            liquidity_usd: 120_000.0,
+            volume_24h_usd: 2_000_000.0,
+            volume_5m_usd: 20_000.0,
+            price_change_5m: 5.0,
+            price_change_1h: 15.0,
+            price_change_24h: 6045.0, // +6,045% in 24h -> Extreme top-chasing risk!
+            buys_5m: 50,
+            sells_5m: 10,
+            score: 9.0,
+        };
+        assert!(!engine.evaluate_candidate(&extended_top), "Must reject token already up +6,045% in 24h!");
+
+        // Candidate 2: Parabolic 1h blow-off spike (+80% in 1h)
+        let blowoff_1h = BreakoutCandidate {
+            token_address: "BlowoffToken1111111111111111111111111111111".to_string(),
+            name: "Blowoff Spike".to_string(),
+            symbol: "SPIKE".to_string(),
+            pair_address: "pair_spike".to_string(),
+            dex_id: "raydium".to_string(),
+            price_usd: 0.05,
+            price_native: 0.0006,
+            liquidity_usd: 80_000.0,
+            volume_24h_usd: 500_000.0,
+            volume_5m_usd: 15_000.0,
+            price_change_5m: 8.0,
+            price_change_1h: 85.0, // +85% in 1 hour -> Vertical blowoff spike (>50%)
+            price_change_24h: 120.0,
+            buys_5m: 40,
+            sells_5m: 5,
+            score: 8.5,
+        };
+        assert!(!engine.evaluate_candidate(&blowoff_1h), "Must reject token already up +85% in last hour!");
     }
 
     #[test]

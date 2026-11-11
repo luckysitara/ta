@@ -358,6 +358,14 @@ enum Commands {
         #[arg(long, default_value_t = 0.5)]
         min_price_change_5m: f64,
 
+        /// Anti-FOMO: Maximum allowable 24h price increase % (default: 250.0 for +250%)
+        #[arg(long, default_value_t = 250.0)]
+        max_price_change_24h: f64,
+
+        /// Anti-FOMO: Maximum allowable 1h price spike % (default: 50.0 for +50%)
+        #[arg(long, default_value_t = 50.0)]
+        max_price_change_1h: f64,
+
         /// Trailing stop loss percentage from peak watermark (default: -15.0 for -15%)
         #[arg(long, default_value_t = -15.0)]
         trailing_stop_pct: f64,
@@ -501,6 +509,8 @@ async fn main() -> anyhow::Result<()> {
         min_buys_5m,
         min_buy_ratio_5m,
         min_price_change_5m,
+        max_price_change_24h,
+        max_price_change_1h,
         trailing_stop_pct,
         break_even_mult,
         poll_interval_secs,
@@ -521,6 +531,8 @@ async fn main() -> anyhow::Result<()> {
             min_buys_5m,
             min_buy_ratio_5m,
             min_price_change_5m,
+            max_price_change_24h,
+            max_price_change_1h,
             trailing_stop_pct,
             break_even_mult,
             poll_interval_secs,
@@ -1346,21 +1358,43 @@ async fn run_liquidate(mint_filter: Option<String>) -> anyhow::Result<()> {
 
     for m in target_mints {
         println!("  Attempting to sell / close ATA: {}...", m);
-        match executor.execute_snipe_sell_jito(&m, "", None, 0, 1, 0.0008, true).await {
+        let mut sold = false;
+
+        // 1. Try Jupiter DEX swap first (covers Raydium, Meteora, PumpSwap, Orca, and Pump.fun)
+        match executor.execute_jupiter_swap_jito(&m, "So11111111111111111111111111111111111111112", 0, 0.0003, 300).await {
             Ok(res) => {
-                println!("    ✔ Submitted sell + rent reclaim: https://solscan.io/tx/{}", res.signature);
+                println!("    ✔ Submitted Jupiter DEX swap: https://solscan.io/tx/{}", res.signature);
                 let _ = executor.poll_signature_confirmation(&res.signature, 8, 500).await;
+                sold = true;
             }
             Err(e) => {
-                println!("    Sell returned: {}. Attempting direct ATA close...", e);
-                match executor.close_token_account_jito(&m, 0.0008, true).await {
-                    Ok(res2) => {
-                        println!("    ✔ ATA closed directly, rent reclaimed: https://solscan.io/tx/{}", res2.signature);
-                        let _ = executor.poll_signature_confirmation(&res2.signature, 8, 500).await;
-                    }
-                    Err(e2) => {
-                        println!("    ✖ Direct close skipped / error: {}", e2);
-                    }
+                println!("    Jupiter swap returned: {}. Attempting direct Pump.fun bonding curve...", e);
+            }
+        }
+
+        // 2. Fallback to direct Pump.fun bonding curve instruction
+        if !sold {
+            match executor.execute_snipe_sell_jito(&m, "", None, 0, 1, 0.0008, true).await {
+                Ok(res) => {
+                    println!("    ✔ Submitted Pump.fun sell: https://solscan.io/tx/{}", res.signature);
+                    let _ = executor.poll_signature_confirmation(&res.signature, 8, 500).await;
+                }
+                Err(e) => {
+                    println!("    Pump.fun sell returned: {}. Proceeding to close ATA...", e);
+                }
+            }
+        }
+
+        // 3. Close ATA to reclaim 0.002039 SOL rent (try standard SPL Token then Token-2022)
+        match executor.close_token_account_jito(&m, 0.0003, false).await {
+            Ok(res2) => {
+                println!("    ✔ SPL ATA closed, rent reclaimed: https://solscan.io/tx/{}", res2.signature);
+                let _ = executor.poll_signature_confirmation(&res2.signature, 8, 500).await;
+            }
+            Err(_) => {
+                if let Ok(res2) = executor.close_token_account_jito(&m, 0.0003, true).await {
+                    println!("    ✔ Token-2022 ATA closed, rent reclaimed: https://solscan.io/tx/{}", res2.signature);
+                    let _ = executor.poll_signature_confirmation(&res2.signature, 8, 500).await;
                 }
             }
         }
@@ -1385,6 +1419,8 @@ async fn run_breakout_scanner(
     min_buys_5m: usize,
     min_buy_ratio_5m: f64,
     min_price_change_5m: f64,
+    max_price_change_24h: f64,
+    max_price_change_1h: f64,
     trailing_stop_pct: f64,
     break_even_mult: f64,
     poll_interval_secs: u64,
@@ -1406,6 +1442,7 @@ async fn run_breakout_scanner(
     println!("  Volume Surge Filter: ≥ ${:.1}k (24h) | ≥ ${:.1}k (5m)", min_volume_24h_usd / 1000.0, min_volume_5m_usd / 1000.0);
     println!("  Buy Pressure Filter: ≥ {} buys in 5m | ≥ {:.0}% buy dominance", min_buys_5m, min_buy_ratio_5m * 100.0);
     println!("  Momentum Trigger:    ≥ +{:.1}% in 5m candle", min_price_change_5m);
+    println!("  Anti-FOMO Ceiling:   Max 24h: +{:.0}% | Max 1h: +{:.0}% (Rejects late exhaustion)", max_price_change_24h, max_price_change_1h);
     println!("  Trailing Stop Loss:  {:.1}% from peak watermark (Break-Even Floor: ≥{:.2}x)", trailing_stop_pct, break_even_mult);
     println!("  Scanner Interval:    Every {} seconds\n", poll_interval_secs);
 
@@ -1437,6 +1474,9 @@ async fn run_breakout_scanner(
         min_buys_5m,
         min_buy_ratio_5m,
         min_price_change_5m,
+        max_price_change_24h: Some(max_price_change_24h),
+        max_price_change_1h: Some(max_price_change_1h),
+        min_price_change_24h: Some(0.0),
         trailing_stop_pct,
         break_even_mult,
         is_paper_trading: is_paper,
