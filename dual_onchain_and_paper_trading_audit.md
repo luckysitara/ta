@@ -979,3 +979,24 @@ flowchart TD
     - Identified breakout entry for `VEYL` (`GHtnAtTCPFz8MRTMQiEyuEob283EUgqd1d1Fysnhpump`) at $\$0.000153$ with $100$ buys in 5m.
 - **Live Wallet Capital Preservation**:
   - Wallet balance strictly preserved at **`0.020610716 SOL`** ($0$ open positions, $0$ ATA rent locked).
+
+---
+
+### 50. Checkpoint #297 — Trade #11 Live On-Chain Breakout Entry (`DACITY` on PumpSwap/Raydium)
+
+- **Daemon Status**: Live On-Chain Breakout Daemon [`task-13435`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13435.log) actively running.
+- **Trade #11 Execution Details (Mainnet Finalized)**:
+  - **Token**: `DACITY` ([`5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump`](https://solscan.io/token/5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump)).
+  - **Transaction Signature**: [`4X74RKa1CVxVnzfjswXkpX6yhEHNNeFepxFdQVB2vtugDVnRmPjWSrrHLK9VtomLo9RYdsf5dCH1p1uq2YkVaEPo`](https://solscan.io/tx/4X74RKa1CVxVnzfjswXkpX6yhEHNNeFepxFdQVB2vtugDVnRmPjWSrrHLK9VtomLo9RYdsf5dCH1p1uq2YkVaEPo).
+  - **Status**: Finalized on Solana Mainnet.
+  - **Buy Size**: `0.0080 SOL` (+ `0.0003 SOL` Jito MEV tip).
+  - **Tokens Acquired**: `257.755213 DACITY`.
+  - **Market Context at Entry**:
+    - Liquidity Depth: **`$128,767 USD`** (Deep order book on PumpSwap/Raydium).
+    - 24-Hour Volume: **`$2,370,931 USD`** ($2.37M).
+    - 24-Hour Price Change: **`+6,045%`** (Massive viral runner profile).
+  - **Active Strategy**:
+    - **Dynamic Trailing Stop**: $-15\%$ from highest peak watermark.
+    - **Break-Even Floor**: Locks $+2\%$ floor once peak reaches $\ge 1.25\text{x}$.
+    - **Uncapped Upside**: No artificial take-profit ceiling, letting the runner ride upwards.
+  - **Liquid SOL Balance**: `0.0094 SOL` available liquid SOL in reserve.
