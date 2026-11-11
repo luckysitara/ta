@@ -1235,3 +1235,24 @@ flowchart TD
   - Token Asset Value (`woohao`): **`~0.00720 SOL`**
   - ATA Rent Reserve: **`0.002039 SOL`**
   - **Total Net Equity**: **`~0.01467 SOL`**
+
+
+---
+
+### 62. Checkpoint #309 — Live Telemetry Report (Trade #14 `woohao` Rebound & Buy Dominance Telemetry)
+
+- **Task Status**: Active Live Daemon [`task-13708`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13708.log) managing active on-chain position.
+- **Active Position Monitoring (`woohao`)**:
+  - Token: [`BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump`](https://solscan.io/token/BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump)
+  - Tokens Held: **`5045.610484 woohao`**
+  - Current Jupiter Sell Quote: **`0.007320978 SOL`** (Rebounding from `0.007199 SOL`).
+  - Retail Buy Dominance: **`57.8%`** (59 buys / 43 sells in recent 5m candle).
+  - Trailing Stop Level: `0.85x` (`0.0068 SOL`), dynamically tracking high watermark.
+  - Liquidity Depth: **`$25,700 USD`**
+  - 5-Minute Volume: **`$6,152 USD`**
+- **Scanner Screening**: 30 trending DEX tokens screened every 10 seconds. Secondary entries deferred while `woohao` is open.
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.005434192 SOL`**
+  - Token Asset Value (`woohao`): **`~0.00732 SOL`**
+  - ATA Rent Reserve: **`0.002039 SOL`**
+  - **Total Net Equity**: **`~0.01479 SOL`** (Up from `0.01467 SOL` in Checkpoint #308).
