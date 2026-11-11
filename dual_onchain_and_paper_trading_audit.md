@@ -2220,3 +2220,25 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - **Token Value (`GATO`)**: **`0.008202000 SOL`**
   - **ATA Rent (`GATO`)**: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.016077 SOL`** (**`+5.11% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+---
+
+### 109. Checkpoint #356 — 2-Minute Cadence Stream Report (Early +2.5% Lockbox Tier Deployed & GATO Holding +2.07% Green)
+
+- **Engine Optimization**: Lowered Tier 1 Break-Even Lockbox activation from `+3.0%` to **`+2.5%`** (`1.025x`), locking the floor at `+1.0%` to capture fee-covered break-even sooner and eliminate drawdowns on tokens that consolidate near $+3\%$.
+- **Active Trade #19 (`GATO`) Telemetry**:
+  - Token: [`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`](https://solscan.io/token/HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump)
+  - Tokens Held: `79.47379 GATO`
+  - Current Price: `$0.008666` (`0.0001023 SOL`, **`+2.07%`** over entry basis of `$0.008490`).
+  - Current Position Valuation: **`0.008130 SOL`**
+  - Lockbox Trigger Status: Peak reached `+2.99%`.
+- **Scanner Screening & Filter Telemetry**:
+  - 34 DEX pairs screened continuously.
+  - `forg` (`2HhH7Lwf...`): Disqualified by `min_liquidity_usd >= $25k` ($3.8k liquidity pool).
+  - Secondary entries deferred while `GATO` runs (`max_positions = 1`).
+- **Portfolio Valuation & Balances (Post-`woohao` Era)**:
+  - **Starting Baseline (At `woohao` Entry)**: `0.015296 SOL`
+  - **Liquid Cash**: **`0.005835832 SOL`** on [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - **Token Value (`GATO`)**: **`0.008130000 SOL`**
+  - **ATA Rent (`GATO`)**: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.016005 SOL`** (**`+4.64% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
