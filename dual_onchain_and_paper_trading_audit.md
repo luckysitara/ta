@@ -1185,3 +1185,32 @@ flowchart TD
   - **Total Portfolio Equity**: **`~0.01825 SOL`**
 - **Capital Control**:
   - Max concurrent positions set to 1; all further entries deferred while `VEYL` is active.
+
+
+---
+
+### 60. Checkpoint #307 — Live Execution Report (Trade #13 `VEYL` Stop-Loss & Trade #14 `woohao` Entry)
+
+- **Task Status**: Active Live Daemon [`task-13708`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13708.log) continuously screening and managing on-chain positions.
+- **Trade #13 (`VEYL`) Stop-Loss Autopsy & Rent Reclaim**:
+  - Sell Execution Tx: [`4K8brgn5YhyThTrfsLc4yjQwLNUZjfBuHSkVC5tx47Z68SKiHNX9B4XCnD4BbuL5rMoK9aNtxZ34AeBpW1ES9oEo`](https://solscan.io/tx/4K8brgn5YhyThTrfsLc4yjQwLNUZjfBuHSkVC5tx47Z68SKiHNX9B4XCnD4BbuL5rMoK9aNtxZ34AeBpW1ES9oEo)
+  - Exit Trigger: Automated stop-loss protection triggered at `0.92x` (-8%), returning `0.00735 SOL` gross.
+  - ATA Rent Recovery Tx: [`4gLpubJ5hXnpMf4WvMc8Zz5mwNUg9pJsSnYUYkYezyMuT3yA9GhPMc3xceHPdr2x7ahhyWMvuoaMj27i6sWpGsac`](https://solscan.io/tx/4gLpubJ5hXnpMf4WvMc8Zz5mwNUg9pJsSnYUYkYezyMuT3yA9GhPMc3xceHPdr2x7ahhyWMvuoaMj27i6sWpGsac) (Reclaimed `+0.002039 SOL` rent directly).
+  - Risk Management Impact: The automated stop-loss cut losses early and saved the wallet from `VEYL`'s subsequent flash drop down to `0.0058 SOL`. Realized loss: `-0.00095 SOL` (-$0.19 USD).
+- **Trade #14 (`woohao`) Live On-Chain Entry**:
+  - **Token**: `woohao` / `ni hao dog` ([`BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump`](https://solscan.io/token/BLVpn8ofkjnAzpWGaVpspZ5bHTeXDbXFgX4vn3fkpump))
+  - **Buy Tx**: [`5japMXfCaGEvvqFbNbzHPisLM52ZCChdeAGQFZmxsxtEsJktDC4LaYs4QqA2KcuTdFV3g6umYeR8qnY4fUVU2jPG`](https://solscan.io/tx/5japMXfCaGEvvqFbNbzHPisLM52ZCChdeAGQFZmxsxtEsJktDC4LaYs4QqA2KcuTdFV3g6umYeR8qnY4fUVU2jPG)
+  - **Cost**: `0.008000 SOL` + `0.000300 SOL` Jito MEV tip.
+  - **Tokens Acquired**: **`5045.610484 woohao`**.
+  - **Market Profile & Anti-FOMO Compliance**:
+    - Liquidity Depth: **`$26,233 USD`** (Complies with $\ge \$25\text{k}$ floor).
+    - 24-Hour Trading Volume: **`$274,522 USD`** (Complies with $\ge \$100\text{k}$ floor).
+    - 5-Minute Volume Surge: **`$4,954 USD`** (Complies with $\ge \$3\text{k}$ floor).
+    - 24-Hour Price Change: **`+196%`** (Complies with `max_price_change_24h <= 250%`).
+    - 1-Hour Price Change: **`+23.69%`** (Complies with `max_price_change_1h <= 50%`).
+  - **Active Strategy**: Dynamic trailing stop (-15% from high watermark) with break-even lock at $\ge 1.25\text{x}$.
+- **Current Portfolio Valuation**:
+  - Liquid SOL Cash: **`0.005434192 SOL`**
+  - Token Position Value (`woohao`): **`0.007823559 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Equity**: **`~0.01530 SOL`**
