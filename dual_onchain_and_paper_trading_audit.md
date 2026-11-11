@@ -1155,3 +1155,33 @@ flowchart TD
   3. **`VEYL` Filtered**:
      - `VEYL` spiked +12.21% in 5m ($4.5k vol), but was rejected by the 24h ceiling.
 - **Solvency**: Capital remains 100% secure with zero stranded tokens and zero phantom positions.
+
+
+---
+
+### 59. Checkpoint #306 — Trade #13 Live Execution Report (`VEYL` On-Chain Breakout Entry)
+
+- **Task Status**: Active Live Daemon [`task-13708`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13708.log) running smoothly in on-chain breakout mode.
+- **Trade #13 Execution (`VEYL`)**:
+  - **Token**: `VEYL` ([`GHtnAtTCPFz8MRTMQiEyuEob283EUgqd1d1Fysnhpump`](https://solscan.io/token/GHtnAtTCPFz8MRTMQiEyuEob283EUgqd1d1Fysnhpump))
+  - **Buy Tx**: [`FjZwT2bLkVnmHDehyeFpg66rGycmrCU5jYaUKSNqkKLeVexnMVoSqMjUdMqaYyRR8PcwTeieDvLYUo9V56gFwtW`](https://solscan.io/tx/FjZwT2bLkVnmHDehyeFpg66rGycmrCU5jYaUKSNqkKLeVexnMVoSqMjUdMqaYyRR8PcwTeieDvLYUo9V56gFwtW)
+  - **Status**: Finalized on Solana Mainnet via PumpSwap AMM and Jito MEV protection.
+  - **Cost**: `0.008000 SOL` + `0.000300 SOL` Jito tip.
+  - **Tokens Acquired**: **`5045.294408 VEYL`**.
+  - **Market Profile at Entry**:
+    - Liquidity Depth: **`$29,303 USD`** (Exceeds $\ge \$25\text{k}$ safety floor).
+    - 24-Hour Trading Volume: **`$2,022,075 USD`** ($2.02M).
+    - 5-Minute Volume Surge: **`$4,476 USD`** (Exceeds $\ge \$3\text{k}$ momentum threshold).
+    - Retail Buy Dominance: **`64.7%`** (33 buys / 18 sells in 5m, exceeding 55% rule).
+    - Anti-FOMO Status: 24h change at entry was **`+247%`** (Complies with `max_price_change_24h <= 250%`), following a healthy **`-12.67%`** 1-hour pullback consolidation from prior spike.
+- **Active Trade Management**:
+  - Dynamic trailing stop: **`-15.0%`** from highest peak price.
+  - Break-even lock: $+2\%$ floor automatically armed once multiplier reaches $\ge 1.25\text{x}$.
+  - Current Jupiter Sell Quote: `0.007949 SOL`.
+- **Wallet & Portfolio Valuation**:
+  - Liquid SOL Cash: **`0.008260011 SOL`**
+  - Token Asset Value: **`~0.00795 SOL`**
+  - ATA Rent Reserve: **`0.002039 SOL`**
+  - **Total Portfolio Equity**: **`~0.01825 SOL`**
+- **Capital Control**:
+  - Max concurrent positions set to 1; all further entries deferred while `VEYL` is active.
