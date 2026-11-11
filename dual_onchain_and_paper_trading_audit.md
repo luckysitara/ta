@@ -1399,3 +1399,25 @@ flowchart TD
   - ATA Rent Reserve: **`0.002039280 SOL`**
   - **Total Net Portfolio Value**: **`~0.01783 SOL`**
 - **Capital Safety**: Max positions locked at 1; zero concurrent entries permitted while `DIGS` is open.
+
+
+---
+
+### 69. Checkpoint #316 — Live Telemetry Report (Trade #15 `DIGS` Active Position Telemetry)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) running with Trailing Take-Profit & Fee-Optimized rules active.
+- **Active Position Monitoring (`DIGS`)**:
+  - Token: [`9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump`](https://solscan.io/token/9QT8K685Hrae4k11dhGXirdtpfAaimExtyfwt8cPpump)
+  - Tokens Held: **`4324.933861 DIGS`**
+  - Entry Cost: `0.008000 SOL` (+ `0.000100 SOL` Jito tip).
+  - Current Jupiter Sell Quote: **`0.007516715 SOL`** (Current multiplier: `0.94x`).
+  - Liquidity Depth: **`$32,675 USD`**
+  - 24-Hour Trading Volume: **`$479,996 USD`**
+  - 5-Minute Volume: **`$2,582 USD`** (93 buys / 48 sells; 66% buy dominance).
+  - Risk Management: Tight stop-loss set to **`-5.0%`**; Trailing Take-Profit ready to ratchet upon recovery to $\ge +8.0\%$.
+- **Portfolio Valuation (Capital Stability)**:
+  - Liquid Cash Balance: **`0.007880236 SOL`**
+  - Token Value (`DIGS`): **`0.007516715 SOL`**
+  - ATA Rent Reserve: **`0.002039280 SOL`**
+  - **Total Net Portfolio Value**: **`~0.01744 SOL`**
+- **Capital Safety**: 1 active position max; zero concurrent entry exposure.
