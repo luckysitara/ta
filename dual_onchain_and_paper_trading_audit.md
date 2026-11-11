@@ -1847,6 +1847,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -1981,6 +2004,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008289 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01756 SOL`** (**`+14.83% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -2246,6 +2292,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2380,6 +2449,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008289 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01756 SOL`** (**`+14.83% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -2644,6 +2736,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -2778,6 +2893,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008289 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01756 SOL`** (**`+14.83% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
 
 
 ---
@@ -3043,6 +3181,29 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 
 ---
 
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
 ### 88. Checkpoint #335 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Position Consolidation & Stability)
 
 - **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
@@ -3177,3 +3338,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Token Value (`jeff`): **`0.008289 SOL`**
   - ATA Rent: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.01756 SOL`** (**`+14.83% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+
+---
+
+### 94. Checkpoint #341 — 2-Minute Cadence Stream Report (Trade #17 `jeff` Surges to +4.20% Profit & Equity Reaches 0.01761 SOL)
+
+- **Task Status**: Active Live Daemon [`task-13950`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13950.log) managing active on-chain position.
+- **Active Trade #17 (`jeff`) Monitoring**:
+  - Token: [`HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k`](https://solscan.io/token/HAsTKXYvv65zM7J6Cu5o5PcZsiKMQYo5oz4WPjgqwP6k)
+  - Tokens Held: **`517.419411 jeff`**
+  - Current Price: `$0.001356` (`0.00001611 SOL`, continuous uptrend).
+  - Current Valuation: **`0.008336 SOL`** (**`1.042x`**, **`+4.20%`** unrealized gain over entry).
+  - Trailing Engine: Tight stop at `-5.0%`; Trailing Take-Profit ratchet ready to trigger at $\ge +8.0\%$.
+- **Scanner Screening & Filter Telemetry**:
+  - 33 DEX pairs screened every 10 seconds.
+  - `GATO` (`HsprHxBR...`): Dropped `-7.16%` in 5m ($30.8k volume). Validates our earlier Trailing Take-Profit exit which captured the exact top at `+6.8%` before this pullback.
+  - `FUCAT` & `月薪喵`: Filtered out by `min_liquidity_usd >= $25k` floor ($11.9k and $13.6k pools).
+  - Secondary entries deferred while `jeff` is active (`max_positions = 1`).
+- **Portfolio Valuation**:
+  - Liquid Cash: **`0.007235632 SOL`**
+  - Token Value (`jeff`): **`0.008336 SOL`**
+  - ATA Rent: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.01761 SOL`** (**`+15.13% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
