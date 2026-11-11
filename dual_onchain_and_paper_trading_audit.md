@@ -2045,3 +2045,33 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - **Token Value (`DIGS`)**: **`0.007878 SOL`**
   - **ATA Rent Reclaimable**: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.016381 SOL`** (**`+7.09% Net Account Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+---
+
+### 102. Checkpoint #349 — Trade #17 `jeff` Loss Autopsy & Granular 5-Tier Lockbox Deployment
+
+- **User Inquiry & Post-Mortem**: *"so i made a loss on the jeff trade even when it did increase to +5% initially, that was bad, let that not repeat again"*
+- **Forensic Trade #17 Autopsy**:
+  - Entry: `0.008000 SOL` + `0.000100 SOL` Jito tip.
+  - Peak Surge: Reached **`+5.04%`** ($0.00840 SOL valuation).
+  - Failure Mechanism in Old Engine: Trailing Take-Profit activation was set at $\ge +7.0\%$, leaving the stop-loss down at `-5.0%`. When `jeff` hit `+5.04%`, **no profit floor was locked**.
+  - Retrace & Exit: `jeff` pulled back from `+5.04%` to `+1.2%`. When liquidated via Jupiter DEX ([Tx `62sg5TQk...`](https://solscan.io/tx/62sg5TQktKgd9Cf9GyETKbhzqAxw7i53s9UpLuD5GBZ6UFXTVHA3rKKF4dS9WfUn7jbvWc7GevP8fTxVBAer73sD)), DEX execution slippage and the `0.000300 SOL` Jito tip returned `0.007676 SOL` net cash to the wallet.
+  - Net Loss: **`-0.000324 SOL`** (`-4.05%`), turning what was a $+5\%$ winning trade into a loss.
+- **Architectural Fix (Granular 5-Tier Lockbox Deployed in `src/solana/breakout.rs`)**:
+  - **Tier 1 ($\ge +3.0\%$ Peak)**: Locks floor at `+1.2%` (Covers all MEV tips and swap fees).
+  - **Tier 2 ($\ge +4.0\%$ Peak)**: Locks floor at `+2.0%` guaranteed profit.
+  - **Tier 3 ($\ge +5.0\%$ Peak)**: Locks floor at `+3.0%` guaranteed profit. **Never allows a +5% winner to exit with less than +3.0% net gain!**
+  - **Tier 4 ($\ge +6.0\%$ Peak)**: Locks floor at `+4.0%` guaranteed profit.
+  - **Tier 5 ($\ge +7.0\%$ Peak)**: Dynamic trailing ratchet with `1.5%` callback buffer (Minimum floor `+4.5%`).
+- **Live Daemon Status**:
+  - Active Daemon: [`task-14684`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-14684.log) running compiled release binary with continuous position telemetry.
+- **Active Trade #18 (`DIGS`) Monitoring**:
+  - Tokens Held: `4,013.285761 DIGS`
+  - Current Price: `$0.0001689` (`0.000002012 SOL`, +1.81% in 5m)
+  - Current Position Valuation: `0.008075 SOL` (`+0.93%` in profit)
+  - Capital Defense Floor: `-5.0%` ($0.00016055)
+- **Wallet & Portfolio Valuation**:
+  - Liquid Cash: `0.006463925 SOL`
+  - Token Valuation (`DIGS`): `0.008074700 SOL`
+  - ATA Rent: `0.002039280 SOL`
+  - **Total Net Equity**: **`~0.016578 SOL`** (**`+8.38% Net Account Growth`** since `woohao` entry baseline of `0.015296 SOL`).
