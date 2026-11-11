@@ -1000,3 +1000,21 @@ flowchart TD
     - **Break-Even Floor**: Locks $+2\%$ floor once peak reaches $\ge 1.25\text{x}$.
     - **Uncapped Upside**: No artificial take-profit ceiling, letting the runner ride upwards.
   - **Liquid SOL Balance**: `0.0094 SOL` available liquid SOL in reserve.
+
+---
+
+### 51. Checkpoint #298 — Live Breakout Telemetry Report (Active Position: `DACITY`)
+
+- **Task Status**: Active Live Daemon [`task-13435`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-13435.log) running smoothly in on-chain breakout mode.
+- **Active Position Monitoring (`DACITY`)**:
+  - Token Mint: [`5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump`](https://solscan.io/token/5tBXkPVh716zSXHNZSr8i1PX7e6Uuj46JnBLdYchpump).
+  - Tokens Held: **`257.755213 DACITY`**.
+  - Current Price: **`$0.002583 USD`** (`0.00003082 SOL`), up **`+2.14%`** in recent 5m candle.
+  - Position Value: `~0.00794 SOL` tokens + `0.002039 SOL` ATA rent reserve = `~0.00998 SOL` total asset value.
+  - Liquidity Depth: **`$129,293 USD`** (Deep order book across PumpSwap/Raydium).
+  - 24h Trading Volume: **`$2,373,790 USD`** ($2.37M).
+  - Trailing Stop Status: Active trailing stop tracking price watermark; uncap runner strategy enabled.
+- **Capital Safety & Over-Leverage Prevention**:
+  - The scanner continuously screened 32 trending tokens per cycle.
+  - When candidates like `VEYL` triggered momentum signals, the engine strictly enforced the wallet capital reservation rule (`0.0094 SOL < 0.0105 SOL required`), safely rejecting additional entries and protecting wallet liquidity from over-leveraging.
+- **Total Portfolio Value**: **`~0.0194 SOL`** (Equity stable near initial 0.020 SOL).
