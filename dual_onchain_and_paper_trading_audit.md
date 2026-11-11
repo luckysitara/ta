@@ -2157,3 +2157,20 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - **Token Value (`GATO`)**: **`0.007979000 SOL`**
   - **ATA Rent (`GATO`)**: **`0.002039280 SOL`**
   - **Total Net Equity**: **`~0.015854 SOL`** (**`+3.65% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
+
+---
+
+### 106. Checkpoint #353 — Post-Woohao Filter Streamlined & Trade #19 GATO Surges to +1.70%
+
+- **User Preference Update**: Streamlined report to display **only analysis and trades from `woohao` onwards** (Trades #14 through #19), eliminating older historical clutter.
+- **Active Trade #19 (`GATO`) Telemetry**:
+  - Token: [`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`](https://solscan.io/token/HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump)
+  - Tokens Held: `79.47379 GATO`
+  - Current Price: `$0.008634` (`0.0001019 SOL`, **`+1.70%`** gain over entry).
+  - Current Position Valuation: **`0.008098 SOL`**
+  - Lockbox Status: Approaching Tier 1 threshold ($+3.0\%$).
+- **Wallet & Portfolio Valuation**:
+  - **Liquid Cash**: **`0.005835832 SOL`**
+  - **Token Value (`GATO`)**: **`0.008098000 SOL`**
+  - **ATA Rent (`GATO`)**: **`0.002039280 SOL`**
+  - **Total Net Equity**: **`~0.015973 SOL`** (**`+4.43% Net Growth`** since `woohao` entry baseline of `0.015296 SOL`).
