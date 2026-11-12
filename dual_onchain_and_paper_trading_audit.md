@@ -5054,3 +5054,57 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - 9 Closed Trades: **3 Wins / 6 Losses (33.3% Win Rate)**, Net PnL: **`-0.004386 SOL`**
   - Active Trade #23 `AIB`: **`+1.32%` in profit**.
+
+
+---
+
+### 253. Checkpoint #503 — 2-Minute Cadence Stream Report (AIB Trade Closure, Lockbox Defense & Full Rent Reclamation)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) completed Trade #23 (`AIB`) exit and returned to active scanning.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.082023791 SOL`**
+  - Open Positions: **0** (100% cash).
+  - Open ATAs: **0** (Rent reclaimed).
+- **Trade Execution Audit (Trade #23 — `AIB`)**:
+  - Token: `AIB` (`AJFnmpiF4VTKeqEWtwBUarib5zKKbXcs594UyrMHpump`)
+  - Strategy: Strategy 2 (Momentum Breakout)
+  - Peak Unrealized Gain: **`+4.46%`** (Locked Tier 2 profit floor at $+2.0\%$).
+  - Exit Trigger: Tight Stop-Loss Protection executed on rapid pullback at 1.00x (`$0.000121`).
+  - Sell Return: `+0.014789617 SOL`
+  - Token Net PnL: **`-0.000330 SOL`** (`-2.20%` after Jito tip + gas).
+  - Rent Reclamation: Associated Token Account closed via `spl-token close`, recovering `+0.001508840 SOL` rent.
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `RAMBO` (`KMifrkYmDdAK...`): Churned at $\$277\text{k}$ liquidity and $\$82\text{k}$ volume.
+  - Active universe: 24 trending DEX pairs screened continuously.
+- **Session Performance (Post-`woohao` Era)**:
+  - 10 Closed Trades: **3 Wins / 7 Losses (30.0% Win Rate)**
+  - Cumulative Net Post-`woohao` PnL: **`-0.004716 SOL`**
+
+
+---
+
+### 254. Checkpoint #504 — 2-Minute Cadence Stream Report (Huang WIN +5.38%, Full Rent Reclamation & Capital Growth to 0.08432 SOL)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) completed Trade #24 (`Huang`) win and is actively scanning 24 DEX pairs with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.084324523 SOL`** (Pure liquid cash; up from `0.083595136 SOL` baseline).
+  - Open Positions: **0** (100% pure liquid capital; zero market exposure).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Trade Execution Audit (Trade #24 — `Huang`)**:
+  - Token: `Huang` (`4FP2GRQS3WYPsZSE2dwaVzqkajrBpHcXyVSTVt83pump`)
+  - Strategy: Strategy 3 (DEX Graduation Burst)
+  - Entry Cost: `0.0150 SOL` (+ `0.0001 SOL` Jito tip)
+  - Sell Execution: Returned `+0.015926892 SOL` on-chain.
+  - Token Net PnL: **`+0.000807 SOL`** (**`+5.38% WIN`**).
+  - Rent Reclamation: Associated Token Account closed via `spl-token close`, recovering `+0.001508840 SOL` rent.
+  - Net Capital Expansion: Total wallet balance reached **`0.084324523 SOL`** (+0.000729 SOL net wallet growth across recent cycle).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `RAMBO` (`KMifrkYmDdAK...`): Maintaining solid liquidity floor at $\$288\text{k}$ and $\$106\text{k}$ volume.
+  - `NOBUSHIBA` (`8AAVuQpJ...`): Consolidating at $\$88\text{k}–\$90\text{k}$ depth and $\$33\text{k}–\$35\text{k}$ volume.
+  - Active universe: 24 trending DEX pairs screened every 10 seconds.
+- **Session Performance (Post-`woohao` Era)**:
+  - 11 Closed Trades: **4 Wins / 7 Losses (36.4% Win Rate)**
+  - Cumulative Net Post-`woohao` PnL: **`-0.003909 SOL`** (Recovered from `-0.004654 SOL`).
+  - Total Liquid Cash Solvency: **`0.084324523 SOL`** ($100\%$ pure cash).
