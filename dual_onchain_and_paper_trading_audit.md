@@ -2421,3 +2421,24 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.010617 SOL`
   - Zero open exposure; capital preserved and actively hunting valid entries.
+
+---
+
+### 119. Checkpoint #366 — Comprehensive On-Chain Ledger Verification (Post-Woohao Real-Chain Audit)
+
+- **Audit Ledger Reconciliation**:
+  - All transactions across the post-`woohao` trading era have been cross-verified directly against Solana RPC node state for wallet [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re).
+  - All transaction signatures, token transfer quantities, lamport delta balances, and ATA rent refunds are 100% matched to block history.
+- **Post-`woohao` Verified Transactions**:
+  1. `woohao` (`BLVpn8of...`): Buy `5japMXfC...` | Sell `5HcsXNM5...` (+0.010574 SOL) | Rent `4RJNuyig...` (+0.001509 SOL) -> Net **+0.002238 SOL (+27.9% WIN)**.
+  2. `DIGS` (`9QT8K6g2...`): Buy `3MDHKEnZ...` | Sell `3vK15SUd...` (0.007251 SOL) | Rent `4ZiqvG3p...` -> Net **-0.000876 SOL (-10.9%)**.
+  3. `GATO` (`HsprHxBR...`): Buy `2zxkmeEi...` | Sell `53WhrP6s...` (0.008334 SOL) | Rent `51ezuoPp...` -> Net **+0.000206 SOL (+2.58% WIN)**.
+  4. `jeff` (`HAsTKX7s...`): Buy `5hnYmRSZ...` | Sell `62sg5TQk...` (0.007676 SOL) | Rent `5WR7Lp1D...` -> Net **-0.000746 SOL (-9.3%)**.
+  5. `DIGS` (`9QT8K6g2...`): Buy `334RZeh2...` | Sell `S4H8dCKr...` (0.007499 SOL) | Rent `3v5VXutk...` -> Net **-0.000621 SOL (-7.7%)**.
+  6. `GATO` (`HsprHxBR...`): Buy `3xv6vkXS...` | Sell `45oDSXbj...` (0.007859 SOL) | Rent `5B2eWrNE...` -> Net **-0.000276 SOL (-3.4%)**.
+  7. `Leonida` (`BWJfBNeX...`): Buy `2iXCDd9e...` | Sell `ZGxPyuLL...` (0.007266 SOL) | Rent `3eyTfkaF...` -> Net **-0.000861 SOL (-10.7%)**.
+  8. `GATO` (`HsprHxBR...`): Buy `LLcPWy6o...` | Sell `263jUfEs...` (0.005919 SOL) | Rent `2eHaJyZ4...` -> Net **-0.003718 SOL** (Offline container restart draw).
+- **Wallet Standing**:
+  - Current Liquid SOL: **`0.010617241 SOL`**
+  - Open Positions: **0**
+  - Open ATAs: **0**
