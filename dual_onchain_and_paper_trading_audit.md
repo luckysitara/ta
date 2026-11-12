@@ -3027,3 +3027,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 152. Checkpoint #399 — 2-Minute Cadence Stream Report (SKUNK +17.6% Sub-Depth Rejection & DexScreener Resilience Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 21-22 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `SKUNK` (`BetzJU2X9UEg...`): Surged **`+17.67%`** in 5m with a high momentum score of 3.0, but pool liquidity remains thin at $16.1k - $16.2k (below the $25.0k floor) and volume reached only $0.8k (below the $2.5k requirement). The engine strictly held fire to avoid slippage traps in shallow pools.
+  - `VI` (`8DwAf1oQ11Ch...`): Maintained steady presence with score 2.6 and $+2.10\%$ price tick, but blocked continuously by shallow $10.5k liquidity depth.
+  - **DexScreener API Resilience**: The scanner handled upstream endpoint rate limits with zero crashes, resuming uninterrupted screening automatically.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - 100% liquid cash preserved; multi-strategy engine active.
