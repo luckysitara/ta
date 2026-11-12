@@ -2629,3 +2629,22 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 130. Checkpoint #377 — 2-Minute Cadence Stream Report (COINSIDE 0-Liquidity Trap Defense & Mustache Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 24 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `COINSIDE` (`9ry9Dx1sygyd...`): Detected surging $+15.29\%$ in 5m with momentum score 2.7, but pool liquidity is **`$0.0k`** (unseeded/rugged pool).
+  - **Zero-Liquidity Honeypot Guard**: The engine instantly barred entry under the `--min-liquidity-usd 25000` rule, preventing complete loss of funds in an unbacked pool.
+  - `Mustache` (`7r3Hcmzzko9U...`): Up $+2.63\%$ in 5m (score 2.6), but depth remains sub-standard at $14.6k with zero volume ($0.0k) (safely bypassed).
+  - `WASTED` (`GexThZHgaswp...`): Momentum faded from $+2.53\%$ to $+0.62\%$; bypassing early low-volume chop prevented getting trapped.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; capital completely protected.
