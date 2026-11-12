@@ -4874,3 +4874,31 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Closed PnL: `-0.004654 SOL` (Trades #14–#21)
   - Active Unrealized Trade: Trade #22 `RAMBO` (`+1.79%` in profit)
+
+
+---
+
+### 245. Checkpoint #495 — 2-Minute Cadence Stream Report (RAMBO Surges +5.30% & Advances to Tier 3 Lockbox +3.0% Guaranteed Profit Floor)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) managing active on-chain `RAMBO` trade under the 5-tier dynamic profit lockbox.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.066966296 SOL`**
+  - Open Positions: **1** (`RAMBO` on pumpswap).
+  - Open ATAs: **1** (Active trade ATA).
+- **Active Position Telemetry (Trade #22 — `RAMBO`)**:
+  - Token: `RAMBO` (`KMifrkYmDdAKtVXAVBEPEQxJ7qP2iLgUcfZjUZipump`)
+  - Strategy: Strategy 1 (5-Minute Oversold Dip-Rebound)
+  - Entry Price: `$0.008393`
+  - Current Price: **`$0.008838`** (**`+5.30%` unrealized gain**)
+  - Peak Gain: **`+5.30%`**
+  - Stop Floor: **`+3.00%`** (Guaranteed win locked; trade cannot lose capital).
+  - Profit Lockbox Progression:
+    - Tier 1: Reached $+3.47\% \to$ locked $+1.0\%$ profit floor.
+    - Tier 2: Reached $+4.07\% \to$ locked $+2.0\%$ profit floor.
+    - Tier 3: Reached $+5.30\% \to$ locked $+3.0\%$ profit floor.
+  - Liquidity Depth: **`$251.2k`** | 5m Volume: **`$34.3k`** (Score: 4.7)
+  - Next Objective: Tier 4 threshold ($+6.00\% \to$ lock $+4.0\%$ floor) and Tier 5 ($\ge +7.00\% \to$ arm trailing TP with $1.5\%$ callback).
+- **Session Performance (Post-`woohao` Era)**:
+  - Closed PnL: `-0.004654 SOL` (Trades #14–#21)
+  - Active Trade #22 `RAMBO`: `+5.30%` unrealized gain, guaranteed minimum exit at `+3.00%`.
