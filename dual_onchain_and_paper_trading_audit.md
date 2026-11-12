@@ -4234,3 +4234,22 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 213. Checkpoint #463 — 2-Minute Cadence Stream Report (NOBUSHIBA +14.8% Rebound to -30.9% Flash-Crash Knife Defense)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) screening 20 DEX pairs continuously with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `NOBUSHIBA` (`8AAVuQpJcqpv...`): Displayed extreme volatility — first rebounded $+14.77\%$ on $\$91.2\text{k}$ pool depth and $\$38.8\text{k}$ volume (candidate score peaking at 5.2), followed immediately by a brutal cascade crash down $-10.06\% \to -13.50\% \to -17.79\% \to -30.92\%$ on heavy sell volume ($\$48.5\text{k}$). The falling-knife threshold ($\Delta 5\text{m} < -7.5\%$) and orderflow filters strictly rejected entry, avoiding a catastrophic $-31\%$ draw.
+  - `Shitcoin` (`8p7GCo3fWJ55...`): Flattened out from $+19.55\%$; preserved under observation.
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
