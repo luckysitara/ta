@@ -2577,3 +2577,20 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; capital defended.
+
+---
+
+### 127. Checkpoint #374 — 2-Minute Cadence Stream Report (AIB Anti-FOMO 899% Rejection Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 25 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `AIB` (`AJFnmpiF...`): Ranked #1 by composite momentum score (3.2) with deep liquidity ($59.5k) and high 5m volume surge ($8.5k), but 24h price change is **`+899%`**!
+  - **Anti-FOMO Guardrail Triggered**: The engine strictly enforced the `max_price_change_24h <= 250.0%` ceiling, safely rejecting late-stage top chasing on an 8x runner.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Capital 100% defended and liquid, scanning for true early-stage base breakouts and oversold dip-rebounds.
