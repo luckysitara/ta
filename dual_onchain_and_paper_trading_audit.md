@@ -2809,3 +2809,20 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; disciplined risk control intact.
+
+---
+
+### 140. Checkpoint #387 — 2-Minute Cadence Stream Report (WASTED & GTAFY Dual Filter Verification)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 22-23 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `WASTED` (`GexThZHgaswp...`): Features deep pool liquidity ($93.5k) and positive 5m price uptick ($+1.92\%$, score 2.6), but 5m volume is $0.0k (safely blocked by `--min-volume-5m-usd 2500` requirement; avoiding low-velocity churn).
+  - `GTAFY` (`EcCpMnjc3wJQ...`): Persistent leader in momentum score (2.7), but blocked by sub-$25k pool depth ($13.6k).
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
