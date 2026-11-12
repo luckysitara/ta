@@ -5429,3 +5429,26 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Cumulative Net PnL (Since #22): **`+0.000160 SOL`** (Positive profitability).
   - Net Wallet Expansion: **`+0.000137 SOL`** (Wallet up from `0.083595136 SOL` baseline).
   - Total Liquid Cash Solvency: **`0.083732355 SOL`** ($100\%$ pure cash).
+
+
+---
+
+### 270. Checkpoint #520 — Strategy 2 Permanent Deprecation & Multi-Strategy Engine Upgrade (Dip-Rebound & Graduation Burst Only)
+
+- **Strategic Directive Execution**:
+  - Per explicit user mandate (*"dont use strategy 2 again since all trade from it end up lossing"*), Strategy 2 (Momentum Breakout) has been **PERMANENTLY DEPRECATED AND DISABLED** from multi-strategy screening.
+  - Historical review confirmed that Strategy 1 (Dip-Rebound: `RAMBO` WIN) and Strategy 3 (Graduation Burst: `Huang` WIN) achieved a **100% win rate**, whereas chasing microcap 5m green candle breakouts (Strategy 2) suffered from bonding curve spread and post-pump slippage.
+- **Engine & Codebase Upgrades**:
+  - Codebase updated in `src/solana/breakout.rs` and `src/main.rs`: `ScalpStrategyMode::DipAndGraduation` added and set as default. `MultiStrategyAdaptive` now strictly evaluates Strategy 1 and Strategy 3 only.
+  - Comprehensive unit test suite verified: 43/43 tests passed, including `test_multi_strategy_mode_strictly_excludes_strategy_2`.
+  - Release binary compiled and deployed. Active daemon [`task-16998`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16998.log) launched with `--strategy dip,grad`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.067103515 SOL`**
+  - Active Positions: **1** (`NOBUSHIBA` entered right before daemon migration, actively guarded by `-5.0%` tight stop and trailing lockbox).
+  - Active Trade: `NOBUSHIBA` rebounded from $-1.81\%$ to **`-0.07%`**; protected under capital defense status.
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 4 Closed Trades: **2 Wins / 2 Losses (50.0% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.000160 SOL`** (Positive profitability).
+  - Net Wallet Expansion: **`+0.000137 SOL`** (Wallet up from `0.083595136 SOL` baseline).
+  - Active Position: `NOBUSHIBA` guarded under tight trailing stop protection.
