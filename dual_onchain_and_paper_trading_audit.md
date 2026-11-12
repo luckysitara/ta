@@ -5027,3 +5027,30 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - 9 Closed Trades: **3 Wins / 6 Losses (33.3% Win Rate)**
   - Cumulative Net Post-`woohao` PnL: **`-0.004386 SOL`**
   - Baseline Standing: **`0.083863 SOL`** (All capital preserved).
+
+
+---
+
+### 252. Checkpoint #502 — 2-Minute Cadence Stream Report (LIVE ON-CHAIN ENTRY: AIB Snipe via Strategy 2 Momentum Breakout & +1.3% Gain)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) executed live on-chain snipe and is managing active `AIB` position.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.067234174 SOL`**
+  - Open Positions: **1** (`AIB` on pumpswap).
+  - Open ATAs: **1** (Active trade ATA).
+- **Active Position Telemetry (Trade #23 — `AIB`)**:
+  - Token: `AIB` (`AJFnmpiF4VTKeqEWtwBUarib5zKKbXcs594UyrMHpump`)
+  - Strategy: Strategy 2 (Momentum Breakout)
+  - Entry Cost: `0.0150 SOL` (+ `0.0001 SOL` Jito tip)
+  - Entry Price: `$0.000121`
+  - Current Price: **`$0.000123`** (**`+1.32%` unrealized gain**)
+  - Peak Gain: `+1.32%`
+  - Stop Floor: `-5.00%`
+  - Status: 🛡️ CAPITAL DEFENSE / Approaching Tier 1 threshold ($+2.50\% \to$ lock $+1.0\%$ profit floor).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `Huang` (`4FP2GRQS3WYP...`): Churned wildly between $+71\%$ and $+136\%$ on $\$24.2\text{k}–\$25.9\text{k}$ liquidity and $\$52\text{k}–\$73\text{k}$ volume; blocked by anti-exhaustion limits.
+  - Active universe: 24 trending DEX pairs.
+- **Session Performance (Post-`woohao` Era)**:
+  - 9 Closed Trades: **3 Wins / 6 Losses (33.3% Win Rate)**, Net PnL: **`-0.004386 SOL`**
+  - Active Trade #23 `AIB`: **`+1.32%` in profit**.
