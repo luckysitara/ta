@@ -4648,3 +4648,23 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 234. Checkpoint #484 — 2-Minute Cadence Stream Report (CBUCKS $223k Deep Pool Low-Volume Filter & ape hao Block)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) screening 23 DEX pairs continuously with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `CBUCKS` (`DtcicPCKTKeA...`): Screened at $+1.17\%$ with substantial deep liquidity ($\$223.2\text{k}$), but held in reserve as 5m volume remained at $\$0.2\text{k}$ (below the $\$2.0\text{k}$ threshold).
+  - `ape hao` (`Fkc9FKhK1K8F...`): Blocked on shallow $\$1.8\text{k}$ pool depth.
+  - `ZEN` (`2hyMwC4c11L3...`): Filtered out on sub-depth liquidity ($\$9.6\text{k}$).
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
