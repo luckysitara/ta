@@ -2361,3 +2361,28 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Starting Baseline: `0.015296 SOL`
   - Current Liquid Capital: `0.015196 SOL` (Capital 100% preserved and ready for the next high-conviction breakout).
+
+---
+
+### 116. Checkpoint #363 — Strategy 1 & Strategy 3 Implementation Deployed & Post-Woohao Audit Stream
+
+- **Implementation Complete**:
+  - **Strategy 1 (5-Minute Oversold Dip-Rebound Scalper)**: Evaluates localized pullbacks ($-7.5\% \le \Delta 5\text{m} \le -1.8\%$) in tokens with positive macro trends ($24\text{h} \ge 0\%$, $1\text{h} \ge -5\%$) and high buyer dominance ($1\text{h} \text{ buy ratio} \ge 52\%$, depth $\ge \$25\text{k}$).
+  - **Strategy 3 (Secondary DEX Graduation Burst Scalper)**: Captures early bursts on fresh pool migrations (`pair_age_mins <= 30m`, seeded depth $\ge \$20\text{k}$, volume surge $\ge \$3\text{k}$, $5\text{m}$ buy dominance $\ge 58\%$).
+  - **Multi-Strategy Adaptive Dispatcher**: Evaluates candidates simultaneously across Graduation Burst, Dip-Rebound, and Momentum Breakout modes.
+  - **Unit Testing**: All 42 tests passed cleanly.
+  - **Binary & Repository**: Compiled optimized release binary, committed, and pushed to `luckysitara/ta.git` (commit `31bfe1c`).
+- **Trades Executed During Cycle**:
+  - **Trade #20 (`Leonida` `BWJfBNeXpapG...`)**:
+    - Buy: $0.0080$ SOL (Tx: [`2iXCDd9ee6jx...`](https://solscan.io/tx/2iXCDd9ee6jxXaj3tnLzg4GNoohnBEc2JZTcbWSeobk4ej2k4j92q4TN6kW9rkouGqVqo9RhZsJyFtuWfdGb49gR))
+    - Exit: Stop-loss executed at $-5.84\%$ via Jupiter sell Tx [`ZGxPyuLL...`](https://solscan.io/tx/ZGxPyuLLww8Ar6yttTwzqRoHJYyVa9RY2gY88Aqk8wqDYQfNqqbNmWNgnVDsprWXFWArqEn4oC2knd16AjChsEW); Token-2022 ATA closed Tx [`3eyTfkaF...`](https://solscan.io/tx/3eyTfkaF5eE4Q79TtmDHJNT3u6UNofMsSg9XWD9FeENGNQvuyLAX2syer7JDiVWz8MMGeHheM4L9bDDZWH55mSBV), net return $0.007138$ SOL.
+  - **Trade #21 (`GATO` round 2 `HsprHxBR...`)**:
+    - Buy: $0.0080$ SOL (Tx: [`LLcPWy6o...`](https://solscan.io/tx/LLcPWy6ozbuoQYbPr52wqLz6iWNtMpnTb16oZYugyjpci37R9H3csijvjuUXCu3W9HFYzXywPwKC23MnpYLUC7J))
+    - Offline Pause & Immediate Liquidation: Host server restart suspended background task from 17:02 UTC to 07:44 UTC. Upon reboot, immediately liquidated via Jupiter swap Tx [`263jUfEs...`](https://solscan.io/tx/263jUfEsYeSshFTveimmVCxT1ixBd6Z2NXWuMR78ctiZfjkVsxugGEpzr9S7iZ6fZDomRJrT2cAnzb9vP1GrfkCZ) and ATA closed Tx [`2eHaJyZ4...`](https://solscan.io/tx/2eHaJyZ4xBMysabFpAwwwT1idqGMGouj9Gqd4q5Rni5onbqK2SRC15AsoWZcrkBsYquuXSMeXf8ojMaEH5yPTAQa), recovering $0.005911$ SOL.
+- **Current Wallet Balance & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.010617241 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Active Daemon**:
+  - Running task [`task-15108`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15108.log) under `--strategy multi`, screening 28+ DEX pairs across Strategy 1, 2, and 3.
