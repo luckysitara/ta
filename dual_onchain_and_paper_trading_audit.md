@@ -4195,3 +4195,23 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 211. Checkpoint #461 — 2-Minute Cadence Stream Report (Shitcoin +28.8% Parabolic Surge & GATO Dip Evaluation)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) screening 20 DEX pairs continuously with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `Shitcoin` (`8p7GCo3fWJ55...`): Surged parabolically from $+11.25\%$ up to $+28.78\%$ with $28.0k pool depth and $7.3k–$8.8k 5m volume (candidate score jumped to 3.3). Filtered from peak exhaustion entry.
+  - `GATO` (`HsprHxBRgiVa...`): Tested Strategy 1 dip criteria with $-5.49\%$ pullback on $249.5k deep liquidity and $9.4k volume, then quickly recovered to $-1.42\%$ (above the $-1.8\%$ dip threshold).
+  - `NOBUSHIBA` (`8AAVuQpJcqpv...`): Retraced from $+15\%$ peak to $-3.04\%$ on $83.8k liquidity and $7.4k volume.
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
