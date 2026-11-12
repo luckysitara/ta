@@ -2844,3 +2844,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 142. Checkpoint #389 — 2-Minute Cadence Stream Report (SKUNK & GTAFY Thin-Depth Resistance Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 22 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `SKUNK` (`BetzJU2X9UEg...`): Gained $+8.47\%$ with score 2.4, but pool liquidity remains trapped under $15k ($14.6k vs. $25.0k required) and volume is $0.2k (< $2.5k floor); strictly bypassed.
+  - `GTAFY` (`EcCpMnjc3wJQ...`): Spiked $+6.97\%$ with a 2.9 momentum score, but barred due to shallow $14.0k depth and negligible $0.3k volume.
+  - `AIB` (`AJFnmpiF4VTK...`): Momentum score flattened to 1.8 with fading volume ($3.8k), remaining disqualified under 24h Anti-FOMO caps.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
