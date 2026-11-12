@@ -378,7 +378,7 @@ enum Commands {
         #[arg(long, default_value_t = 2.5)]
         trailing_take_profit_callback_pct: f64,
 
-        /// Scalping strategy mode: multi (default), dip, graduation, breakout
+        /// Scalping strategy mode: multi (default: Strategy 1 & 3), dip, graduation, breakout
         #[arg(long, default_value = "multi")]
         strategy: String,
 
@@ -1508,12 +1508,12 @@ async fn run_breakout_scanner(
         "dip" | "dip-rebound" | "strategy1" | "1" => solana::breakout::ScalpStrategyMode::DipReboundScalp,
         "grad" | "graduation" | "burst" | "strategy3" | "3" => solana::breakout::ScalpStrategyMode::GraduationBurstScalp,
         "breakout" | "momentum" | "strategy2" | "2" => solana::breakout::ScalpStrategyMode::MomentumBreakout,
-        _ => solana::breakout::ScalpStrategyMode::MultiStrategyAdaptive,
+        _ => solana::breakout::ScalpStrategyMode::DipAndGraduation,
     };
 
     let is_paper = !onchain;
     println!("  Execution Mode:       {}", if is_paper { "PAPER TRADING (Zero Financial Risk)".bold().green() } else { "LIVE ON-CHAIN (Real SOL Execution via Jupiter & Jito MEV)".bold().red() });
-    println!("  Scalp Strategies:     {:?} (Strategy 1: Dip-Rebound, Strategy 2: Breakout, Strategy 3: Graduation Burst)", strat_mode);
+    println!("  Scalp Strategies:     {:?} (Strategy 1: Dip-Rebound & Strategy 3: Graduation Burst | Strategy 2 PERMANENTLY DISABLED)", strat_mode);
     println!("  Budget / Allocation:  Total: {:.4} SOL | Size: {:.4} SOL per trade", budget, buy_amount);
     println!("  Max Open Positions:   {}", max_positions);
     println!("  Jito MEV Tip:         {:.4} SOL (Optimized for minimal fee drag)", jito_tip);

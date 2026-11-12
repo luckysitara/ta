@@ -13,15 +13,16 @@ use crate::solana::SOL_MINT;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ScalpStrategyMode {
-    MomentumBreakout,     // Strategy 2: Volume & 5m momentum breakout
+    MomentumBreakout,     // Strategy 2: Volume & 5m momentum breakout (Solo mode only)
     DipReboundScalp,      // Strategy 1: 5m oversold dip pullback in macro uptrend
     GraduationBurstScalp, // Strategy 3: Fresh Pump.fun migration/graduation on Raydium/PumpSwap/Meteora
-    MultiStrategyAdaptive,// Default: All strategies active simultaneously
+    DipAndGraduation,     // Strategy 1 & Strategy 3 ONLY (Strategy 2 permanently excluded)
+    MultiStrategyAdaptive,// High-win-rate adaptive mode (Strategy 1 & 3 active; Strategy 2 disabled)
 }
 
 impl Default for ScalpStrategyMode {
     fn default() -> Self {
-        Self::MultiStrategyAdaptive
+        Self::DipAndGraduation
     }
 }
 
@@ -397,14 +398,13 @@ impl BreakoutEngine {
                     None
                 }
             }
-            ScalpStrategyMode::MultiStrategyAdaptive => {
-                // Priority evaluation: Graduation Burst -> Dip Rebound -> Momentum Breakout
+            ScalpStrategyMode::DipAndGraduation | ScalpStrategyMode::MultiStrategyAdaptive => {
+                // High-Win-Rate Multi Mode: Strategy 3 (Graduation Burst) & Strategy 1 (Dip-Rebound) ONLY
+                // Strategy 2 (Momentum Breakout) is permanently disabled per performance review (all losses eliminated)
                 if self.evaluate_graduation_burst(c) {
                     Some("Strategy 3: DEX Graduation Burst".to_string())
                 } else if self.evaluate_dip_rebound(c) {
                     Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
-                } else if self.evaluate_momentum_breakout(c) {
-                    Some("Strategy 2: Momentum Breakout".to_string())
                 } else {
                     None
                 }
@@ -1031,7 +1031,9 @@ mod tests {
 
     #[test]
     fn test_evaluate_candidate_identifies_mihao_style_breakout() {
-        let engine = BreakoutEngine::new(BreakoutSettings::default(), None);
+        let mut settings = BreakoutSettings::default();
+        settings.strategy_mode = ScalpStrategyMode::MomentumBreakout;
+        let engine = BreakoutEngine::new(settings, None);
         let mihao_candidate = BreakoutCandidate {
             token_address: "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump".to_string(),
             name: "ni hao cat".to_string(),
@@ -1055,11 +1057,42 @@ mod tests {
             matched_strategy: None,
             score: 9.2,
         };
-        assert!(engine.evaluate_candidate(&mihao_candidate), "Must qualify early base breakout!");
+        assert!(engine.evaluate_candidate(&mihao_candidate), "Must qualify early base breakout under MomentumBreakout mode!");
         assert_eq!(
             engine.evaluate_candidate_strategy(&mihao_candidate),
             Some("Strategy 2: Momentum Breakout".to_string())
         );
+    }
+
+    #[test]
+    fn test_multi_strategy_mode_strictly_excludes_strategy_2() {
+        let engine = BreakoutEngine::new(BreakoutSettings::default(), None);
+        // Candidate that only matches Strategy 2 (Momentum Breakout) and not Strategy 1 (not a dip) or 3 (pool age 450m > 30m)
+        let mihao_candidate = BreakoutCandidate {
+            token_address: "4CxjZyMNoF1p6eXHXHv1TWpS2X47CuUmLwtGe18spump".to_string(),
+            name: "ni hao cat".to_string(),
+            symbol: "mihao".to_string(),
+            pair_address: "Ho1aSG6WGH1FfXdEHrK2f4Ggt1Hoxo9s5jcLMDqeyeBz".to_string(),
+            dex_id: "pumpswap".to_string(),
+            price_usd: 0.015,
+            price_native: 0.000179,
+            liquidity_usd: 390_000.0,
+            volume_24h_usd: 24_000_000.0,
+            volume_5m_usd: 22_000.0,
+            price_change_5m: 3.5,
+            price_change_1h: 15.0,
+            price_change_24h: 85.0,
+            buys_5m: 135,
+            sells_5m: 35,
+            buys_1h: 2400,
+            sells_1h: 1100,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(450.0),
+            matched_strategy: None,
+            score: 9.2,
+        };
+        // In Multi/DipAndGraduation mode, Strategy 2 candidate must be completely rejected!
+        assert_eq!(engine.evaluate_candidate_strategy(&mihao_candidate), None);
     }
 
     #[test]
