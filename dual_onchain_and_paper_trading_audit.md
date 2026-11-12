@@ -2442,3 +2442,20 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Current Liquid SOL: **`0.010617241 SOL`**
   - Open Positions: **0**
   - Open ATAs: **0**
+
+---
+
+### 120. Checkpoint #367 — 2-Minute Cadence Stream Report (COINSIDE & TENEX Quality Filter Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15108`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15108.log) screening 26 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.010617241 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `COINSIDE` (`9ry9Dx1s...`): Spiked $+19.69\%$ in 5m with $1.7k volume, but disqualified due to negligible liquidity ($0.0k < $25.0k threshold). Capital protected against high-slippage illiquid traps.
+  - `TENEX` (`GpCiqGaW...`): 5m change +0.61%, but no established pool liquidity; safely rejected.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.010617 SOL`
+  - Disciplined capital defense active across all three scalping strategies.
