@@ -2862,3 +2862,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 143. Checkpoint #390 — 2-Minute Cadence Stream Report (GTAFY +14.7% Illiquidity Trap Defended & 0.0836 SOL Reserves)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 22 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `GTAFY` (`EcCpMnjc3wJQ...`): Surged **`+14.74%`** in 5 minutes with a top-tier composite momentum score of 3.3.
+  - **Illiquidity Trap Blocked**: Despite high price velocity, the move was engineered on a thin $14.6k pool with only $600 ($0.6k) of 5-minute volume. The engine strictly enforced `--min-liquidity-usd 25000` and `--min-volume-5m-usd 2500`, preventing our 0.015 SOL order from suffering large slippage in a micro-depth pool.
+  - `SKUNK` (`BetzJU2X9UEg...`): Flatlined around $+8\%$ on $0.2k volume; rejected.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
