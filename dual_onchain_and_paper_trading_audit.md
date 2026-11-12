@@ -2665,3 +2665,24 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 132. Checkpoint #379 — 2-Minute Cadence Stream Report (AIB Falling-Knife Defense & Anti-FOMO Validation)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 23 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - **`AIB` (`AJFnmpiF4VTK...`) Top-Rejection & Crash Validation**:
+    - In Checkpoint #374, `AIB` peaked at **`+899%`** with score 3.2. Our engine's Anti-FOMO ceiling (`max_price_change_24h <= 250%`) rejected it outright.
+    - Exactly as predicted, `AIB` just experienced a catastrophic cliff-dive: **`-17.28%`** and **`-14.63%`** in 5-minute intervals with massive sell volume ($9.9k).
+    - **Falling-Knife Defense**: Strategy 1 (Oversold Dip-Rebound) correctly barred entry because its parameters require $-7.5\% \le \Delta 5\text{m} \le -1.8\%$ controlled pullbacks. A $-17\%$ crash is a dump knife, not a shallow liquidity dip! Both buying the top and catching the knife were prevented.
+  - `TENEX` (`GpCiqGaWm9Lk...`): Score 2.5, but pool liquidity is $0.0k (safely rejected).
+  - `GTAFY` (`EcCpMnjc3wJQ...`): Blocked due to low liquidity ($14.1k < $25k).
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - 100% liquid cash preserved against major market drawdowns.
