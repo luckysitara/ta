@@ -5398,3 +5398,34 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Cumulative Net PnL (Since #22): **`+0.000745 SOL`**
   - Net Wallet Expansion: **`+0.000729 SOL`**
   - Total Liquid Cash Solvency: **`0.084324523 SOL`** ($100\%$ pure cash).
+
+
+---
+
+### 269. Checkpoint #519 — 2-Minute Cadence Stream Report (LIVE ON-CHAIN TRADE #25: Leonida Peak +6.30%, Lockbox Exit & Full Rent Reclamation)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) completed Trade #25 (`Leonida`) lifecycle and returned to screening 26 DEX pairs.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083732355 SOL`** (100% dry powder; up from `0.083595136 SOL` pre-Trade #22 baseline).
+  - Open Positions: **0** (Zero active exposure; 100% cash).
+  - Open Trade ATAs: **0** (All rent reclaimed).
+- **Trade Execution Audit (Trade #25 — `Leonida`)**:
+  - Token: `Leonida` (`BWJfBNeXpapG7uoqByp5KSwWgCQba8QcDmA2DQiEpump`)
+  - Strategy: Strategy 2 (Momentum Breakout)
+  - Entry Cost: `0.0150 SOL` (+ `0.0001 SOL` Jito tip)
+  - Entry Price: `$0.000383`
+  - Peak Unrealized Gain: **`+6.30%`** (Stop floor ratcheted to `+4.00%`).
+  - Exit Trigger: Profit Lockbox Exit executed on pullback at 1.03x (`$0.000393`).
+  - Sell Return: `+0.014535332 SOL` on-chain.
+  - Token Net PnL: **`-0.000585 SOL`** (`-3.87%` after bonding curve slippage + Jito tip + gas).
+  - Rent Reclamation: Associated Token Account closed via `spl-token close`, recovering `+0.001508840 SOL` rent.
+  - Final Post-Trade Wallet Balance: **`0.083732355 SOL`** (Positive net capital standing).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `NOBUSHIBA` (`8AAVuQpJ...`): Rose to top candidate with score 5.1, $\$77.7\text{k}$ liquidity, and $\$47.3\text{k}$ volume (+2.93%).
+  - Active DEX universe: 26 trending DEX pairs screened every 10 seconds.
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 4 Closed Trades: **2 Wins / 2 Losses (50.0% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.000160 SOL`** (Positive profitability).
+  - Net Wallet Expansion: **`+0.000137 SOL`** (Wallet up from `0.083595136 SOL` baseline).
+  - Total Liquid Cash Solvency: **`0.083732355 SOL`** ($100\%$ pure cash).
