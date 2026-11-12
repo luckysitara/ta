@@ -4846,3 +4846,31 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 244. Checkpoint #494 — 2-Minute Cadence Stream Report (LIVE ON-CHAIN ENTRY: RAMBO Snipe via Strategy 1 Dip-Rebound & +1.8% Surge)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) executed live on-chain snipe and is managing active position.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.066966296 SOL`**
+  - Open Positions: **1** (`RAMBO` on pumpswap).
+  - Open ATAs: **1** (Active trade ATA).
+- **Active Position Telemetry (Trade #22 — `RAMBO`)**:
+  - Token: `RAMBO` (`KMifrkYmDdAKtVXAVBEPEQxJ7qP2iLgUcfZjUZipump`)
+  - Strategy: Strategy 1 (5-Minute Oversold Dip-Rebound)
+  - Entry Cost: `0.0150 SOL` (+ `0.0001 SOL` Jito tip)
+  - Entry Price: `$0.008393`
+  - Current Price: **`$0.008543`** (**`+1.79%` unrealized gain**)
+  - Peak Gain: `+1.79%`
+  - Stop Floor: `-5.00%`
+  - Liquidity Depth: **`$246.3k`** | 5m Volume: **`$29.2k`** (Score: 4.2)
+  - Lockbox Target: Approaching Tier 1 threshold ($+2.50\% \to$ lock $+1.0\%$ profit floor).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `GATO` (`HsprHxBRgiVa...`): Fell $-8.04\%$, properly rejected by falling knife boundaries prior to `RAMBO` selection.
+  - `Charl` (`4BmPe8LGK72S...`): Blocked on $\$0.0\text{k}$ liquidity.
+- **Session Performance (Post-`woohao` Era)**:
+  - Closed PnL: `-0.004654 SOL` (Trades #14–#21)
+  - Active Unrealized Trade: Trade #22 `RAMBO` (`+1.79%` in profit)
