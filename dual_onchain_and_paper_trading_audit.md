@@ -3851,3 +3851,22 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 196. Checkpoint #443 — 2-Minute Cadence Stream Report (ZEN +22.5% Re-Spike & Māo Sub-Depth Defense)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 22 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `ZEN` (`2hyMwC4c11L3...`): Re-spiked from $+18.45\%$ to $+22.52\%$ with candidate score 3.3, but blocked strictly by `--min-liquidity-usd 25000` ($10.6k pool depth, $0.6k volume).
+  - `Māo` (`AWL7bYYUH3St...`): Held at $+8.11\%$, rejected due to $11.8k liquidity and $0.2k volume.
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
