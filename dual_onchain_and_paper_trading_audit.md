@@ -3045,3 +3045,23 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - 100% liquid cash preserved; multi-strategy engine active.
+
+---
+
+### 153. Checkpoint #400 — 2-Minute Cadence Stream Report (NOBUSHIBA Deep-Knife & Whipsaw Defense Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 21 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `NOBUSHIBA` (`8AAVuQpJcqpv...`) Deep-Knife & Whipsaw Defense:
+    - Displayed high liquidity ($106.0k) and heavy 5m volume ($15.6k - $16.0k), but underwent extreme turbulence: crashing **`-13.81%`** in 5m before snapping back violently **`+16.63%`** and retracing to $+8.54\%$.
+    - **Dump Knife Defense**: Strategy 1 requires $-7.5\% \le \Delta 5\text{m} \le -1.8\%$ to buy dips. The $-13.8\%$ collapse was correctly classified as an unconfirmed dump rather than a controlled pull-back.
+    - **Whipsaw Guard**: Subsequent reflex spikes were screened and held back by anti-whipsaw parameters, ensuring our capital was not churned in erratic oscillations.
+  - `SKUNK` (`BetzJU2X9UEg...`): Re-tested with $+22.68\%$ 5m bump, but liquidity ($16.5k) remains below the $25.0k threshold; rejected.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - 100% liquid cash preserved; multi-strategy engine active.
