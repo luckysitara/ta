@@ -2459,3 +2459,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.010617 SOL`
   - Disciplined capital defense active across all three scalping strategies.
+
+---
+
+### 121. Checkpoint #368 — Fresh Capital Deposit (+0.072978 SOL) & Daemon Budget Expansion to 0.080 SOL
+
+- **On-Chain Deposit Detected**:
+  - Deposit Tx: [`4E5wBufu1pzsyLWx9tZrEJBmsBrhCELMkMEBk6W8Jma2zFJp4tbyUY2GC6SYPoxQX8fUY8rZYoUw6AqxaxQYNCtL`](https://solscan.io/tx/4E5wBufu1pzsyLWx9tZrEJBmsBrhCELMkMEBk6W8Jma2zFJp4tbyUY2GC6SYPoxQX8fUY8rZYoUw6AqxaxQYNCtL)
+  - Amount: **`+0.072978 SOL`**
+  - Total Wallet Balance: **`0.083595136 SOL`**
+- **Daemon Parameter Upgrade**:
+  - Relaunched active daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log).
+  - Total Budget: `0.080 SOL` (up from 0.010 SOL).
+  - Trade Allocation: `0.015 SOL` per trade (up from 0.005 SOL).
+  - Max Positions: `1` (strict risk containment).
+  - Strategy: `multi` (Strategy 1 Dip-Rebound, Strategy 2 Breakout, Strategy 3 Graduation Burst).
+  - Stop-Loss & Lockbox: Tight -5.0% stop, 5-Tier Profit Lockbox active.
+- **Scanner Screening Status**:
+  - Actively screening 25+ Solana DEX pairs. Top Candidate: `AIB` (`AJFnmpiF...`) depth $58.2k, 5m vol $4.5k.
