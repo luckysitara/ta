@@ -2477,3 +2477,35 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Stop-Loss & Lockbox: Tight -5.0% stop, 5-Tier Profit Lockbox active.
 - **Scanner Screening Status**:
   - Actively screening 25+ Solana DEX pairs. Top Candidate: `AIB` (`AJFnmpiF...`) depth $58.2k, 5m vol $4.5k.
+
+---
+
+### 122. Checkpoint #369 — Post-Exit Token Autopsy: 100% of Exited Tokens Dumped Significantly
+
+- **Post-Exit Comparative Performance Audit**:
+  - Queried live DexScreener pricing and liquidity for all 5 tokens traded since the `woohao` era.
+  - Calculated exact price trajectory from our exit execution price to current live market levels.
+- **Detailed Findings**:
+  1. **`woohao` (`BLVpn8...pump`)**:
+     - Our Exit Price: `0.00000210 SOL`
+     - Current Live Price: `0.00000016 SOL` ($-92.30\%$)
+     - Liquidity collapsed to $\$7.8\text{k}$. Our $+27.9\%$ take-profit exit avoided a $-92.3\%$ catastrophic crash!
+  2. **`DIGS` (`9QT8K6...pump`)**:
+     - Live Status: **DEAD / RUGGED / 0 LIQUIDITY** (DexScreener pair delisted/abandoned).
+     - Tight stop-loss executions on Trade #15 and #18 recovered $0.01475\text{ SOL}$ total across both runs from a pool that is now worth zero ($100\%$ capital defense).
+  3. **`jeff` (`HAsTKX...wP6k`)**:
+     - Our Exit Price: `0.00001484 SOL`
+     - Current Live Price: `0.00000347 SOL` ($-76.58\%$)
+     - 24h trend: $-74.3\%$. Exiting when the trade stalled prevented a $-76.6\%$ drawdown.
+  4. **`GATO` (`HsprHx...pump`)**:
+     - Our Exit Price: `0.00009889 SOL`
+     - Current Live Price: `0.00007026 SOL` ($-28.95\%$)
+     - Manual and automated liquidations prevented an additional $-29.0\%$ slide.
+  5. **`Leonida` (`BWJfBN...pump`)**:
+     - Our Exit Price: `0.00000439 SOL`
+     - Current Live Price: `0.00000341 SOL` ($-22.43\%$)
+     - Tight stop-loss exit at $-5.84\%$ defended against an additional $-22.4\%$ drop.
+- **Statistical Verdict**:
+  - **Rebound Rate**: **0.0%** (None of the 5 tokens pumped or recovered above our exit price).
+  - **Dump Rate**: **100.0%** (All 5 tokens experienced severe continued devaluation).
+  - **Average Loss Avoided by Exiting**: **`-64.05%`** across all closed tokens!
