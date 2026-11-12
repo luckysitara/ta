@@ -2774,3 +2774,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 138. Checkpoint #385 — 2-Minute Cadence Stream Report (SKUNK & GTAFY Sub-Depth Rejections Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 23 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `SKUNK` (`BetzJU2X9UEg...`): Spiked $+7.91\%$ in 5m with score 2.9, but pool depth remains inadequate at $14.6k (fails $25.0k liquidity floor) with only $0.1k volume (fails $2.5k volume floor); safely barred.
+  - `GTAFY` (`EcCpMnjc3wJQ...`): Trailed with score 2.5 and $+0.75\%$ 5m change, depth $13.3k, and $0.0k volume; bypassed.
+  - `TOMMY` (`7tLZtt1TmFzh...`): Persistent screening, but held back by $6.8k liquidity depth.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
