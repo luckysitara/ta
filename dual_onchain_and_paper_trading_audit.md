@@ -2594,3 +2594,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Capital 100% defended and liquid, scanning for true early-stage base breakouts and oversold dip-rebounds.
+
+---
+
+### 128. Checkpoint #375 — 2-Minute Cadence Stream Report (CBUCKS & WASTED Volume Verification Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 24 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `CBUCKS` (`DtcicPCKTKeA...`): Ranked #1 candidate by composite score (2.6) with deep liquidity pool ($218.0k), $+1.93\%$ 5m price increase, but 5m volume is only $0.2k (safely rejected by `--min-volume-5m-usd 2500` gatekeeper; prevents entering stagnant pools without true buying velocity).
+  - `WASTED` (`GexThZHgaswp...`): Composite score 2.6, healthy pool liquidity ($93.5k), $+1.89\%$ 5m delta, but near zero 5m volume ($0.0k) (rejected).
+  - `woohao` (`BLVpn8ofkjnA...`): Surfaced briefly with 2.5 score but continues to be barred by the $25k liquidity floor ($7.8k actual).
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
