@@ -4452,3 +4452,23 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 224. Checkpoint #474 — 2-Minute Cadence Stream Report (USDEM +76.5% Illiquid Mirage & SKUNK Sub-Depth Filter)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) screening 24 DEX pairs continuously with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `USDEM` (`9L9XBcrRaMWL...`): Repeatedly whipped between $+76.53\%$ and $+17.38\%$, with negligible pool liquidity ($\$0.3\text{k}–\$0.4\text{k}$) and low volume ($\le \$1.1\text{k}$). Consistently and safely rejected by liquidity and volume thresholds.
+  - `SKUNK` (`BetzJU2X9UEg...`): Flagged at $+7.37\%$, blocked by sub-floor pool depth ($\$19.0\text{k}$ vs $\$25.0\text{k}$) and $\$0.2\text{k}$ volume.
+  - `$Chew` (`HrvF3KLc2Q5P...`): Blocked on $\$0.0\text{k}$ liquidity.
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
