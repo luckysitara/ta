@@ -4175,3 +4175,23 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Zero open exposure; 100% dry powder preserved.
+
+
+---
+
+### 210. Checkpoint #460 — 2-Minute Cadence Stream Report (NOBUSHIBA Rebound to +16% & Shitcoin Momentum Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16156`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16156.log) screening 20 DEX pairs continuously with `--min-volume-5m-usd 2000`.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `NOBUSHIBA` (`8AAVuQpJcqpv...`): Rebounded sharply from flash-dump consolidation into $+13.87\%$ to $+17.31\%$ 5m momentum, backed by $86.6k–$89.4k pool depth and $4.1k–$4.8k 5m volume (candidate score peaking at 3.1). Filtered from chasing peak momentum without pullback baseline.
+  - `Shitcoin` (`8p7GCo3fWJ55...`): Printed $+11.25\%$ 5m surge with $26.5k liquidity and $9.5k 5m volume (score 2.7); held under observation.
+  - `MAX` (`8Gug6wcw7Fac...`): Flagged at $+1.11\%$, safely blocked due to $0.0k liquidity and $0.0k volume.
+  - Capital fully protected; engine awaiting qualified candidates meeting all liquidity and volume gates.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Zero open exposure; 100% dry powder preserved.
