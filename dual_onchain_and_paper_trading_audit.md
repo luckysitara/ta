@@ -5509,3 +5509,31 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Cumulative Net PnL (Closed): **`+0.000160 SOL`**
   - Active Trade #26 `NOBUSHIBA`: **`+19.53%`** unrealized gain (`≥ +17.74%` guaranteed floor).
   - Total Projected Portfolio PnL: **`≥ +0.002821 SOL`** (Significant new equity ATH).
+
+
+---
+
+### 273. Checkpoint #523 — Trade #26 NOBUSHIBA WIN +4.72%, Full Rent Reclaimed & Wallet Reaches 0.08443 SOL ATH
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16998`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16998.log) executed live exit for Trade #26 (`NOBUSHIBA`), reclaimed rent, and returned to 100% dry powder screening.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.084432409 SOL`** (New post-`woohao` ATH; up from `0.083595136 SOL` baseline).
+  - Open Positions: **0** (Zero active exposure; 100% cash).
+  - Open Trade ATAs: **0** (All rent reclaimed).
+- **Trade Execution Audit (Trade #26 — `NOBUSHIBA`)**:
+  - Token: `NOBUSHIBA` (`8AAVuQpJcqpvCuutxyBTVvgBEXZJSkZoNv1sExpBpump`)
+  - Strategy: In-Flight Adopted Position
+  - Entry Cost: `0.0150 SOL` (+ `0.0001 SOL` Jito tip)
+  - Sell Execution: Returned `+0.015827554 SOL` on-chain.
+  - Token Net PnL: **`+0.000708 SOL`** (**`+4.72% WIN`**).
+  - Rent Reclamation: Associated Token Account closed via `spl-token close`, recovering `+0.001508840 SOL` rent.
+  - Net Capital Expansion: Total wallet balance increased to **`0.084432409 SOL`** (+0.000837 SOL expansion since Trade #22).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `RAMBO` (`KMifrkYmDdAK...`): Maintaining massive liquidity at $\$335.6\text{k}$ and $\$30.1\text{k}$ volume. Strategy 1 dip entry actively evaluated.
+  - Active DEX universe: 26 trending DEX pairs screened every 10 seconds; Strategy 2 strictly disabled.
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 5 Closed Trades: **3 Wins / 2 Losses (60.0% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.000868 SOL`** (Net positive profitability).
+  - Net Wallet Expansion: **`+0.000837 SOL`** (New capital high).
+  - Total Liquid Cash Solvency: **`0.084432409 SOL`** ($100\%$ pure cash).
