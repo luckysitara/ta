@@ -11,6 +11,20 @@ use crate::solana::execution::OnChainExecutor;
 use crate::solana::sniper::PortfolioState;
 use crate::solana::SOL_MINT;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum ScalpStrategyMode {
+    MomentumBreakout,     // Strategy 2: Volume & 5m momentum breakout
+    DipReboundScalp,      // Strategy 1: 5m oversold dip pullback in macro uptrend
+    GraduationBurstScalp, // Strategy 3: Fresh Pump.fun migration/graduation on Raydium/PumpSwap/Meteora
+    MultiStrategyAdaptive,// Default: All strategies active simultaneously
+}
+
+impl Default for ScalpStrategyMode {
+    fn default() -> Self {
+        Self::MultiStrategyAdaptive
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BreakoutSettings {
     pub total_budget_sol: f64,
@@ -33,6 +47,14 @@ pub struct BreakoutSettings {
     pub break_even_mult: f64,
     pub is_paper_trading: bool,
     pub poll_interval_secs: u64,
+    // Multi-strategy extensions
+    pub strategy_mode: ScalpStrategyMode,
+    pub min_dip_pct: f64,
+    pub max_dip_pct: f64,
+    pub min_buy_ratio_1h: f64,
+    pub max_graduation_age_mins: f64,
+    pub min_graduation_liquidity_usd: f64,
+    pub min_graduation_buy_ratio_5m: f64,
 }
 
 impl Default for BreakoutSettings {
@@ -58,6 +80,13 @@ impl Default for BreakoutSettings {
             break_even_mult: 1.08,
             is_paper_trading: true,
             poll_interval_secs: 10,
+            strategy_mode: ScalpStrategyMode::MultiStrategyAdaptive,
+            min_dip_pct: -7.5,
+            max_dip_pct: -1.8,
+            min_buy_ratio_1h: 0.52,
+            max_graduation_age_mins: 30.0,
+            min_graduation_liquidity_usd: 20_000.0,
+            min_graduation_buy_ratio_5m: 0.58,
         }
     }
 }
@@ -79,6 +108,11 @@ pub struct BreakoutCandidate {
     pub price_change_24h: f64,
     pub buys_5m: usize,
     pub sells_5m: usize,
+    pub buys_1h: usize,
+    pub sells_1h: usize,
+    pub pair_created_at_ms: Option<u64>,
+    pub pair_age_mins: Option<f64>,
+    pub matched_strategy: Option<String>,
     pub score: f64,
 }
 
@@ -100,6 +134,7 @@ pub struct BreakoutPosition {
     pub stop_loss_price_usd: f64,
     pub is_closed: bool,
     pub pnl_sol: f64,
+    pub strategy: String,
 }
 
 pub struct BreakoutEngine {
@@ -180,6 +215,7 @@ impl BreakoutEngine {
                     stop_loss_price_usd: stop_price,
                     is_closed: false,
                     pnl_sol: 0.0,
+                    strategy: "Adopted Wallet Position".to_string(),
                 };
                 positions.insert(mint.clone(), pos);
                 adopted_cnt += 1;
@@ -193,8 +229,8 @@ impl BreakoutEngine {
         Ok(adopted_cnt)
     }
 
-    /// Evaluates if a token qualifies as an active DEX volume breakout
-    pub fn evaluate_candidate(&self, c: &BreakoutCandidate) -> bool {
+    /// Evaluates if a token qualifies for Strategy 2: Volume & 5m Momentum Breakout
+    pub fn evaluate_momentum_breakout(&self, c: &BreakoutCandidate) -> bool {
         // 1. Liquidity check: Ensure deep liquidity to avoid illiquid traps and high slippage
         if c.liquidity_usd < self.settings.min_liquidity_usd {
             return false;
@@ -223,40 +259,189 @@ impl BreakoutEngine {
         // 4b. Anti-FOMO Guardrails: Must be an early-stage base breakout, NOT a late-stage parabolic top!
         if let Some(max_24h) = self.settings.max_price_change_24h {
             if c.price_change_24h > max_24h {
-                // Reject: Already up e.g. >250% (like DACITY +6,000%), extreme risk of buying the top!
                 return false;
             }
         }
         if let Some(min_24h) = self.settings.min_price_change_24h {
             if c.price_change_24h < min_24h {
-                // Reject: Negative 24h trend / dying dump
                 return false;
             }
         }
         if let Some(max_1h) = self.settings.max_price_change_1h {
             if c.price_change_1h > max_1h {
-                // Reject: Vertical 1h blow-off spike (>50%)
                 return false;
             }
         }
 
-        // 5. Must not be already entered or active
-        let entered = self.entered_tokens.lock().unwrap();
-        if entered.contains(&c.token_address) {
+        true
+    }
+
+    /// Evaluates if a token qualifies for Strategy 1: 5-Minute Oversold Dip-Rebound Scalper
+    pub fn evaluate_dip_rebound(&self, c: &BreakoutCandidate) -> bool {
+        // 1. Liquidity check: Must have deep liquidity ($25k+)
+        if c.liquidity_usd < self.settings.min_liquidity_usd {
+            return false;
+        }
+
+        // 2. 24h Volume check: Must be an established token with proven daily volume ($100k+)
+        if c.volume_24h_usd < self.settings.min_volume_24h_usd {
+            return false;
+        }
+
+        // 3. Active liquidity during dip: 5m volume >= $2,500
+        if c.volume_5m_usd < 2_500.0 {
+            return false;
+        }
+
+        // 4. Macro uptrend: 24h price change >= 0% and 1h price change >= -5%
+        if c.price_change_24h < 0.0 || c.price_change_1h < -5.0 {
+            return false;
+        }
+
+        // Anti-FOMO: Reject already overextended blowoff tops (> 250%)
+        if let Some(max_24h) = self.settings.max_price_change_24h {
+            if c.price_change_24h > max_24h {
+                return false;
+            }
+        }
+
+        // 5. Oversold Dip window: 5m price change must be negative within the pullback zone
+        // e.g. -7.5% <= price_change_5m <= -1.8%
+        if c.price_change_5m > self.settings.max_dip_pct || c.price_change_5m < self.settings.min_dip_pct {
+            return false;
+        }
+
+        // 6. Macro buyer dominance: 1h buyers must remain in control
+        let total_txns_1h = c.buys_1h + c.sells_1h;
+        if total_txns_1h < 20 {
+            return false;
+        }
+        let buy_ratio_1h = (c.buys_1h as f64) / (total_txns_1h as f64);
+        if buy_ratio_1h < self.settings.min_buy_ratio_1h {
             return false;
         }
 
         true
     }
 
-    /// Calculates a composite momentum score based on volume velocity and buy dominance
+    /// Evaluates if a token qualifies for Strategy 3: Secondary DEX Graduation Burst Scalper
+    pub fn evaluate_graduation_burst(&self, c: &BreakoutCandidate) -> bool {
+        // 1. Pair age: Must be a freshly migrated / graduated token (age <= max_graduation_age_mins, default 30m)
+        let age_mins = match c.pair_age_mins {
+            Some(age) => age,
+            None => return false,
+        };
+        if age_mins > self.settings.max_graduation_age_mins {
+            return false;
+        }
+
+        // 2. Seeded initial liquidity: >= $20,000 USD
+        if c.liquidity_usd < self.settings.min_graduation_liquidity_usd {
+            return false;
+        }
+
+        // 3. 5m Volume surge: >= $3,000 USD
+        if c.volume_5m_usd < 3_000.0 {
+            return false;
+        }
+
+        // 4. 5m Buy pressure: >= 8 buys and >= 58% buy ratio
+        let total_txns_5m = c.buys_5m + c.sells_5m;
+        if total_txns_5m < 8 || c.buys_5m < 5 {
+            return false;
+        }
+        let buy_ratio_5m = (c.buys_5m as f64) / (total_txns_5m as f64);
+        if buy_ratio_5m < self.settings.min_graduation_buy_ratio_5m {
+            return false;
+        }
+
+        // 5. Positive momentum: 5m change >= +1.0%
+        if c.price_change_5m < 1.0 {
+            return false;
+        }
+
+        // 6. Anti-exhaustion: 1h price change <= 250%
+        if c.price_change_1h > 250.0 {
+            return false;
+        }
+
+        true
+    }
+
+    /// Evaluates if candidate matches selected strategy mode and returns matched strategy name
+    pub fn evaluate_candidate_strategy(&self, c: &BreakoutCandidate) -> Option<String> {
+        let entered = self.entered_tokens.lock().unwrap();
+        if entered.contains(&c.token_address) {
+            return None;
+        }
+
+        match self.settings.strategy_mode {
+            ScalpStrategyMode::MomentumBreakout => {
+                if self.evaluate_momentum_breakout(c) {
+                    Some("Strategy 2: Momentum Breakout".to_string())
+                } else {
+                    None
+                }
+            }
+            ScalpStrategyMode::DipReboundScalp => {
+                if self.evaluate_dip_rebound(c) {
+                    Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
+                } else {
+                    None
+                }
+            }
+            ScalpStrategyMode::GraduationBurstScalp => {
+                if self.evaluate_graduation_burst(c) {
+                    Some("Strategy 3: DEX Graduation Burst".to_string())
+                } else {
+                    None
+                }
+            }
+            ScalpStrategyMode::MultiStrategyAdaptive => {
+                // Priority evaluation: Graduation Burst -> Dip Rebound -> Momentum Breakout
+                if self.evaluate_graduation_burst(c) {
+                    Some("Strategy 3: DEX Graduation Burst".to_string())
+                } else if self.evaluate_dip_rebound(c) {
+                    Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
+                } else if self.evaluate_momentum_breakout(c) {
+                    Some("Strategy 2: Momentum Breakout".to_string())
+                } else {
+                    None
+                }
+            }
+        }
+    }
+
+    /// Evaluates if a token qualifies for entry under current strategy mode
+    #[allow(dead_code)]
+    pub fn evaluate_candidate(&self, c: &BreakoutCandidate) -> bool {
+        self.evaluate_candidate_strategy(c).is_some()
+    }
+
+    /// Calculates a composite momentum score based on volume velocity, buy dominance, and strategy setup
     pub fn calculate_breakout_score(c: &BreakoutCandidate) -> f64 {
-        let total_txns = (c.buys_5m + c.sells_5m).max(1) as f64;
-        let buy_ratio = (c.buys_5m as f64) / total_txns;
+        let total_txns_5m = (c.buys_5m + c.sells_5m).max(1) as f64;
+        let buy_ratio_5m = (c.buys_5m as f64) / total_txns_5m;
         let vol_score = (c.volume_5m_usd / 5_000.0).min(10.0);
         let pct_score = (c.price_change_5m / 5.0).clamp(-2.0, 10.0);
-        let ratio_score = buy_ratio * 10.0;
-        vol_score * 0.4 + pct_score * 0.3 + ratio_score * 0.3
+        let ratio_score = buy_ratio_5m * 10.0;
+
+        // Bonus for fresh graduation pool (< 30m)
+        let grad_bonus = match c.pair_age_mins {
+            Some(age) if age <= 30.0 => 3.0,
+            _ => 0.0,
+        };
+
+        // Bonus for dip rebound setup (oversold dip with strong 1h buy ratio)
+        let total_txns_1h = (c.buys_1h + c.sells_1h).max(1) as f64;
+        let buy_ratio_1h = (c.buys_1h as f64) / total_txns_1h;
+        let dip_bonus = if c.price_change_5m < -1.5 && buy_ratio_1h >= 0.52 {
+            2.5
+        } else {
+            0.0
+        };
+
+        vol_score * 0.35 + pct_score * 0.25 + ratio_score * 0.25 + grad_bonus * 0.075 + dip_bonus * 0.075
     }
 
     /// Fetch trending/boosted token mint addresses from DexScreener
@@ -333,6 +518,17 @@ impl BreakoutEngine {
                 let price_change_24h = p["priceChange"]["h24"].as_f64().unwrap_or(0.0);
                 let buys_5m = p["txns"]["m5"]["buys"].as_u64().unwrap_or(0) as usize;
                 let sells_5m = p["txns"]["m5"]["sells"].as_u64().unwrap_or(0) as usize;
+                let buys_1h = p["txns"]["h1"]["buys"].as_u64().unwrap_or(0) as usize;
+                let sells_1h = p["txns"]["h1"]["sells"].as_u64().unwrap_or(0) as usize;
+                let pair_created_at_ms = p["pairCreatedAt"].as_u64();
+                let now_ms = Utc::now().timestamp_millis() as u64;
+                let pair_age_mins = pair_created_at_ms.map(|created| {
+                    if now_ms >= created {
+                        (now_ms - created) as f64 / 60_000.0
+                    } else {
+                        0.0
+                    }
+                });
 
                 let mut cand = BreakoutCandidate {
                     token_address,
@@ -350,6 +546,11 @@ impl BreakoutEngine {
                     price_change_24h,
                     buys_5m,
                     sells_5m,
+                    buys_1h,
+                    sells_1h,
+                    pair_created_at_ms,
+                    pair_age_mins,
+                    matched_strategy: None,
                     score: 0.0,
                 };
                 cand.score = Self::calculate_breakout_score(&cand);
@@ -362,9 +563,10 @@ impl BreakoutEngine {
 
     /// Process a detected candidate: check active capacity and trigger entry
     pub async fn process_candidate(&self, c: &BreakoutCandidate) -> Result<bool> {
-        if !self.evaluate_candidate(c) {
-            return Ok(false);
-        }
+        let strat_label = match self.evaluate_candidate_strategy(c) {
+            Some(s) => s,
+            None => return Ok(false),
+        };
 
         // Check active positions limit
         {
@@ -425,6 +627,7 @@ impl BreakoutEngine {
             stop_loss_price_usd: stop_price,
             is_closed: false,
             pnl_sol: 0.0,
+            strategy: strat_label.clone(),
         };
 
         if self.settings.is_paper_trading {
@@ -440,23 +643,23 @@ impl BreakoutEngine {
             println!(
                 "\n{}",
                 format!(
-                    "🚀 [DEX BREAKOUT ENTRY #{}] Token: {} ({}) | DEX: {}",
-                    trade_num, c.symbol, c.token_address, c.dex_id
+                    "🚀 [DEX ENTRY #{}] Token: {} ({}) | DEX: {} | {}",
+                    trade_num, c.symbol, c.token_address, c.dex_id, strat_label
                 )
                 .bold()
                 .green()
             );
             println!(
-                "   Price: ${:.6} ({:.8} SOL) | 5m Vol: ${:.1}k | 5m Change: +{:.2}% | 5m Buys: {}",
+                "   Price: ${:.6} ({:.8} SOL) | 5m Vol: ${:.1}k | 5m Change: {:+.2}% | 5m Buys: {}",
                 c.price_usd, c.price_native, c.volume_5m_usd / 1000.0, c.price_change_5m, c.buys_5m
             );
             println!(
-                "   Liquidity: ${:.1}k | 24h Vol: ${:.1}k | Momentum Score: {:.1}",
-                c.liquidity_usd / 1000.0, c.volume_24h_usd / 1000.0, c.score
+                "   Liquidity: ${:.1}k | 24h Vol: ${:.1}k | Score: {:.1} | Age: {:.1}m",
+                c.liquidity_usd / 1000.0, c.volume_24h_usd / 1000.0, c.score, c.pair_age_mins.unwrap_or(0.0)
             );
             println!(
-                "   📈 Strategy: Wide Trailing Stop ({:.1}%) | Break-Even Floor: ≥{:.2}x | Uncapped Upside",
-                self.settings.trailing_stop_pct, self.settings.break_even_mult
+                "   📈 Strategy: {} | Trailing Stop ({:.1}%) | Break-Even Floor: ≥{:.2}x",
+                strat_label, self.settings.trailing_stop_pct, self.settings.break_even_mult
             );
             println!(
                 "   💼 [PAPER WALLET] Balance: {:.4} SOL Available | {:.4} SOL Invested",
@@ -478,8 +681,8 @@ impl BreakoutEngine {
                 println!(
                     "\n{}",
                     format!(
-                        "🎯 [LIVE ON-CHAIN BREAKOUT ATTEMPT] Sniping {} ({}) on {} | Cost: {:.4} SOL (+{:.4} Tip)...",
-                        sym, mint, dex, buy_amount, tip
+                        "🎯 [LIVE ON-CHAIN ENTRY] Sniping {} ({}) on {} | {} | Cost: {:.4} SOL (+{:.4} Tip)...",
+                        sym, mint, dex, strat_label, buy_amount, tip
                     )
                     .bold()
                     .cyan()
@@ -564,39 +767,78 @@ impl BreakoutEngine {
                         pos.peak_multiplier = pos.current_multiplier;
                     }
 
-                    // 1. Trailing Take-Profit (Ratchet):
-                    // Once peak price reaches the activation threshold (default +8%, 1.08x):
+                    // 1. Granular Multi-Tier Profit Lockbox & Trailing Take-Profit:
+                    // Guarantees that once a trade is in profit, it can NEVER fall back into a loss!
+                    let peak_mult = pos.peak_multiplier;
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
-                    if pos.peak_multiplier >= activation_mult {
-                        // Trail tight callback buffer (default 2.5%) below highest peak watermark
+
+                    if peak_mult >= activation_mult {
+                        // Tier 5: Active Trailing Take-Profit at >= activation_mult (default +7.0% / 1.07x)
+                        // Trail tight callback buffer (e.g. 1.5%) below highest peak watermark, min floor +4.5%
                         let ttp_floor = pos.peak_price_usd * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
-                        // Guaranteed minimum profit floor (+2.0% above fees)
-                        let min_guaranteed_profit = pos.entry_price_usd * 1.02;
+                        let min_guaranteed_profit = pos.entry_price_usd * 1.045; // Minimum +4.5% locked floor
                         let effective_floor = ttp_floor.max(min_guaranteed_profit);
 
                         if effective_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = effective_floor;
                         }
-                    } else if pos.peak_multiplier >= self.settings.break_even_mult {
-                        // 2. Break-Even floor lock when multiplier reaches target (default 1.08x)
-                        let be_floor = pos.entry_price_usd * 1.02; // +2% profit locked
+                    } else if peak_mult >= 1.06 {
+                        // Tier 4: Lockbox at +6.0% gain -> Locks +4.0% guaranteed profit floor!
+                        let tier4_floor = pos.entry_price_usd * 1.040;
+                        if tier4_floor > pos.stop_loss_price_usd {
+                            pos.stop_loss_price_usd = tier4_floor;
+                        }
+                    } else if peak_mult >= 1.05 {
+                        // Tier 3: Lockbox at +5.0% gain -> Locks +3.0% guaranteed profit floor!
+                        // Prevents any +5% winner from retracing or losing profit.
+                        let tier3_floor = pos.entry_price_usd * 1.030;
+                        if tier3_floor > pos.stop_loss_price_usd {
+                            pos.stop_loss_price_usd = tier3_floor;
+                        }
+                    } else if peak_mult >= 1.04 {
+                        // Tier 2: Lockbox at +4.0% gain -> Locks +2.0% guaranteed profit floor!
+                        let tier2_floor = pos.entry_price_usd * 1.020;
+                        if tier2_floor > pos.stop_loss_price_usd {
+                            pos.stop_loss_price_usd = tier2_floor;
+                        }
+                    } else if peak_mult >= 1.025 {
+                        // Tier 1: Early Break-even Lockbox at +2.5% gain -> Locks +1.0% floor (covers all MEV tips and swap fees)
+                        // Once a trade touches +2.5%, it can NEVER turn into a loss!
+                        let be_floor = pos.entry_price_usd * 1.010;
                         if be_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = be_floor;
                         }
                     } else {
-                        // 3. Fallback trailing stop from peak watermark
-                        let new_trailing_stop = pos.peak_price_usd * (1.0 + self.settings.trailing_stop_pct / 100.0);
-                        if new_trailing_stop > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = new_trailing_stop;
+                        // Initial capital protection: tight -5.0% stop-loss from entry
+                        let initial_stop = pos.entry_price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
+                        if pos.stop_loss_price_usd == 0.0 || pos.stop_loss_price_usd < initial_stop {
+                            pos.stop_loss_price_usd = initial_stop;
                         }
                     }
 
+                    // Print continuous live position telemetry
+                    let floor_pct = if pos.entry_price_usd > 0.0 {
+                        (pos.stop_loss_price_usd / pos.entry_price_usd - 1.0) * 100.0
+                    } else {
+                        0.0
+                    };
+                    println!(
+                        "  📊 [POSITION TELEMETRY] {} | Price: ${:.6} | Gain: {:+.2}% (Peak: {:+.2}%) | Stop Floor: {:+.2}% | Strategy: {} | Status: {}",
+                        pos.symbol,
+                        cand.price_usd,
+                        (pos.current_multiplier - 1.0) * 100.0,
+                        (pos.peak_multiplier - 1.0) * 100.0,
+                        floor_pct,
+                        pos.strategy,
+                        if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
+                    );
+
                     // Check stop-loss / trailing profit trigger
                     if cand.price_usd <= pos.stop_loss_price_usd {
-                        let reason = if pos.current_multiplier >= 1.02 {
-                            format!("Trailing Take-Profit Locked (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
-                        } else if pos.current_multiplier >= 1.0 {
-                            format!("Break-Even Profit Protection ({:.2}x)", pos.current_multiplier)
+                        let reason = if pos.current_multiplier >= 1.025 {
+                            format!("Profit Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
+                        } else if pos.current_multiplier >= 1.005 {
+                            format!("Break-Even Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
                         } else {
                             format!("Tight Stop Loss Protection ({:.2}x)", pos.current_multiplier)
                         };
@@ -777,6 +1019,11 @@ mod tests {
             price_change_24h: 30.0,
             buys_5m: 30,
             sells_5m: 5,
+            buys_1h: 150,
+            sells_1h: 50,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(120.0),
+            matched_strategy: None,
             score: 8.5,
         };
         assert!(!engine.evaluate_candidate(&low_liq), "Must reject low liquidity pool");
@@ -801,9 +1048,86 @@ mod tests {
             price_change_24h: 85.0, // Healthy early breakout from base (< 250%)
             buys_5m: 135, // 135 buys
             sells_5m: 35, // 35 sells -> 79% buy ratio!
+            buys_1h: 2400,
+            sells_1h: 1100,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(450.0),
+            matched_strategy: None,
             score: 9.2,
         };
         assert!(engine.evaluate_candidate(&mihao_candidate), "Must qualify early base breakout!");
+        assert_eq!(
+            engine.evaluate_candidate_strategy(&mihao_candidate),
+            Some("Strategy 2: Momentum Breakout".to_string())
+        );
+    }
+
+    #[test]
+    fn test_evaluate_dip_rebound_qualifies_oversold_pullback() {
+        let engine = BreakoutEngine::new(BreakoutSettings::default(), None);
+        let dip_candidate = BreakoutCandidate {
+            token_address: "DipToken111111111111111111111111111111111111".to_string(),
+            name: "Dip Token".to_string(),
+            symbol: "DIP".to_string(),
+            pair_address: "pair_dip".to_string(),
+            dex_id: "raydium".to_string(),
+            price_usd: 0.025,
+            price_native: 0.0003,
+            liquidity_usd: 150_000.0,
+            volume_24h_usd: 1_200_000.0,
+            volume_5m_usd: 8_500.0,
+            price_change_5m: -3.4, // Pullback -3.4% in 5m (oversold dip)
+            price_change_1h: 8.5,  // Macro 1h trend is positive (+8.5%)
+            price_change_24h: 42.0, // Healthy 24h uptrend
+            buys_5m: 12,
+            sells_5m: 18,
+            buys_1h: 320,  // 320 buys
+            sells_1h: 160, // 160 sells -> 66.7% buy ratio over 1h!
+            pair_created_at_ms: None,
+            pair_age_mins: Some(300.0),
+            matched_strategy: None,
+            score: 7.8,
+        };
+
+        assert!(engine.evaluate_dip_rebound(&dip_candidate), "Must qualify as Strategy 1 dip-rebound!");
+        assert_eq!(
+            engine.evaluate_candidate_strategy(&dip_candidate),
+            Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
+        );
+    }
+
+    #[test]
+    fn test_evaluate_graduation_burst_identifies_fresh_pool() {
+        let engine = BreakoutEngine::new(BreakoutSettings::default(), None);
+        let fresh_grad = BreakoutCandidate {
+            token_address: "GradToken11111111111111111111111111111111111".to_string(),
+            name: "Graduated Token".to_string(),
+            symbol: "GRAD".to_string(),
+            pair_address: "pair_grad".to_string(),
+            dex_id: "pumpswap".to_string(),
+            price_usd: 0.0045,
+            price_native: 0.000053,
+            liquidity_usd: 35_000.0, // $35k initial seeded pool
+            volume_24h_usd: 120_000.0,
+            volume_5m_usd: 15_000.0, // $15k surge in 5m
+            price_change_5m: 4.8,    // Exploding +4.8% on secondary listing
+            price_change_1h: 18.0,
+            price_change_24h: 35.0,
+            buys_5m: 45,
+            sells_5m: 15, // 75% buy ratio
+            buys_1h: 60,
+            sells_1h: 20,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(8.5), // Freshly graduated 8.5 minutes ago!
+            matched_strategy: None,
+            score: 9.5,
+        };
+
+        assert!(engine.evaluate_graduation_burst(&fresh_grad), "Must qualify as Strategy 3 graduation burst!");
+        assert_eq!(
+            engine.evaluate_candidate_strategy(&fresh_grad),
+            Some("Strategy 3: DEX Graduation Burst".to_string())
+        );
     }
 
     #[test]
@@ -826,6 +1150,11 @@ mod tests {
             price_change_24h: 6045.0, // +6,045% in 24h -> Extreme top-chasing risk!
             buys_5m: 50,
             sells_5m: 10,
+            buys_1h: 500,
+            sells_1h: 200,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(180.0),
+            matched_strategy: None,
             score: 9.0,
         };
         assert!(!engine.evaluate_candidate(&extended_top), "Must reject token already up +6,045% in 24h!");
@@ -847,6 +1176,11 @@ mod tests {
             price_change_24h: 120.0,
             buys_5m: 40,
             sells_5m: 5,
+            buys_1h: 400,
+            sells_1h: 100,
+            pair_created_at_ms: None,
+            pair_age_mins: Some(200.0),
+            matched_strategy: None,
             score: 8.5,
         };
         assert!(!engine.evaluate_candidate(&blowoff_1h), "Must reject token already up +85% in last hour!");
@@ -881,6 +1215,7 @@ mod tests {
             stop_loss_price_usd: stop_price,
             is_closed: false,
             pnl_sol: 0.0,
+            strategy: "Strategy 2: Momentum Breakout".to_string(),
         };
 
         // Price spikes +50% (1.50x)
@@ -931,6 +1266,7 @@ mod tests {
             stop_loss_price_usd: initial_stop,
             is_closed: false,
             pnl_sol: 0.0,
+            strategy: "Strategy 2: Momentum Breakout".to_string(),
         };
 
         // 1. Price jumps to +20% ($1.20)

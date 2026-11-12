@@ -378,6 +378,34 @@ enum Commands {
         #[arg(long, default_value_t = 2.5)]
         trailing_take_profit_callback_pct: f64,
 
+        /// Scalping strategy mode: multi (default), dip, graduation, breakout
+        #[arg(long, default_value = "multi")]
+        strategy: String,
+
+        /// Strategy 1: Minimum oversold 5m dip % (default: -7.5 for -7.5%)
+        #[arg(long, default_value_t = -7.5)]
+        min_dip_pct: f64,
+
+        /// Strategy 1: Maximum oversold 5m dip % (default: -1.8 for -1.8%)
+        #[arg(long, default_value_t = -1.8)]
+        max_dip_pct: f64,
+
+        /// Strategy 1: Minimum 1h buy transaction ratio (default: 0.52 for 52%)
+        #[arg(long, default_value_t = 0.52)]
+        min_buy_ratio_1h: f64,
+
+        /// Strategy 3: Maximum pool graduation age in minutes (default: 30.0 mins)
+        #[arg(long, default_value_t = 30.0)]
+        max_graduation_age_mins: f64,
+
+        /// Strategy 3: Minimum initial pool liquidity in USD (default: $20,000)
+        #[arg(long, default_value_t = 20000.0)]
+        min_graduation_liquidity_usd: f64,
+
+        /// Strategy 3: Minimum 5m buy ratio for graduation burst (default: 0.58 for 58%)
+        #[arg(long, default_value_t = 0.58)]
+        min_graduation_buy_ratio_5m: f64,
+
         /// Trailing stop loss percentage from peak watermark (default: -10.0 for -10%)
         #[arg(long, default_value_t = -10.0)]
         trailing_stop_pct: f64,
@@ -523,6 +551,13 @@ async fn main() -> anyhow::Result<()> {
         min_price_change_5m,
         max_price_change_24h,
         max_price_change_1h,
+        strategy,
+        min_dip_pct,
+        max_dip_pct,
+        min_buy_ratio_1h,
+        max_graduation_age_mins,
+        min_graduation_liquidity_usd,
+        min_graduation_buy_ratio_5m,
         stop_loss_pct,
         trailing_take_profit_activation_pct,
         trailing_take_profit_callback_pct,
@@ -548,6 +583,13 @@ async fn main() -> anyhow::Result<()> {
             min_price_change_5m,
             max_price_change_24h,
             max_price_change_1h,
+            strategy,
+            min_dip_pct,
+            max_dip_pct,
+            min_buy_ratio_1h,
+            max_graduation_age_mins,
+            min_graduation_liquidity_usd,
+            min_graduation_buy_ratio_5m,
             stop_loss_pct,
             trailing_take_profit_activation_pct,
             trailing_take_profit_callback_pct,
@@ -1439,6 +1481,13 @@ async fn run_breakout_scanner(
     min_price_change_5m: f64,
     max_price_change_24h: f64,
     max_price_change_1h: f64,
+    strategy: String,
+    min_dip_pct: f64,
+    max_dip_pct: f64,
+    min_buy_ratio_1h: f64,
+    max_graduation_age_mins: f64,
+    min_graduation_liquidity_usd: f64,
+    min_graduation_buy_ratio_5m: f64,
     stop_loss_pct: f64,
     trailing_take_profit_activation_pct: f64,
     trailing_take_profit_callback_pct: f64,
@@ -1455,11 +1504,21 @@ async fn run_breakout_scanner(
     println!("{}", "      Uncapped Upside | Trailing Take-Profit | Fee-Optimized    ".bold().yellow());
     println!("{}", "===============================================================\n".bold().cyan());
 
+    let strat_mode = match strategy.to_lowercase().as_str() {
+        "dip" | "dip-rebound" | "strategy1" | "1" => solana::breakout::ScalpStrategyMode::DipReboundScalp,
+        "grad" | "graduation" | "burst" | "strategy3" | "3" => solana::breakout::ScalpStrategyMode::GraduationBurstScalp,
+        "breakout" | "momentum" | "strategy2" | "2" => solana::breakout::ScalpStrategyMode::MomentumBreakout,
+        _ => solana::breakout::ScalpStrategyMode::MultiStrategyAdaptive,
+    };
+
     let is_paper = !onchain;
     println!("  Execution Mode:       {}", if is_paper { "PAPER TRADING (Zero Financial Risk)".bold().green() } else { "LIVE ON-CHAIN (Real SOL Execution via Jupiter & Jito MEV)".bold().red() });
+    println!("  Scalp Strategies:     {:?} (Strategy 1: Dip-Rebound, Strategy 2: Breakout, Strategy 3: Graduation Burst)", strat_mode);
     println!("  Budget / Allocation:  Total: {:.4} SOL | Size: {:.4} SOL per trade", budget, buy_amount);
     println!("  Max Open Positions:   {}", max_positions);
     println!("  Jito MEV Tip:         {:.4} SOL (Optimized for minimal fee drag)", jito_tip);
+    println!("  Strategy 1 (Dip):     Dip: [{:.1}% .. {:.1}%] | Min 1h Buy Dominance: ≥ {:.0}%", min_dip_pct, max_dip_pct, min_buy_ratio_1h * 100.0);
+    println!("  Strategy 3 (Grad):    Max Pool Age: ≤ {:.0}m | Min Pool Liq: ≥ ${:.1}k | Min 5m Buys: ≥ {:.0}%", max_graduation_age_mins, min_graduation_liquidity_usd / 1000.0, min_graduation_buy_ratio_5m * 100.0);
     println!("  Liquidity Floor:      ≥ ${:.1}k USD (Meteora DLMM / Raydium / PumpSwap / Orca)", min_liquidity_usd / 1000.0);
     println!("  Volume Surge Filter:  ≥ ${:.1}k (24h) | ≥ ${:.1}k (5m)", min_volume_24h_usd / 1000.0, min_volume_5m_usd / 1000.0);
     println!("  Buy Pressure Filter:  ≥ {} buys in 5m | ≥ {:.0}% buy dominance", min_buys_5m, min_buy_ratio_5m * 100.0);
@@ -1508,6 +1567,13 @@ async fn run_breakout_scanner(
         break_even_mult,
         is_paper_trading: is_paper,
         poll_interval_secs,
+        strategy_mode: strat_mode,
+        min_dip_pct,
+        max_dip_pct,
+        min_buy_ratio_1h,
+        max_graduation_age_mins,
+        min_graduation_liquidity_usd,
+        min_graduation_buy_ratio_5m,
     };
 
     let engine = Arc::new(solana::breakout::BreakoutEngine::new(settings, executor));
