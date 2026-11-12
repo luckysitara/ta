@@ -2973,3 +2973,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
+
+---
+
+### 149. Checkpoint #396 — 2-Minute Cadence Stream Report (COINSIDE +23% 0-Liquidity Trap Defense & 0.0836 SOL Standing)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 22 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `COINSIDE` (`9ry9Dx1sygyd...`): Re-ignited with an aggressive **`+23.24%`** 5m surge on $1.1k volume, but pool liquidity remains at **`$0.0k`** (unbacked/honeypot pool). The engine's zero-liquidity defense completely blocked execution, preventing complete loss of trade funds.
+  - `TOMMY` (`7tLZtt1TmFzh...`): Persisted with $+1.71\%$ price tick, but blocked by shallow $6.8k depth and $0.0k volume.
+  - `Māo` (`AWL7bYYUH3St...`): Blocked due to $11.8k liquidity.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
