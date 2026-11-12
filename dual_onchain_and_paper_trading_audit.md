@@ -2756,3 +2756,21 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
 - **Session Performance (Post-`woohao` Era)**:
   - Baseline Liquid Capital: `0.083595 SOL`
   - 100% liquid cash defended; zero drawdown.
+
+---
+
+### 137. Checkpoint #384 — 2-Minute Cadence Stream Report (TOMMY Sub-Depth Rejection & COINSIDE 0-Liquidity Telemetry)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-15205`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-15205.log) screening 23 DEX pairs continuously.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.083595136 SOL`**
+  - Open Positions: **0** (100% pure liquid capital; zero market risk).
+  - Open ATAs: **0** (Zero stranded rent).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `TOMMY` (`7tLZtt1TmFzh...`): Surfaced as top candidate with $+5.60\%$ 5m momentum and score 2.8, but pool liquidity is only $6.8k (below $25.0k floor) and volume is $0.1k (< $2.5k requirement); strictly bypassed.
+  - `COINSIDE` (`9ry9Dx1sygyd...`): Re-tested with $+8.22\%$ 5m price change (score 2.9), but liquidity remains at **`$0.0k`**; safely barred from execution.
+  - `AIB` (`AJFnmpiF4VTK...`): Persisted with downside distribution ($-6.52\%$, $-4.65\%$), showing ongoing sell pressure.
+- **Session Performance (Post-`woohao` Era)**:
+  - Baseline Liquid Capital: `0.083595 SOL`
+  - Engine actively defending capital while awaiting genuine liquidity + volume aligned breakouts or dip rebounds.
