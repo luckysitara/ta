@@ -5452,3 +5452,31 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Cumulative Net PnL (Since #22): **`+0.000160 SOL`** (Positive profitability).
   - Net Wallet Expansion: **`+0.000137 SOL`** (Wallet up from `0.083595136 SOL` baseline).
   - Active Position: `NOBUSHIBA` guarded under tight trailing stop protection.
+
+
+---
+
+### 271. Checkpoint #521 — 2-Minute Cadence Stream Report (NOBUSHIBA Surges to +2.22% Unrealized Gain & Solvency Tracking)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-16998`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-16998.log) screening 26 DEX pairs continuously with Strategy 2 permanently excluded.
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.067103515 SOL`**
+  - Active Positions: **1** (`NOBUSHIBA` in profit).
+  - Open Trade ATAs: **1** (Active trade ATA).
+- **Active Position Telemetry (Trade #26 — `NOBUSHIBA`)**:
+  - Token: `NOBUSHIBA` (`8AAVuQpJcqpvCuutxyBTVvgBEXZJSkZoNv1sExpBpump`)
+  - Strategy: In-Flight Adopted Position (Pre-upgrade final breakout entry)
+  - Entry Price: `$0.000855`
+  - Current Price: **`$0.000874`** (**`+2.22%` unrealized gain**)
+  - Peak Gain: `+2.22%`
+  - Stop Floor: `-5.00%` (Approaching Tier 1 ratchet threshold at $+2.50\% \to$ lock $+1.0\%$ profit floor).
+  - Status: 🛡️ CAPITAL DEFENSE / Advancing towards Profit Lockbox Tier 1.
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `RAMBO` (`KMifrkYmDdAK...`): Deep liquidity pool at $\$322\text{k}–\$334\text{k}$ with $\$50\text{k}–\$60\text{k}$ volume. Monitored for Strategy 1 dip entry.
+  - Active DEX universe: 26 trending DEX pairs screened every 10 seconds; Strategy 2 strictly disabled.
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 4 Closed Trades: **2 Wins / 2 Losses (50.0% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.000160 SOL`** (Positive profitability).
+  - Net Wallet Expansion: **`+0.000137 SOL`** (Wallet up from `0.083595136 SOL` baseline).
+  - Active Trade #26 `NOBUSHIBA`: **`+2.22%` in unrealized profit**.
