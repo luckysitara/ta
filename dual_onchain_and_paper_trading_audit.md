@@ -1616,3 +1616,18 @@
 - **Safety Filters**: `GTA 6.0` ($13.8k liq) quarantined below the $25k liquidity floor.
 - **Solana Wallet Balance**: `0.068824194 SOL` liquid + 214.213237 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (214.213237).
+
+### Checkpoint #668 (2026-11-13 15:12:50 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 131 cycles completed).
+- **Trade #31 Telemetry (GATO)**:
+  - **Holding**: 214.213237 GATO.
+  - **Current Price**: $0.005626 (`+0.37%` gain vs entry $0.005605, peak `+0.89%`).
+  - **Capital Defense**: Stop floor held at `-5.00%` ($0.005325); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 131 continuous cycles (1,965 dual-leg quotes queried across Raydium, Meteora DLMM, and Orca Whirlpools).
+  - **Spread Observations**: Spreads remain in the 9 bps to 23 bps range; sizing is ready at 0.020 SOL to execute atomically on-chain via Jito MEV bundles when $\ge 30\text{ bps}$ net spread triggers.
+- **Safety Filters**: `SOLBRO` ($0.0k liq) filtered cleanly below $\ge \$25\text{k}$ liquidity floor.
+- **Solana Wallet Balance**: `0.068824194 SOL` liquid + 214.213237 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (214.213237).
