@@ -1460,3 +1460,14 @@
 - **Solana Wallet Balance**: `0.069130334 SOL` liquid + 214.490759 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (214.490759).
 - **Safety Filters**: `SOLBRO` ($0.0k liq) and `CS` ($16.7k liq) rejected cleanly below the $25k liquidity floor.
+
+### Checkpoint #656 (2026-11-13 14:28:50 UTC)
+- **Engine State**: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+- **Scanner Status**: 23 trending DEX tokens screened continuously. Active Positions: 0.
+- **Trade #29 Resolution Event**:
+  - **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+  - **Status**: CLOSED on-chain. Token account completely flattened (0 balance).
+  - **Capital Recovered**: 0.01483 SOL (Net PnL: -0.000281 SOL).
+- **Solana Wallet Balance**: `0.083964231 SOL` (100% liquid dry powder, 0 open positions).
+- **Active Token Accounts**: Zero open token accounts.
+- **Solvency**: Capital strictly conserved; net balance remains +0.000369 SOL above pre-#22 baseline.
