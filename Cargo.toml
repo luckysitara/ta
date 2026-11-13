@@ -1,0 +1,30 @@
+[package]
+name = "tradingagents-rs"
+version = "0.1.0"
+edition = "2021"
+description = "Native Rust port of TradingAgents: Multi-Agent LLM Financial Trading Framework"
+
+[dependencies]
+tokio = { version = "1.40", features = ["full"] }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+clap = { version = "4.5", features = ["derive", "env"] }
+async-trait = "0.1"
+chrono = { version = "0.4", features = ["serde"] }
+colored = "2.1"
+anyhow = "1.0"
+thiserror = "1.0"
+dotenvy = "0.15"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+regex = "1.10"
+futures = "0.3"
+bs58 = "0.5"
+base64 = "0.22"
+yellowstone-grpc-client = "16.0.1"
+yellowstone-grpc-proto = "14.0.1"
+tonic = { version = "0.14", features = ["tls-native-roots"] }
+rustls = { version = "0.23", features = ["ring"] }
+solana-sdk = "2.1"
+bincode = "1.3"

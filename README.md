@@ -1,140 +1,93 @@
-# 🦀 Solana Trading Agents: High-Performance Rust Sniper & Breakout Engine
+# 🦀 TradingAgents-rs: Multi-Agent Financial Trading Framework in Native Rust
 
-A high-performance, native Rust trading engine and autonomous sniper built specifically for **Solana DEXs, Yellowstone gRPC mempool feeds, and Jito MEV bundles**.
+A high-performance, native Rust reproduction of the **TradingAgents** multi-agent LLM financial trading framework, optimized for crypto assets, equity markets, and on-chain **Solana DEX & Prediction Market execution**.
 
 ---
 
-## ⚡ Core Engine Architecture
+## ⚡ Architecture Overview
+
+TradingAgents-rs mirrors the full dynamics of a quantitative trading firm using an asynchronous state DAG powered by **Tokio**:
 
 ```
-                 [ Solana Blockchain / Yellowstone gRPC Stream ]
-                                        │
-           ┌────────────────────────────┴───────────────────────────┐
-           ▼                                                        ▼
-  [ Yellowstone Mempool Sniper ]                          [ DEX Breakout Scanner ]
-  - Sub-slot pool creation detection                      - Real-time multi-pool scanning
-  - Bonding curve reserves tracking                       - Liquidity & volume velocity filters
-  - Option 1: Live price heuristics                       - Anti-FOMO & parabolic extension caps
-  - Option 2: Anti-rug & dev holding checks               - Strict Sweet Spot enforcement
-           │                                                        │
-           └────────────────────────────┬───────────────────────────┘
-                                        │
-                                        ▼
-                       [ Autonomous Strategy Classifier ]
-        ┌───────────────────────────────┴───────────────────────────────┐
-        ▼                                                               ▼
-[ Strategy 1: Dip-Rebound ]                               [ Strategy 3: Graduation Burst ]
-(5m oversold pullback in deep pools)                      (Pump.fun to Raydium migrations)
-        │                                                               │
-        └───────────────────────────────┬───────────────────────────────┘
-                                        │
-                                        ▼
-                     [ Multi-Tier Trailing Profit Lockbox ]
-                      - Activation Threshold: +7.0%
-                      - Dynamic Trailing Callback: 1.5%
-                      - Break-Even Floor Ratchet: 1.025x
-                      - Tight Capital Stop Loss: -5.0%
-                                        │
-                                        ▼
-                      [ Jito MEV On-Chain Bundle Executor ]
-                      - Direct validator tip routing (0.0001 SOL)
-                      - Atomic bundle inclusion / zero frontrunning
-                      - Immediate ATA rent reclamation (+0.002 SOL)
+           [ Live Market Feeds, Sentiment & Jupiter Prediction Markets ]
+                                         │
+        ┌──────────────┬─────────────────┴─────────────┬──────────────┐
+        ▼              ▼                               ▼              ▼
+[Technical Analyst] [Sentiment Analyst]          [News Analyst] [Fundamentals/On-Chain]
+        └──────────────┬───────────────────────────────┴──────────────┘
+                       │ (Parallel join via tokio::join!)
+                       ▼
+       [ Research Debate: Bullish vs Bearish Researcher ]
+                       │
+                       ▼
+            [ Head of Research Synthesis ]
+                       │
+                       ▼
+            [ Lead Portfolio Trader ]
+                       │ (Trade Proposal)
+                       ▼
+    [ Multi-Perspective Risk Management Committee ]
+    (Aggressive, Conservative & Neutral Risk Officers)
+                       │
+                       ▼
+             [ Final Consensus Report ]
+                       │
+         ┌─────────────┴────────────────────────┐
+         ▼                                      ▼
+  [ ⚡ Jupiter DEX Spot Swap ]    [ 🎯 Jupiter Prediction Market ]
+  (Raydium / Orca Whirlpools)      (YES/NO Binary Contracts on Solana)
 ```
 
 ---
 
 ## 🚀 Key Features
 
-* **⚡ Ultra-Low Latency Yellowstone gRPC**: Streams raw validator blocks, transactions, and pool creations with zero RPC polling lag.
-* **🛡️ Strict Anti-Rug & Liquidity Filters**:
-  * Enforces minimum liquidity floors ($\ge \$25\text{k}$) and 5m volume thresholds ($\ge \$2\text{k}$).
-  * Dev holding filters reject pools where creators retain excessive supply or bundle launches.
-* **🎯 High-Conviction Strategies**:
-  * **Strategy 1 (5m Oversold Dip-Rebound)**: Detects healthy pullbacks ($-2\%$ to $-25\%$) within high-depth pools ($\ge \$250\text{k}$ liquidity) and captures aggressive reversals.
-  * **Strategy 3 (DEX Graduation Burst)**: Targets fresh Pump.fun-to-Raydium graduations ($\le 30$ mins old) experiencing initial institutional liquidity injections.
-  * *Strategy 2 (Momentum Breakout)* has been permanently deprecated to prevent buying microcap exhaustion tops.
-* **🔒 Dynamic Trailing Profit Lockbox**: Automatically ratchets guaranteed stop floors beneath peak watermarks as unrealized gains surge, locking in profits while letting winners run.
-* **⚡ Jito MEV Bundle Delivery**: Delivers buy and sell instructions directly to Jito block engines with custom priority tips, shielding transactions from toxic sandwich attacks and slippage.
-* **💰 Zero Stranded Rent**: Automatically closes empty Associated Token Accounts (ATAs) upon position exit, immediately reclaiming the `~0.002039 SOL` account rent back to liquid capital.
+* **True Async Concurrency**: Parallel analyst execution via `tokio::join!` with zero GIL latency.
+* **🎯 Jupiter Prediction Market API (`api.jup.ag/prediction/v1`)**:
+  * Live discovery of prediction events and binary YES/NO markets on Solana.
+  * Price-as-probability ingestion ($0.65 = 65% probability) for macro and sentiment agents.
+  * Automatic strategy formulation: sizes contract purchases in USDC, computes potential $1.00 payout and ROI.
+  * Prepares `POST /orders` unsigned Solana transactions for instant wallet signing.
+* **⚡ Native Solana Spot DEX Routing**:
+  * Queries real-time DEX liquidity routes and price impact via **Jupiter Swap API v6**.
+  * Outputs exact token swap routing across Raydium CLMM, Orca Whirlpools, and Meteora.
+* **Multi-Provider LLM Engine**:
+  * **Claude Code CLI** (`--provider claude-code`): Uses your active local session with zero API key required.
+  * **Ollama** (`--provider ollama`): Local offline LLM execution.
+  * **OpenAI** (`gpt-4o`), **Anthropic** (`claude-3-5-sonnet`), **Groq** (`llama-3.3-70b-versatile`).
+  * **Mock LLM**: Built-in offline dry-run testing mode.
 
 ---
 
-## 🛠️ Quick Start
+## 🛠️ Usage
 
-### Prerequisites
-* Rust 1.78+ (`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`)
-* Solana CLI tools (`solana-keygen`, `spl-token`)
-* Solana Keypair located at `~/.config/solana/id.json`
-
-### 1. Build the Release Binary
+### 1. Build and Run
 ```bash
 cd tradingagents-rs
 cargo build --release
 ```
 
-### 2. Run the Yellowstone Mempool Sniper
+### 2. Run Analysis on Solana (SOL)
 ```bash
-# Quick launcher with interactive strategy selection
-./snipe.sh
+# Analyzes SOL spot and discovers Jupiter Prediction Markets:
+cargo run -- --ticker SOL
 
-# Or directly with Cargo:
-cargo run --manifest-path tradingagents-rs/Cargo.toml -- snipe \
-  --grpc-endpoint "https://your-yellowstone-grpc.com:443" \
-  --grpc-token "YOUR_TOKEN" \
-  --budget 0.1 \
-  --buy-amount 0.015 \
-  --paper
+# Run using your local Claude Code session:
+cargo run -- --ticker SOL --provider claude-code
+
+# Run with custom cash sizing:
+cargo run -- --ticker SOL --cash 25000
 ```
 
-### 3. Run the Autonomous Multi-Strategy Breakout Engine
-```bash
-./tradingagents-rs/target/release/tradingagents-rs breakout \
-  --strategy dip,grad \
-  --budget 0.080 \
-  --buy-amount 0.015 \
-  --max-positions 1 \
-  --jito-tip 0.0001 \
-  --stop-loss-pct=-5.0 \
-  --trailing-take-profit-activation-pct 7.0 \
-  --trailing-take-profit-callback-pct 1.5 \
-  --trailing-stop-pct=-10.0 \
-  --break-even-mult 1.025 \
-  --max-price-change-24h 250.0 \
-  --max-price-change-1h 50.0 \
-  --min-liquidity-usd 25000 \
-  --min-volume-24h-usd 100000 \
-  --min-volume-5m-usd 2000 \
-  --poll-interval-secs 10 \
-  --onchain
+### 3. CLI Options
 ```
-
----
-
-## 🧪 Testing Suite
-
-Run the full native test suite covering Jito tips, rug filters, trailing take-profit ratchets, and strategy qualifications:
-
-```bash
-cd tradingagents-rs
-cargo test
+Options:
+  -t, --ticker <TICKER>          Ticker symbol to analyze (default: SOL)
+  -p, --provider <PROVIDER>      auto, claude-code, ollama, openai, groq, mock [default: auto]
+  -m, --model <MODEL>            Model identifier
+  -a, --analysts <ANALYSTS>      Comma-separated list of analysts [default: technical,sentiment,news,fundamentals]
+      --solana-dex               Display Solana DEX spot swap route via Jupiter API [default: true]
+      --prediction-markets       Discover & formulate Jupiter Prediction Market contracts [default: true]
+      --cash <CASH>              Initial portfolio cash in USD [default: 10000.0]
+  -h, --help                     Print help
 ```
-
-All 43 unit tests run in $< 2$ seconds and verify:
-- In-slot emergency exit and dev dump rejection
-- Bonding curve reserves and graduation detection
-- Trailing stop calculation and profit lockbox ratchets
-- Strict exclusion of deprecated breakout strategies
-- Associated token account closing and rent reclamation
-
----
-
-## 📜 Audit & Performance History
-
-Full session checkpoints, transaction receipts, and live solvency records are documented in [dual_onchain_and_paper_trading_audit.md](file:///dual_onchain_and_paper_trading_audit.md).
-
----
-
-## 📄 License
-
-Apache-2.0. See `LICENSE` for details.
