@@ -1515,3 +1515,16 @@
 - **Cross-DEX Arbitrage Telemetry**: Completed 5 cycles scanning Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools for $\ge 30\text{ bps}$ net spreads.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Checkpoint #661 (2026-11-13 14:44:40 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 15 cycles completed).
+- **Trade #30 Telemetry (GATO)**:
+  - **Holding**: 218.436587 GATO.
+  - **Current Price**: $0.005585 (`+0.94%` gain vs entry $0.005533, peak `+1.34%`).
+  - **Capital Defense**: Stop floor locked at `-5.00%` ($0.005256); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Status**: Cycle #15 completed scanning Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools.
+- **Safety Filters**: `ONE` ($21.7k) and `CS` ($16.5k) filtered cleanly below the $25k liquidity floor.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
