@@ -1364,3 +1364,17 @@
 - **Solana Wallet Balance**: `0.086197861 SOL` (100% liquid dry powder).
 - **Active Token Accounts**: USDC (0 balance, standard reserve). Zero unneeded open ATAs.
 - **Solvency**: Capital strictly conserved; net PnL since baseline +0.002603 SOL.
+
+### Checkpoint #648 (2026-11-13 14:04:45 UTC)
+- **Engine State**: Active (`task-17909`, `--strategy dip,grad`, Strategy 2 excluded).
+- **Scanner Status**: 24 trending DEX tokens screened continuously. Active Positions: 1.
+- **Trade #28 Entry Event**:
+  - **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+  - **Strategy**: Strategy 1 (5m Oversold Dip-Rebound).
+  - **Liquidity**: $249.5k (well above $25k floor).
+  - **5m Volume**: $5.2k (well above $2.0k floor).
+  - **Entry Cost**: 0.0150 SOL (+ 0.0001 SOL Jito tip).
+  - **Token Holdings**: 222.362651 GATO.
+  - **Current Telemetry**: Price $0.005462 (-0.69% vs entry), Stop Floor -5.00%, Trailing TP active at +7.00%.
+- **Solana Wallet Balance**: `0.069569021 SOL` liquid + 222.362651 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (222.362651).
