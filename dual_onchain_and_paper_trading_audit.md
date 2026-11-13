@@ -1711,3 +1711,18 @@
 - **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
 - **Active Token Accounts**: 0 open meme positions. Cleaned.
 - **System Storage**: 147 GB available (78% disk capacity).
+
+### Checkpoint #674 (2026-11-13 15:41:15 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, Strategy 2 excluded). 0 open positions.
+  - Cross-DEX Arbitrage Engine: Active (`task-19238`, `--onchain`, `--use-kamino-flash-loan`, Cycle #41 completed).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 41 multi-pool scanning cycles (615 dual-leg quotes across Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools).
+  - **Kamino Dynamic Sizing**: $S^* \le 10.0\text{ SOL}$ sized against pool depth; liquidity floor $\ge \$100\text{k USD}$ actively rejecting micro-caps.
+  - **Safety Gatekeepers**: Zero-loss runtime assertion floor and pre-simulation active; zero transaction fees spent on unconfirmed opportunities.
+- **Strict Git Branch Routing**: Committed and pushed exclusively to `origin/solana-rust` (`main` excluded).
+- **Closed Performance Ledger (Trades #22–#31)**:
+  - 10 Closed Trades | **6 Wins / 4 Losses (60.0% Win Rate)** | **Net Closed PnL: `+0.001594 SOL`**.
+- **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
+- **Active Token Accounts**: 0 open meme positions. Cleaned.
+- **System Storage**: 147 GB free (78% capacity).
