@@ -5775,3 +5775,24 @@ At the moment Trade #14 (`woohao`) was entered, our wallet and portfolio consist
   - Cumulative Net PnL (Since #22): **`+0.000868 SOL`** (Net positive profitability).
   - Net Wallet Expansion: **`+0.000837 SOL`** (New capital high).
   - Total Liquid Cash Solvency: **`0.084432409 SOL`** ($100\%$ pure cash).
+
+
+---
+
+### 285. Checkpoint #535 — Post-Server Restart Verification, Breakout Engine Relaunch (Strategy 1 & 3 Active, Strategy 2 Excluded) & Solvency at 0.08443 SOL
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-17361`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-17361.log) successfully relaunched following server restart. Scanning 34 trending DEX pairs with `--strategy dip,grad` (Strategy 2 permanently excluded).
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.084432409 SOL`** (100% dry powder; up from `0.083595136 SOL` pre-Trade #22 baseline).
+  - Open Positions: **0** (Zero active exposure; 100% cash).
+  - Open Trade ATAs: **0** (All rent reclaimed).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - DEX Universe expanded to **34 trending pairs** dynamically ingested.
+  - Strategy 2 (Momentum Breakout) remains permanently disabled per user mandate.
+  - Strategy 1 (5m Oversold Dip-Rebound) and Strategy 3 (DEX Graduation Burst) active with strict liquidity floor ($\ge \$25\text{k}$) and 5m volume threshold ($\ge \$2\text{k}$).
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 5 Closed Trades: **3 Wins / 2 Losses (60.0% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.000868 SOL`** (Net positive profitability).
+  - Net Wallet Expansion: **`+0.000837 SOL`** (New capital high).
+  - Total Liquid Cash Solvency: **`0.084432409 SOL`** ($100\%$ pure cash).
