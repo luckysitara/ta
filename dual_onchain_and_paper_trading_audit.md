@@ -296,3 +296,24 @@
   - 6 Closed Trades: **4 Wins / 2 Losses (66.7% Win Rate)**
   - Cumulative Net PnL (Since #22): **`+0.001125 SOL`** (Net positive profitability).
   - Total Liquid Cash Solvency: **`0.086197861 SOL`** ($100\%$ pure cash).
+
+
+---
+
+### 341. Checkpoint #591 — 2-Minute Cadence Stream Report (Sub-Floor Filters: jjaemu & BOOK Quarantined, Solvency at 0.08620 SOL)
+
+- **Task Status**: Active Multi-Strategy Daemon [`task-17909`](file:///home/rootkit/.gemini/antigravity-cli/brain/05a0c255-a313-4d1f-ae20-0abb0e9076c2/.system_generated/tasks/task-17909.log) screening 26 trending DEX pairs continuously with `--strategy dip,grad` (Strategy 2 permanently excluded).
+- **Wallet Connection & Risk Exposure**:
+  - Wallet: [`BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re`](https://solscan.io/account/BEmX1nfeZT5i4VpSEeZmhiYxpZ9z4Y1LQLjAtPR9c3re)
+  - Liquid SOL Cash: **`0.086197861 SOL`** (100% dry powder; up from `0.083595136 SOL` pre-Trade #22 baseline, representing **`+0.002602725 SOL`** net wallet expansion).
+  - Open Positions: **0** (Zero active exposure; 100% cash).
+  - Open Trade ATAs: **0** (Zero idle rent liabilities).
+- **Scanner Screening & Quality Filter Telemetry**:
+  - `BOOK` (`6S3iL67jVJc7...`): Zero-liquidity ($0.0k pool depth) flagged and rejected immediately.
+  - `jjaemu` (`AWuUCEXwrCvb...`): Carries $\$22.1\text{k}$ liquidity and $\$0.4\text{k}$ 5m volume; failed both the $\$25.0\text{k}$ liquidity threshold and the $\$2.0\text{k}$ volume floor. Quarantined.
+  - `Huang` (`4FP2GRQS3WYP...`): Liquidity healthy at $\$32.7\text{k}$ ($+11.83\%$), but 5m volume ($1.0k) remains under the $\$2.0\text{k}$ momentum floor; safely bypassed.
+  - Active DEX universe: 26 trending DEX pairs screened continuously every 10 seconds.
+- **Session Performance (Trade #22 `RAMBO` Era)**:
+  - 6 Closed Trades: **4 Wins / 2 Losses (66.7% Win Rate)**
+  - Cumulative Net PnL (Since #22): **`+0.001125 SOL`** (Net positive profitability).
+  - Total Liquid Cash Solvency: **`0.086197861 SOL`** ($100\%$ pure cash).
