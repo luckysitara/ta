@@ -1599,3 +1599,20 @@
   - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, standard -5.0% stop, 0 active positions).
   - Cross-DEX Arb Engine: Active (`task-19000`, `--onchain`, Cycle #69 completed).
 - **Solana Wallet Balance**: `0.083939194 SOL` (100% liquid dry powder).
+
+### Checkpoint #667 (2026-11-13 15:02:30 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 78 cycles completed).
+- **Trade #31 Telemetry (GATO)**:
+  - **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+  - **Strategy**: Strategy 1 (5m Oversold Dip-Rebound) fresh re-entry at $0.005605.
+  - **Holding**: 214.213237 GATO.
+  - **Current Price**: $0.005612 (`+0.12%` gain vs entry, peak `+0.57%`).
+  - **Capital Defense**: Stop floor locked at `-5.00%` ($0.005325); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 78 continuous scan cycles (1,170 dual-leg quotes queried across Raydium, Meteora DLMM, and Orca Whirlpools).
+  - **Spread Status**: Average spreads hover between 11 bps and 23 bps. Atomic Jito bundle ready to execute at $\ge 30\text{ bps}$ net.
+- **Safety Filters**: `GTA 6.0` ($13.8k liq) quarantined below the $25k liquidity floor.
+- **Solana Wallet Balance**: `0.068824194 SOL` liquid + 214.213237 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (214.213237).
