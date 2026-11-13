@@ -1573,3 +1573,18 @@
 - **Safety Filters**: `Heisto` ($0.0k liq) and `Leonida` ($0.1k 5m vol) quarantined.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Checkpoint #665 (2026-11-13 14:57:45 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored with profit lockbox active.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 62 cycles completed).
+- **Trade #30 Telemetry (GATO)**:
+  - **Holding**: 218.436587 GATO.
+  - **Current Price**: $0.005761 (`+4.12%` gain vs entry $0.005533, new peak `+5.71%`).
+  - **Profit Lockbox**: Ratchet floor held at `+3.00%` ($0.005699); guaranteed green trade. Dynamic trailing TP activation armed at `+7.00%`.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 62 continuous cycles (930 dual-leg quotes queried across Raydium, Meteora DLMM, and Orca Whirlpools).
+  - **Spread Status**: Average spreads remain in the 10 bps to 22 bps range; atomic Jito bundling primed for $\ge 30\text{ bps}$ net moves.
+- **Safety Filters**: `WASTED` ($0.5k 5m vol) quarantined below the volume floor.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
