@@ -1588,3 +1588,14 @@
 - **Safety Filters**: `WASTED` ($0.5k 5m vol) quarantined below the volume floor.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Trade #30 Manual Profit Take Closure (2026-11-13 14:59:30 UTC)
+- **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+- **Action**: User-directed profit take.
+- **Entry**: $0.005533 | **Exit Price**: $0.005745 (`+3.83% WIN`).
+- **Execution**: Liquidated via Jupiter DEX swap back into SOL; SPL token account closed and rent reclaimed.
+- **Capital Recovered**: 0.01509 SOL (+0.000090 SOL net gain).
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, standard -5.0% stop, 0 active positions).
+  - Cross-DEX Arb Engine: Active (`task-19000`, `--onchain`, Cycle #69 completed).
+- **Solana Wallet Balance**: `0.083939194 SOL` (100% liquid dry powder).
