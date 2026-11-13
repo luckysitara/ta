@@ -1501,3 +1501,17 @@
 - **Solana Wallet Balance**: `0.083964231 SOL` (100% liquid dry powder).
 - **Active Token Accounts**: Zero open token accounts.
 - **Solvency**: Capital strictly conserved; net balance remains +0.000369 SOL above pre-#22 baseline.
+
+### Milestone Checkpoint #660 (2026-11-13 14:41:40 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates).
+- **Trade #30 Entry Telemetry**:
+  - **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+  - **Strategy**: Strategy 1 (5m Oversold Dip-Rebound).
+  - **Entry Price**: $0.005533. Current Price: $0.005536 (+0.05%).
+  - **Holding**: 218.436587 GATO.
+  - **Capital Defense**: Stop floor locked at `-5.00%` ($0.005256); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Telemetry**: Completed 5 cycles scanning Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools for $\ge 30\text{ bps}$ net spreads.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
