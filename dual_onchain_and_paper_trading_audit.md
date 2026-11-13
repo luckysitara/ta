@@ -1402,3 +1402,15 @@
   - **Liquidity & Depth**: Healthy $247.7k liquidity, $5.9k 5m turnover.
 - **Solana Wallet Balance**: `0.069569021 SOL` liquid + 222.362651 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (222.362651). Zero unneeded open ATAs.
+
+### Checkpoint #651 (2026-11-13 14:13:10 UTC)
+- **Engine State**: Active (`task-18882`, `--strategy dip,grad`, Strategy 2 excluded). Tight stop-loss updated to -1.5%.
+- **Trade #28 Liquidation Event**:
+  - **Token**: `GATO` (`HsprHxBRgiVaQdRf3TnKNuZZtaX9JUSPgMFdAkk6pump`).
+  - **Trigger**: User directive enforced: immediate stop at -1.5% target threshold.
+  - **Execution**: Liquidated via Jupiter DEX swap back to SOL, followed by SPL token account closure.
+  - **Returned**: 0.01466 SOL (Net PnL: -0.000440 SOL; -2.9% net after fees and tip).
+  - **Status**: CLOSED. All 222.362651 GATO sold; rent reclaimed.
+- **Solana Wallet Balance**: `0.084245334 SOL` (100% liquid dry powder, 0 open positions).
+- **Active Token Accounts**: Zero open token accounts.
+- **Secret Audit Verification**: Complete git history sweep across `main` and `solana-rust` confirmed 0 private keys, 0 `.env` files, and 0 secrets committed.
