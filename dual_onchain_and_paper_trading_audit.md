@@ -1631,3 +1631,22 @@
 - **Safety Filters**: `SOLBRO` ($0.0k liq) filtered cleanly below $\ge \$25\text{k}$ liquidity floor.
 - **Solana Wallet Balance**: `0.068824194 SOL` liquid + 214.213237 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (214.213237).
+
+### Checkpoint #669 (2026-11-13 15:25:00 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored. 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 211 cycles completed).
+- **Trade #31 Resolution (GATO)**:
+  - **Entry Price**: $0.005605 (0.0150 SOL input).
+  - **Peak Surge**: $0.006106 (`+8.94%`). Dynamic profit lockbox ratcheted stop floor up to `+7.30%`.
+  - **Exit Execution**: Pullback triggered lockbox take-profit at $0.005978 - $0.006000 (`+6.65%` to `+7.33%`). Reclaimed 0.0161 SOL net (+0.001100 SOL net profit, **`+7.33% WIN`**).
+  - **Rent Reclamation**: ATA closed cleanly, rent refunded to main wallet.
+- **Closed Performance Ledger (Trades #22–#31)**:
+  - 10 Closed Trades | **6 Wins / 4 Losses (60.0% Win Rate)** | **Net Closed PnL: `+0.001594 SOL`**.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 211 scan cycles (3,165 dual-leg quotes queried across Raydium, Meteora DLMM, and Orca Whirlpools).
+  - **Spreads Observed**: Ranging from 8 bps to 24 bps across BONK, WIF, JUP, BOME.
+  - **Kamino Flash Loan Upgrade**: Integrating zero-collateral Kamino Flash Loan engine (`KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD`) with dynamic pool depth sizing, hard minimum output assertion floor, and zero-loss pre-simulation gatekeeper.
+- **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
+- **Active Token Accounts**: 0 open meme positions. Cleaned.
+- **System Storage**: 147 GB available (78% disk capacity).
