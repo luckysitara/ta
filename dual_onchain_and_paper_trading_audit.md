@@ -1528,3 +1528,16 @@
 - **Safety Filters**: `ONE` ($21.7k) and `CS` ($16.5k) filtered cleanly below the $25k liquidity floor.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Checkpoint #662 (2026-11-13 14:47:50 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 26 cycles completed).
+- **Trade #30 Telemetry (GATO)**:
+  - **Holding**: 218.436587 GATO.
+  - **Current Price**: $0.005629 (`+1.74%` gain vs entry $0.005533, new peak `+1.74%`).
+  - **Capital Defense**: Stop floor locked at `-5.00%` ($0.005256); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Status**: Cycle #26 completed scanning Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools.
+- **Safety Filters**: `PIRATE` ($50.5k liq, $23.3k vol, +11.6%) monitored; no FOMO chase under Strategy 2 exclusion.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
