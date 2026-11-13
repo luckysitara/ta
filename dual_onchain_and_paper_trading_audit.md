@@ -1541,3 +1541,19 @@
 - **Safety Filters**: `PIRATE` ($50.5k liq, $23.3k vol, +11.6%) monitored; no FOMO chase under Strategy 2 exclusion.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Checkpoint #663 (2026-11-13 14:50:40 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 36 cycles completed).
+- **Trade #30 Telemetry (GATO)**:
+  - **Holding**: 218.436587 GATO.
+  - **Current Price**: $0.005616 (`+1.50%` gain vs entry $0.005533, session peak `+2.46%`).
+  - **Capital Defense**: Stop floor locked at `-5.00%` ($0.005256); Trailing TP active at `+7.00%`.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 36 continuous scan cycles (540 dual-leg queries across Raydium, Meteora DLMM, and Orca Whirlpools).
+  - **Spread Observations**: Cross-DEX spreads on candidate tokens (BONK, WIF, JUP, BOME, FASTMOON) range between 10 bps and 25 bps. Sizing is ready at 0.020 SOL to execute atomically via Jito MEV bundles when spread exceeds 30 bps net.
+  - **Execution Risk**: 0 inventory risk; transactions revert atomically with zero gas cost if spread narrows before block inclusion.
+- **Safety Filters**: `Heisto` ($0.0k liq) filtered cleanly below $\ge \$25\text{k}$ floor.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
