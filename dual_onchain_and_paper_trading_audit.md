@@ -1378,3 +1378,15 @@
   - **Current Telemetry**: Price $0.005462 (-0.69% vs entry), Stop Floor -5.00%, Trailing TP active at +7.00%.
 - **Solana Wallet Balance**: `0.069569021 SOL` liquid + 222.362651 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (222.362651).
+
+### Checkpoint #649 (2026-11-13 14:07:25 UTC)
+- **Engine State**: Active (`task-17909`, `--strategy dip,grad`, Strategy 2 excluded).
+- **Scanner Status**: 25 trending DEX tokens screened continuously. Active Positions: 1.
+- **Trade #28 Telemetry (GATO)**:
+  - **Holding**: 222.362651 GATO.
+  - **Live Price**: $0.005520 (Gain: `+0.36%`, Peak: `+0.51%`).
+  - **Stop Loss Floor**: -5.00% capital defense floor.
+  - **Trailing Take-Profit**: Activation at +7.00%, callback 1.50%.
+- **Solana Wallet Balance**: `0.069569021 SOL` liquid + 222.362651 GATO.
+- **Active Token Accounts**: USDC (0 balance), GATO (222.362651).
+- **Cross-DEX Arbitrage Engine**: Complete & compiled into release binary. Tested in 15-pair multi-DEX discovery cycle with 0 errors.
