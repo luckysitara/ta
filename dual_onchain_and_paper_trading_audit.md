@@ -1650,3 +1650,19 @@
 - **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
 - **Active Token Accounts**: 0 open meme positions. Cleaned.
 - **System Storage**: 147 GB available (78% disk capacity).
+
+### Checkpoint #670 (2026-11-13 15:30:15 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-19073`, `--strategy dip,grad`, Strategy 2 permanently excluded). 0 open positions.
+  - Cross-DEX Arbitrage Engine: Upgraded & Live (`task-19238`, `--onchain`, `--use-kamino-flash-loan --kamino-max-borrow 10.0 --kamino-min-liquidity 100000.0`, cycle #8+ completed).
+- **Kamino Flash Loan Safe Engine Live Deployment**:
+  - **Zero-Collateral Borrow**: Native integration of Kamino Lending (`KLend2g3cP87fffoy8q1mQqGKjrxjC8boSyAYavgmjD`).
+  - **Pool Depth Gatekeeper**: Enforces strict $\ge \$100\text{k USD}$ liquidity threshold; automatically rejects flash borrowing on micro-caps to prevent slippage erosion.
+  - **Dynamic Sizing Calculator**: Dynamically caps borrow volume at $1.0\%\text{--}1.5\%$ of pool depth ($S^* \le 10.0\text{ SOL}$) maintaining price impact $\le 0.65\%$.
+  - **Hard Assertion Floor**: Asserts Leg 2 return $\ge \text{Loan} + \text{Loan Fee} + \text{Min Profit} + \text{Tip}$; reverts inside Solana runtime if profit threshold is missed.
+  - **Zero-Loss Pre-Simulation**: Every bundle simulated via RPC pre-flight prior to broadcast; $0\text{ SOL}$ gas spent on failed or unprofitable routes.
+- **Closed Performance Ledger (Trades #22–#31)**:
+  - 10 Closed Trades | **6 Wins / 4 Losses (60.0% Win Rate)** | **Net Closed PnL: `+0.001594 SOL`**.
+- **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
+- **Token Accounts**: 0 open meme positions. Cleaned.
+- **System Storage**: 147 GB free (78% capacity).
