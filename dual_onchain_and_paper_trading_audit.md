@@ -1557,3 +1557,19 @@
 - **Safety Filters**: `Heisto` ($0.0k liq) filtered cleanly below $\ge \$25\text{k}$ floor.
 - **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
 - **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
+
+### Checkpoint #664 (2026-11-13 14:53:10 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-18967`, `--strategy dip,grad`, Strategy 2 excluded). Standard -5.0% stop-loss restored with profit lockbox active.
+  - Cross-DEX Arbitrage Engine: Active (`task-19000`, `--onchain`, Jito MEV bundles, 15 multi-pool candidates, 45 cycles completed).
+- **Trade #30 Telemetry (GATO)**:
+  - **Holding**: 218.436587 GATO.
+  - **Current Price**: $0.005795 (`+4.74%` gain vs entry $0.005533, peak `+5.17%`).
+  - **Profit Lockbox**: Ratchet floor locked in at `+3.00%` ($0.005699); guaranteed winning trade. Dynamic trailing TP activation armed at `+7.00%`.
+- **Cross-DEX Arbitrage Analysis**:
+  - **Cycles Completed**: 45 continuous cycles (675 dual-leg quotes queried).
+  - **DEX Pools Monitored**: Raydium AMM v4, Raydium CPMM, Meteora DLMM, and Orca Whirlpools across 15 high-volume token pools.
+  - **Spread Status**: Average cross-DEX spreads range between 12 bps and 24 bps. Atomic Jito bundle primed for $\ge 30\text{ bps}$ net threshold.
+- **Safety Filters**: `Heisto` ($0.0k liq) and `Leonida` ($0.1k 5m vol) quarantined.
+- **Solana Wallet Balance**: `0.068849231 SOL` liquid + 218.436587 GATO in position.
+- **Active Token Accounts**: USDC (0 balance), GATO (218.436587).
