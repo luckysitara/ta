@@ -1,6 +1,7 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
+pub mod arbitrage;
 pub mod breakout;
 pub mod execution;
 pub mod prediction;

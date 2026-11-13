@@ -434,6 +434,68 @@ enum Commands {
         #[arg(long, env = "SOLANA_RPC_URL")]
         rpc_url: Option<String>,
     },
+    /// Run Solana Cross-DEX Atomic Arbitrage Engine (Raydium, Meteora, Orca, PumpSwap)
+    Arbitrage {
+        /// Paper/live trading budget in SOL (default: 0.08 SOL)
+        #[arg(long, default_value_t = 0.08)]
+        budget: f64,
+
+        /// Trade size in SOL per cyclic arbitrage (default: 0.02 SOL)
+        #[arg(long, default_value_t = 0.02)]
+        trade_amount: f64,
+
+        /// Minimum net profit in basis points (default: 30 bps = 0.3%)
+        #[arg(long, default_value_t = 30)]
+        min_profit_bps: i64,
+
+        /// Jito MEV tip amount in SOL (default: 0.0001 SOL)
+        #[arg(long, default_value_t = 0.0001)]
+        jito_tip: f64,
+
+        /// Polling interval in seconds (default: 5s)
+        #[arg(long, default_value_t = 5)]
+        poll_interval_secs: u64,
+
+        /// Max run duration in seconds (optional)
+        #[arg(long)]
+        duration_secs: Option<u64>,
+
+        /// Comma-separated token mints to screen (optional, defaults to automatic multi-DEX discovery)
+        #[arg(long)]
+        tokens: Option<String>,
+
+        /// Live on-chain execution with real SOL using Jito MEV bundles
+        #[arg(long, default_value_t = false)]
+        onchain: bool,
+
+        /// Enable Kamino zero-collateral flash loans for deep liquidity cross-DEX pools
+        #[arg(long, default_value_t = false)]
+        use_kamino_flash_loan: bool,
+
+        /// Maximum Kamino flash loan borrow limit in SOL (default: 10.0 SOL)
+        #[arg(long, default_value_t = 10.0)]
+        kamino_max_borrow: f64,
+
+        /// Minimum pool liquidity in USD required to unlock Kamino flash loan (default: $100,000)
+        #[arg(long, default_value_t = 100000.0)]
+        kamino_min_liquidity: f64,
+
+        /// Maximum price impact percent allowed per leg (default: 0.65%)
+        #[arg(long, default_value_t = 0.65)]
+        kamino_max_price_impact: f64,
+
+        /// Path to Solana Keypair JSON file (default: ~/.config/solana/id.json)
+        #[arg(long, env = "KEYPAIR_PATH")]
+        keypair_path: Option<String>,
+
+        /// Solana RPC endpoint URL
+        #[arg(long, env = "SOLANA_RPC_URL")]
+        rpc_url: Option<String>,
+
+        /// Jito Block Engine endpoint URL
+        #[arg(long, env = "JITO_BLOCK_ENGINE_URL")]
+        jito_url: Option<String>,
+    },
 }
 
 #[tokio::main]
@@ -602,6 +664,50 @@ async fn main() -> anyhow::Result<()> {
             rpc_url,
         )
         .await;
+    }
+
+    if let Some(Commands::Arbitrage {
+        budget,
+        trade_amount,
+        min_profit_bps,
+        jito_tip,
+        poll_interval_secs,
+        duration_secs,
+        tokens,
+        onchain,
+        use_kamino_flash_loan,
+        kamino_max_borrow,
+        kamino_min_liquidity,
+        kamino_max_price_impact,
+        keypair_path,
+        rpc_url,
+        jito_url,
+    }) = args.command
+    {
+        let target_tokens = tokens
+            .map(|t| t.split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect())
+            .unwrap_or_default();
+
+        let cfg = solana::arbitrage::ArbitrageConfig {
+            budget_sol: budget,
+            trade_amount_sol: trade_amount,
+            min_profit_bps,
+            jito_tip_sol: jito_tip,
+            onchain,
+            poll_interval_secs,
+            duration_secs,
+            target_tokens,
+            keypair_path,
+            rpc_url,
+            jito_url,
+            use_kamino_flash_loan,
+            kamino_max_borrow_sol: kamino_max_borrow,
+            kamino_min_pool_liquidity_usd: kamino_min_liquidity,
+            kamino_max_price_impact_pct: kamino_max_price_impact,
+        };
+
+        let engine = solana::arbitrage::ArbitrageEngine::new(cfg)?;
+        return engine.run().await;
     }
 
     if args.snipe {
