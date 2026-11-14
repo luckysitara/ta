@@ -1613,6 +1613,7 @@ async fn run_breakout_scanner(
     let strat_mode = match strategy.to_lowercase().as_str() {
         "dip" | "dip-rebound" | "strategy1" | "1" => solana::breakout::ScalpStrategyMode::DipReboundScalp,
         "grad" | "graduation" | "burst" | "strategy3" | "3" => solana::breakout::ScalpStrategyMode::GraduationBurstScalp,
+        "gem" | "early" | "earlygem" | "strategy5" | "5" => solana::breakout::ScalpStrategyMode::EarlyGemRunner,
         "breakout" | "momentum" | "strategy2" | "2" => solana::breakout::ScalpStrategyMode::MomentumBreakout,
         _ => solana::breakout::ScalpStrategyMode::DipAndGraduation,
     };

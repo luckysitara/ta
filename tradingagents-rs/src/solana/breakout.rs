@@ -16,8 +16,9 @@ pub enum ScalpStrategyMode {
     MomentumBreakout,     // Strategy 2: Volume & 5m momentum breakout (Solo mode only)
     DipReboundScalp,      // Strategy 1: 5m oversold dip pullback in macro uptrend
     GraduationBurstScalp, // Strategy 3: Fresh Pump.fun migration/graduation on Raydium/PumpSwap/Meteora
-    DipAndGraduation,     // Strategy 1 & Strategy 3 ONLY (Strategy 2 permanently excluded)
-    MultiStrategyAdaptive,// High-win-rate adaptive mode (Strategy 1 & 3 active; Strategy 2 disabled)
+    EarlyGemRunner,       // Strategy 5: Fresh low-cap graduated gem runner (micro-allocation, strictly screened)
+    DipAndGraduation,     // Strategy 1, Strategy 3 & Strategy 5 (Strategy 2 permanently excluded)
+    MultiStrategyAdaptive,// High-win-rate adaptive mode (Strategy 1, 3 & 5 active; Strategy 2 disabled)
 }
 
 impl Default for ScalpStrategyMode {
@@ -369,6 +370,49 @@ impl BreakoutEngine {
         true
     }
 
+    /// Evaluates if a token qualifies for Strategy 5: Early Gem / Micro-Runner
+    /// Specifically catches fresh graduated/early gems with $10k-$25k liquidity, explosive 5m volume, and clean buy pressure
+    pub fn evaluate_early_gem_runner(&self, c: &BreakoutCandidate) -> bool {
+        // 1. Initial liquidity corridor: $10,000 USD to $35,000 USD (fresh curve graduation size)
+        if c.liquidity_usd < 10_000.0 || c.liquidity_usd > 50_000.0 {
+            return false;
+        }
+
+        // 2. Pair freshness: must be under 60 minutes old
+        if let Some(age) = c.pair_age_mins {
+            if age > 60.0 {
+                return false;
+            }
+        }
+
+        // 3. 5m volume velocity: at least $2,000 USD
+        if c.volume_5m_usd < 2_000.0 {
+            return false;
+        }
+
+        // 4. Healthy buy dominance: >= 60% buy ratio in 5m
+        let total_txns_5m = c.buys_5m + c.sells_5m;
+        if total_txns_5m < 6 || c.buys_5m < 4 {
+            return false;
+        }
+        let buy_ratio_5m = (c.buys_5m as f64) / (total_txns_5m as f64);
+        if buy_ratio_5m < 0.60 {
+            return false;
+        }
+
+        // 5. Positive 5m momentum
+        if c.price_change_5m < 0.5 {
+            return false;
+        }
+
+        // 6. Anti-exhaustion top ceiling: not up over 1000% on 1h
+        if c.price_change_1h > 1000.0 {
+            return false;
+        }
+
+        true
+    }
+
     /// Evaluates if candidate matches selected strategy mode and returns matched strategy name
     pub fn evaluate_candidate_strategy(&self, c: &BreakoutCandidate) -> Option<String> {
         let entered = self.entered_tokens.lock().unwrap();
@@ -398,11 +442,20 @@ impl BreakoutEngine {
                     None
                 }
             }
+            ScalpStrategyMode::EarlyGemRunner => {
+                if self.evaluate_early_gem_runner(c) {
+                    Some("Strategy 5: Early Gem Runner".to_string())
+                } else {
+                    None
+                }
+            }
             ScalpStrategyMode::DipAndGraduation | ScalpStrategyMode::MultiStrategyAdaptive => {
-                // High-Win-Rate Multi Mode: Strategy 3 (Graduation Burst) & Strategy 1 (Dip-Rebound) ONLY
+                // High-Win-Rate Multi Mode: Strategy 1, Strategy 3, & Strategy 5
                 // Strategy 2 (Momentum Breakout) is permanently disabled per performance review (all losses eliminated)
                 if self.evaluate_graduation_burst(c) {
                     Some("Strategy 3: DEX Graduation Burst".to_string())
+                } else if self.evaluate_early_gem_runner(c) {
+                    Some("Strategy 5: Early Gem Runner".to_string())
                 } else if self.evaluate_dip_rebound(c) {
                     Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
                 } else {
@@ -463,6 +516,19 @@ impl BreakoutEngine {
 
         // 2. Fetch latest boosted
         if let Ok(resp) = self.http_client.get("https://api.dexscreener.com/token-boosts/latest/v1").send().await {
+            if let Ok(items) = resp.json::<Vec<serde_json::Value>>().await {
+                for item in items {
+                    if item["chainId"].as_str() == Some("solana") {
+                        if let Some(addr) = item["tokenAddress"].as_str() {
+                            mints.insert(addr.to_string());
+                        }
+                    }
+                }
+            }
+        }
+
+        // 3. Fetch latest token profiles (catches fresh tokens like FOOD early)
+        if let Ok(resp) = self.http_client.get("https://api.dexscreener.com/token-profiles/latest/v1").send().await {
             if let Ok(items) = resp.json::<Vec<serde_json::Value>>().await {
                 for item in items {
                     if item["chainId"].as_str() == Some("solana") {
@@ -580,8 +646,12 @@ impl BreakoutEngine {
             }
         }
 
-        // Check budget & fee buffer
-        let buy_amount = self.settings.buy_amount_sol;
+        // Dynamic sizing: Strategy 5 uses micro-lottery sizing (e.g. 0.004 SOL), while Strategy 1 & 3 use standard sizing
+        let buy_amount = if strat_label.starts_with("Strategy 5") {
+            (self.settings.buy_amount_sol * 0.35).max(0.004)
+        } else {
+            self.settings.buy_amount_sol
+        };
         let tip = self.settings.jito_tip_sol;
         let fee_buffer = if !self.settings.is_paper_trading { 0.0022 } else { 0.0 };
         let trade_cost = buy_amount + tip + fee_buffer;
@@ -768,48 +838,36 @@ impl BreakoutEngine {
                     }
 
                     // 1. Granular Multi-Tier Profit Lockbox & Trailing Take-Profit:
-                    // Guarantees that once a trade is in profit, it can NEVER fall back into a loss!
+                    // Calibrated for low-cap micro trades to overcome ~5-6% total friction (DEX swap fees, slippage & Jito tips)
+                    // Guarantees that premature lockboxes do not exit in a net loss!
                     let peak_mult = pos.peak_multiplier;
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
                     if peak_mult >= activation_mult {
-                        // Tier 5: Active Trailing Take-Profit at >= activation_mult (default +7.0% / 1.07x)
-                        // Trail tight callback buffer (e.g. 1.5%) below highest peak watermark, min floor +4.5%
+                        // Tier 4: Active Trailing Take-Profit at >= activation_mult (default +10.0% / 1.10x)
+                        // Trail tight callback buffer (e.g. 2.0%) below highest peak watermark, min floor +7.0%
                         let ttp_floor = pos.peak_price_usd * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
-                        let min_guaranteed_profit = pos.entry_price_usd * 1.045; // Minimum +4.5% locked floor
+                        let min_guaranteed_profit = pos.entry_price_usd * 1.070; // Minimum +7.0% locked floor (guaranteed net profit)
                         let effective_floor = ttp_floor.max(min_guaranteed_profit);
 
                         if effective_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = effective_floor;
                         }
-                    } else if peak_mult >= 1.06 {
-                        // Tier 4: Lockbox at +6.0% gain -> Locks +4.0% guaranteed profit floor!
-                        let tier4_floor = pos.entry_price_usd * 1.040;
-                        if tier4_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier4_floor;
-                        }
-                    } else if peak_mult >= 1.05 {
-                        // Tier 3: Lockbox at +5.0% gain -> Locks +3.0% guaranteed profit floor!
-                        // Prevents any +5% winner from retracing or losing profit.
-                        let tier3_floor = pos.entry_price_usd * 1.030;
+                    } else if peak_mult >= 1.08 {
+                        // Tier 3: Lockbox at +8.0% gain -> Locks +6.0% guaranteed floor (covers all friction with green net SOL!)
+                        let tier3_floor = pos.entry_price_usd * 1.060;
                         if tier3_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = tier3_floor;
                         }
-                    } else if peak_mult >= 1.04 {
-                        // Tier 2: Lockbox at +4.0% gain -> Locks +2.0% guaranteed profit floor!
-                        let tier2_floor = pos.entry_price_usd * 1.020;
+                    } else if peak_mult >= 1.06 {
+                        // Tier 2: Early True Break-even at +6.0% gain -> Locks +5.0% floor (covers 2% DEX fee + 2 tips + slippage)
+                        let tier2_floor = pos.entry_price_usd * 1.050;
                         if tier2_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = tier2_floor;
                         }
-                    } else if peak_mult >= 1.025 {
-                        // Tier 1: Early Break-even Lockbox at +2.5% gain -> Locks +1.0% floor (covers all MEV tips and swap fees)
-                        // Once a trade touches +2.5%, it can NEVER turn into a loss!
-                        let be_floor = pos.entry_price_usd * 1.010;
-                        if be_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = be_floor;
-                        }
                     } else {
                         // Initial capital protection: tight -5.0% stop-loss from entry
+                        // Gives room for initial trade volatility without triggering a premature fake 'break-even' loss
                         let initial_stop = pos.entry_price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
                         if pos.stop_loss_price_usd == 0.0 || pos.stop_loss_price_usd < initial_stop {
                             pos.stop_loss_price_usd = initial_stop;

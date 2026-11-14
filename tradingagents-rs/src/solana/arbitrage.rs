@@ -281,7 +281,13 @@ impl ArbitrageEngine {
         let (trade_sol, is_flash_loan) = self.calculate_dynamic_loan_size(pool_liq_usd);
         let trade_amount_lamports = (trade_sol * 1_000_000_000.0) as u64;
 
-        let dex_candidates = vec!["Raydium", "Raydium CPMM", "Meteora DLMM", "Orca Whirlpool"];
+        let dex_candidates = vec![
+            "Raydium",
+            "Raydium CPMM",
+            "Meteora DLMM",
+            "Orca Whirlpool",
+            "Pump.fun Amm",
+        ];
 
         // 1. Fetch Leg 1: SOL -> Token across all candidate DEXes in parallel
         let mut leg1_futs = Vec::new();
@@ -494,7 +500,7 @@ impl ArbitrageEngine {
 
             let candidates = self.fetch_multi_dex_candidates().await;
             info!(
-                "🔍 [ARB CYCLE #{}] Scanning {} multi-pool candidates across Raydium, Meteora & Orca...",
+                "🔍 [ARB CYCLE #{}] Scanning {} multi-pool candidates across Raydium, Meteora, Orca & PumpSwap...",
                 cycle, candidates.len()
             );
 
