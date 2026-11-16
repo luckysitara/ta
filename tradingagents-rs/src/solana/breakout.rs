@@ -137,6 +137,7 @@ pub struct BreakoutPosition {
     pub is_closed: bool,
     pub pnl_sol: f64,
     pub strategy: String,
+    pub is_newly_graduated: bool,
 }
 
 pub struct BreakoutEngine {
@@ -218,6 +219,7 @@ impl BreakoutEngine {
                     is_closed: false,
                     pnl_sol: 0.0,
                     strategy: "Adopted Wallet Position".to_string(),
+                    is_newly_graduated: cand.pair_age_mins.map(|a| a < 60.0).unwrap_or(true) || cand.liquidity_usd < 35_000.0,
                 };
                 positions.insert(mint.clone(), pos);
                 adopted_cnt += 1;
@@ -450,14 +452,12 @@ impl BreakoutEngine {
                 }
             }
             ScalpStrategyMode::DipAndGraduation | ScalpStrategyMode::MultiStrategyAdaptive => {
-                // Multi Mode: Strategy 1 (Dip-Rebound), Strategy 2 (Momentum Breakout), & Strategy 3 (Graduation Burst)
-                // Strategy 5 (Early Gem Runner) remains disabled
+                // High-Win-Rate Multi Mode: Strategy 3 (Graduation Burst) & Strategy 1 (Dip-Rebound) ONLY
+                // Strategy 2 (Momentum Breakout) is permanently disabled per performance review (all losses eliminated)
                 if self.evaluate_graduation_burst(c) {
                     Some("Strategy 3: DEX Graduation Burst".to_string())
                 } else if self.evaluate_dip_rebound(c) {
                     Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
-                } else if self.evaluate_momentum_breakout(c) {
-                    Some("Strategy 2: Momentum Breakout".to_string())
                 } else {
                     None
                 }
@@ -676,6 +676,7 @@ impl BreakoutEngine {
             1_000_000
         };
 
+        let is_newly_grad = c.pair_age_mins.map(|a| a < 60.0).unwrap_or(true) || c.liquidity_usd < 35_000.0;
         let position = BreakoutPosition {
             token_address: c.token_address.clone(),
             symbol: c.symbol.clone(),
@@ -694,6 +695,7 @@ impl BreakoutEngine {
             is_closed: false,
             pnl_sol: 0.0,
             strategy: strat_label.clone(),
+            is_newly_graduated: is_newly_grad,
         };
 
         if self.settings.is_paper_trading {
@@ -874,8 +876,20 @@ impl BreakoutEngine {
                     let peak_mult = pos.peak_multiplier;
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
+                    // Dual-Tier Exit Logic:
+                    // 1) Newly graduated / micro-liq tokens: Fixed Quick Scalp at ≥+7.5% (no pullback wait!)
+                    // 2) Established / deep liq tokens: Trailing Take-Profit allowing multi-X runs
+                    let quick_scalp_target = 1.075; // +7.5% gross gain
+                    let is_quick_scalp_hit = pos.is_newly_graduated && live_multiplier >= quick_scalp_target;
+
+                    // Stale time-stop for newly graduated tokens: if held > 120 secs without reaching +5%, cut risk
+                    let hold_duration_secs = (Utc::now() - pos.entry_timestamp).num_seconds();
+                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.05;
+
                     // Trailing take profit floor calculated on true multiplier
-                    let stop_mult_floor = if peak_mult >= activation_mult {
+                    let stop_mult_floor = if is_quick_scalp_hit {
+                        live_multiplier // Trigger immediate exit into current liquidity
+                    } else if peak_mult >= activation_mult {
                         let ttp = peak_mult * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
                         ttp.max(1.05) // Minimum +5% guaranteed real net SOL
                     } else if peak_mult >= 1.08 {
@@ -888,17 +902,24 @@ impl BreakoutEngine {
 
                     // Print continuous live position telemetry with live on-chain valuation
                     println!(
-                        "  📊 [POSITION TELEMETRY] {} | Live Mult: {:.3}x (Peak: {:.3}x) | Stop Floor: {:.3}x | Strategy: {} | Status: {}",
+                        "  📊 [POSITION TELEMETRY] {} | Live Mult: {:.3}x (Peak: {:.3}x) | Stop Floor: {:.3}x | Strategy: {} | Tier: {} | Status: {}",
                         pos.symbol,
                         live_multiplier,
                         pos.peak_multiplier,
                         stop_mult_floor,
                         pos.strategy,
-                        if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
+                        if pos.is_newly_graduated { "⚡ Quick-Scalp" } else { "🌊 Trailing-Runner" },
+                        if is_quick_scalp_hit { "⚡ SCALP TARGET HIT" } else if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
                     );
 
-                    // Check stop-loss / trailing profit trigger on live on-chain value
-                    if live_multiplier <= stop_mult_floor {
+                    // Check stop-loss / quick scalp / trailing profit trigger on live on-chain value
+                    if is_quick_scalp_hit {
+                        let reason = format!("Quick Scalp Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0);
+                        exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
+                    } else if is_stale_microcap {
+                        let reason = format!("Micro-Cap Stale Time Stop ({}s @ {:.2}x)", hold_duration_secs, live_multiplier);
+                        exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
+                    } else if live_multiplier <= stop_mult_floor {
                         let reason = if live_multiplier >= 1.025 {
                             format!("Real Profit Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0)
                         } else if live_multiplier >= 1.005 {
@@ -914,8 +935,8 @@ impl BreakoutEngine {
 
         // Execute exits with True Live Output Assertion
         for (mint, exit_price, reason) in exit_triggers {
-            // Guard: If this is a Profit/Break-Even exit, verify with Jupiter that live sell output > cost
-            if reason.contains("Profit") || reason.contains("Break-Even") {
+            // Guard: If this is a Profit/Break-Even/Quick Scalp exit, verify with Jupiter that live sell output > cost
+            if reason.contains("Profit") || reason.contains("Break-Even") || reason.contains("Quick Scalp") {
                 if self.executor.is_some() {
                     let min_required_lamports = ((self.settings.buy_amount_sol + (self.settings.jito_tip_sol * 2.0)) * 1_000_000_000.0) as u64;
                     let quote_url = format!(
@@ -1348,6 +1369,7 @@ mod tests {
             is_closed: false,
             pnl_sol: 0.0,
             strategy: "Strategy 2: Momentum Breakout".to_string(),
+            is_newly_graduated: false,
         };
 
         // Price spikes +50% (1.50x)
@@ -1399,6 +1421,7 @@ mod tests {
             is_closed: false,
             pnl_sol: 0.0,
             strategy: "Strategy 2: Momentum Breakout".to_string(),
+            is_newly_graduated: false,
         };
 
         // 1. Price jumps to +20% ($1.20)
