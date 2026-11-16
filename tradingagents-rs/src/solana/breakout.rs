@@ -450,14 +450,14 @@ impl BreakoutEngine {
                 }
             }
             ScalpStrategyMode::DipAndGraduation | ScalpStrategyMode::MultiStrategyAdaptive => {
-                // High-Win-Rate Multi Mode: Strategy 1, Strategy 3, & Strategy 5
-                // Strategy 2 (Momentum Breakout) is permanently disabled per performance review (all losses eliminated)
+                // Multi Mode: Strategy 1 (Dip-Rebound), Strategy 2 (Momentum Breakout), & Strategy 3 (Graduation Burst)
+                // Strategy 5 (Early Gem Runner) remains disabled
                 if self.evaluate_graduation_burst(c) {
                     Some("Strategy 3: DEX Graduation Burst".to_string())
-                } else if self.evaluate_early_gem_runner(c) {
-                    Some("Strategy 5: Early Gem Runner".to_string())
                 } else if self.evaluate_dip_rebound(c) {
                     Some("Strategy 1: 5m Oversold Dip-Rebound".to_string())
+                } else if self.evaluate_momentum_breakout(c) {
+                    Some("Strategy 2: Momentum Breakout".to_string())
                 } else {
                     None
                 }
@@ -646,12 +646,8 @@ impl BreakoutEngine {
             }
         }
 
-        // Dynamic sizing: Strategy 5 uses micro-lottery sizing (e.g. 0.004 SOL), while Strategy 1 & 3 use standard sizing
-        let buy_amount = if strat_label.starts_with("Strategy 5") {
-            (self.settings.buy_amount_sol * 0.35).max(0.004)
-        } else {
-            self.settings.buy_amount_sol
-        };
+        // Fixed sizing: Exactly fixed buy_amount_sol across all strategies
+        let buy_amount = self.settings.buy_amount_sol;
         let tip = self.settings.jito_tip_sol;
         let fee_buffer = if !self.settings.is_paper_trading { 0.0022 } else { 0.0 };
         let trade_cost = buy_amount + tip + fee_buffer;
@@ -758,7 +754,8 @@ impl BreakoutEngine {
                     .cyan()
                 );
 
-                match exec.execute_jupiter_swap_jito(SOL_MINT, &mint, lamports, tip, 1000).await {
+                // Tight 200 bps (2.0%) slippage to prevent buying at inflated prices or slippage ruin
+                match exec.execute_jupiter_swap_jito(SOL_MINT, &mint, lamports, tip, 200).await {
                     Ok(res) => {
                         println!(
                             "   {}",
@@ -815,8 +812,34 @@ impl BreakoutEngine {
             return Ok(());
         }
 
+        // 1. Fetch live metrics from DEX Screener
         let candidates = self.fetch_batch_metrics(&active_mints).await;
         let mut exit_triggers: Vec<(String, f64, String)> = Vec::new();
+
+        // 2. Fetch live on-chain sell valuation directly from Jupiter for each active position
+        // This eliminates reliance on cached DEX chart prices and reflects exact real-time AMM pool reserves!
+        let mut live_onchain_values = std::collections::HashMap::new();
+        for mint in &active_mints {
+            let tokens_held = {
+                let positions = self.positions.lock().unwrap();
+                positions.get(mint).map(|p| p.tokens_held).unwrap_or(0)
+            };
+            if tokens_held > 0 {
+                let quote_url = format!(
+                    "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps=200",
+                    mint, SOL_MINT, tokens_held
+                );
+                if let Ok(resp) = self.http_client.get(&quote_url).send().await {
+                    if resp.status().is_success() {
+                        if let Ok(q) = resp.json::<serde_json::Value>().await {
+                            if let Some(out_lamports) = q["outAmount"].as_str().and_then(|s| s.parse::<u64>().ok()) {
+                                live_onchain_values.insert(mint.clone(), out_lamports as f64 / 1_000_000_000.0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         {
             let mut positions = self.positions.lock().unwrap();
@@ -825,80 +848,63 @@ impl BreakoutEngine {
                     if pos.is_closed {
                         continue;
                     }
-                    pos.current_price_usd = cand.price_usd;
-                    pos.current_multiplier = if pos.entry_price_usd > 0.0 {
-                        cand.price_usd / pos.entry_price_usd
+
+                    // If live on-chain quote exists, evaluate multiplier strictly on real-time SOL return!
+                    let live_multiplier = if let Some(&live_sol_out) = live_onchain_values.get(&cand.token_address) {
+                        let total_cost_sol = pos.buy_amount_sol + (self.settings.jito_tip_sol * 2.0);
+                        let real_mult = live_sol_out / total_cost_sol;
+                        pos.current_multiplier = real_mult;
+                        pos.current_price_usd = cand.price_usd * real_mult;
+                        real_mult
                     } else {
-                        1.0
+                        pos.current_price_usd = cand.price_usd;
+                        pos.current_multiplier = if pos.entry_price_usd > 0.0 {
+                            cand.price_usd / pos.entry_price_usd
+                        } else {
+                            1.0
+                        };
+                        pos.current_multiplier
                     };
 
-                    if cand.price_usd > pos.peak_price_usd {
-                        pos.peak_price_usd = cand.price_usd;
-                        pos.peak_multiplier = pos.current_multiplier;
+                    if live_multiplier > pos.peak_multiplier {
+                        pos.peak_multiplier = live_multiplier;
+                        pos.peak_price_usd = pos.current_price_usd;
                     }
 
-                    // 1. Granular Multi-Tier Profit Lockbox & Trailing Take-Profit:
-                    // Calibrated for low-cap micro trades to overcome ~5-6% total friction (DEX swap fees, slippage & Jito tips)
-                    // Guarantees that premature lockboxes do not exit in a net loss!
                     let peak_mult = pos.peak_multiplier;
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
-                    if peak_mult >= activation_mult {
-                        // Tier 4: Active Trailing Take-Profit at >= activation_mult (default +10.0% / 1.10x)
-                        // Trail tight callback buffer (e.g. 2.0%) below highest peak watermark, min floor +7.0%
-                        let ttp_floor = pos.peak_price_usd * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
-                        let min_guaranteed_profit = pos.entry_price_usd * 1.070; // Minimum +7.0% locked floor (guaranteed net profit)
-                        let effective_floor = ttp_floor.max(min_guaranteed_profit);
-
-                        if effective_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = effective_floor;
-                        }
+                    // Trailing take profit floor calculated on true multiplier
+                    let stop_mult_floor = if peak_mult >= activation_mult {
+                        let ttp = peak_mult * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
+                        ttp.max(1.05) // Minimum +5% guaranteed real net SOL
                     } else if peak_mult >= 1.08 {
-                        // Tier 3: Lockbox at +8.0% gain -> Locks +6.0% guaranteed floor (covers all friction with green net SOL!)
-                        let tier3_floor = pos.entry_price_usd * 1.060;
-                        if tier3_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier3_floor;
-                        }
-                    } else if peak_mult >= 1.06 {
-                        // Tier 2: Early True Break-even at +6.0% gain -> Locks +5.0% floor (covers 2% DEX fee + 2 tips + slippage)
-                        let tier2_floor = pos.entry_price_usd * 1.050;
-                        if tier2_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier2_floor;
-                        }
+                        1.05
+                    } else if peak_mult >= 1.05 {
+                        1.025
                     } else {
-                        // Initial capital protection: tight -5.0% stop-loss from entry
-                        // Gives room for initial trade volatility without triggering a premature fake 'break-even' loss
-                        let initial_stop = pos.entry_price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
-                        if pos.stop_loss_price_usd == 0.0 || pos.stop_loss_price_usd < initial_stop {
-                            pos.stop_loss_price_usd = initial_stop;
-                        }
-                    }
-
-                    // Print continuous live position telemetry
-                    let floor_pct = if pos.entry_price_usd > 0.0 {
-                        (pos.stop_loss_price_usd / pos.entry_price_usd - 1.0) * 100.0
-                    } else {
-                        0.0
+                        1.0 + (self.settings.stop_loss_pct / 100.0)
                     };
+
+                    // Print continuous live position telemetry with live on-chain valuation
                     println!(
-                        "  📊 [POSITION TELEMETRY] {} | Price: ${:.6} | Gain: {:+.2}% (Peak: {:+.2}%) | Stop Floor: {:+.2}% | Strategy: {} | Status: {}",
+                        "  📊 [POSITION TELEMETRY] {} | Live Mult: {:.3}x (Peak: {:.3}x) | Stop Floor: {:.3}x | Strategy: {} | Status: {}",
                         pos.symbol,
-                        cand.price_usd,
-                        (pos.current_multiplier - 1.0) * 100.0,
-                        (pos.peak_multiplier - 1.0) * 100.0,
-                        floor_pct,
+                        live_multiplier,
+                        pos.peak_multiplier,
+                        stop_mult_floor,
                         pos.strategy,
                         if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
                     );
 
-                    // Check stop-loss / trailing profit trigger
-                    if cand.price_usd <= pos.stop_loss_price_usd {
-                        let reason = if pos.current_multiplier >= 1.025 {
-                            format!("Profit Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
-                        } else if pos.current_multiplier >= 1.005 {
-                            format!("Break-Even Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
+                    // Check stop-loss / trailing profit trigger on live on-chain value
+                    if live_multiplier <= stop_mult_floor {
+                        let reason = if live_multiplier >= 1.025 {
+                            format!("Real Profit Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0)
+                        } else if live_multiplier >= 1.005 {
+                            format!("Real Break-Even Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0)
                         } else {
-                            format!("Tight Stop Loss Protection ({:.2}x)", pos.current_multiplier)
+                            format!("Real Stop Loss Protection ({:.2}x)", live_multiplier)
                         };
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     }
@@ -906,8 +912,42 @@ impl BreakoutEngine {
             }
         }
 
-        // Execute exits
+        // Execute exits with True Live Output Assertion
         for (mint, exit_price, reason) in exit_triggers {
+            // Guard: If this is a Profit/Break-Even exit, verify with Jupiter that live sell output > cost
+            if reason.contains("Profit") || reason.contains("Break-Even") {
+                if self.executor.is_some() {
+                    let min_required_lamports = ((self.settings.buy_amount_sol + (self.settings.jito_tip_sol * 2.0)) * 1_000_000_000.0) as u64;
+                    let quote_url = format!(
+                        "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount=100000000&slippageBps=200",
+                        mint, SOL_MINT
+                    );
+                    if let Ok(resp) = self.http_client.get(&quote_url).send().await {
+                        if resp.status().is_success() {
+                            if let Ok(q) = resp.json::<serde_json::Value>().await {
+                                let out_lamports = q["outAmount"].as_str().and_then(|s| s.parse::<u64>().ok()).unwrap_or(0);
+                                // Scale outAmount by tokens_held / 100000000
+                                let pos_tokens = {
+                                    let positions = self.positions.lock().unwrap();
+                                    positions.get(&mint).map(|p| p.tokens_held).unwrap_or(0)
+                                };
+                                let est_total_sol_out = if pos_tokens > 0 {
+                                    (out_lamports as f64 * (pos_tokens as f64 / 100_000_000.0)) as u64
+                                } else {
+                                    out_lamports
+                                };
+                                if est_total_sol_out > 0 && est_total_sol_out < min_required_lamports {
+                                    warn!(
+                                        "🛡️ [ZERO-LOSS DEFENSE] Rejected fake profit exit for {}: Live quote yields {:.5} SOL < {:.5} SOL required net floor. Holding for real profit move.",
+                                        mint, est_total_sol_out as f64 / 1e9, min_required_lamports as f64 / 1e9
+                                    );
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             self.execute_position_exit(&mint, exit_price, &reason).await?;
         }
 
@@ -981,7 +1021,8 @@ impl BreakoutEngine {
                 );
 
                 // 1. Sell tokens back to SOL via Jupiter (amount 0 = full token ATA balance)
-                match exec.execute_jupiter_swap_jito(token_address, SOL_MINT, 0, tip, 1000).await {
+                // Tight 200 bps (2.0%) slippage to protect exit proceeds
+                match exec.execute_jupiter_swap_jito(token_address, SOL_MINT, 0, tip, 200).await {
                     Ok(res) => {
                         println!("   ✔ [LIVE SELL BROADCAST] Tx: https://solscan.io/tx/{}", res.signature);
                         let _ = exec.poll_signature_confirmation(&res.signature, 8, 500).await;

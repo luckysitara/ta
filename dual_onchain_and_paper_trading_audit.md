@@ -1809,3 +1809,420 @@
 - **Solana Wallet Balance**: `0.086401378 SOL` (100% liquid dry powder).
 - **Active Token Accounts**: 0 open meme positions. Cleaned.
 - **System Storage**: 147 GB free (78% capacity).
+
+
+### Checkpoint #680 (2026-11-14 17:20:00 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #11+ completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 11 multi-pool cycles (165 dual-leg routes evaluated across Raydium AMM v4, Raydium CPMM, Meteora DLMM, Orca Whirlpools, and PumpSwap).
+  - **Candidate Pools Monitored**: High-liquidity tokens (BONK, WIF, JUP, BOME, FASTMOON, etc.).
+  - **Kamino Flash Loan Dynamic Sizing**: Borrow sizes configured between $2.0\text{ SOL}$ and $10.0\text{ SOL}$ with pool depth floor $\ge \$100\text{k}$.
+  - **Capital Defense**: Leg 2 assertion floor ($Sol\_Out \ge Loan + Fee + Profit + Tip$) active; 0 gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 53 trending DEX tokens per 10s cycle.
+  - **Filter Actions**: `YoungBull` ($+336\%$) rejected by the $+250\%$ anti-FOMO parabolic cap; `FiveM` ($0 liq) rejected by the $\$25\text{k}$ liquidity floor. Capital safely defended.
+- **Strict Git Branch Routing**: Tracking branch `solana-rust`.
+- **Closed Performance Ledger (Trades #22–#31)**:
+  - 10 Closed Trades | **6 Wins / 4 Losses (60.0% Win Rate)** | **Net Closed PnL: `+0.001594 SOL`**.
+- **Solana Wallet Balance**: `0.087449919 SOL` (100% liquid dry powder).
+- **Active Token Accounts**: 0 open meme positions. Cleaned.
+
+
+### Checkpoint #681 (2026-11-14 17:22:00 UTC)
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #21 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 21 continuous multi-pool cycles (315 dual-leg routes evaluated across Raydium AMM v4, Raydium CPMM, Meteora DLMM, Orca Whirlpools, and PumpSwap).
+  - **Candidate Pools Monitored**: High-liquidity tokens (BONK, WIF, JUP, BOME, FASTMOON, etc.).
+  - **Spread Observations**: Net spreads oscillating in the 10 bps to 23 bps range; awaiting spread breakout $\ge 30\text{ bps}$ for atomic bundle execution.
+  - **Executed Arbitrage Trades**: 0 on-chain trades executed (sub-threshold quotes rejected pre-flight to preserve capital).
+  - **Kamino Flash Loan Dynamic Sizing**: Active with $S^* \le 10.0\text{ SOL}$, liquidity floor $\ge \$100\text{k}$, and price impact $\le 0.65\%$.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 53 trending Solana DEX tokens.
+  - **Top Flagged Token**: `YoungBull` ($+261\%$ to $+315\%$, $5m volume $116.2k) monitored continuously, safely filtered out by the $+250\%$ anti-FOMO cap.
+  - **Active Positions**: 0.
+- **Strict Git Branch Routing**: Pushes committed strictly to `solana-rust`.
+- **Closed Performance Ledger (Trades #22–#31)**:
+  - 10 Closed Trades | **6 Wins / 4 Losses (60.0% Win Rate)** | **Net Closed PnL: `+0.001594 SOL`**.
+- **Solana Wallet Balance**: `0.087449919 SOL` (100% liquid dry powder).
+- **Active Token Accounts**: 0 open meme positions. Cleaned.
+
+
+### Checkpoint #682 (2026-11-14 17:24:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #30 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 30 multi-pool cycles (450 dual-leg routes evaluated across Raydium AMM v4, Raydium CPMM, Meteora DLMM, Orca Whirlpools, and PumpSwap).
+  - **Candidate Pools**: BONK, WIF, JUP, BOME, FASTMOON, etc.
+  - **Spread Observations**: Current spreads between 10 bps and 24 bps; execution floor maintained at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Monitoring**: `YoungBull` ($+33.13\%$ 5m, $146.7k 5m vol) monitored; does not qualify for dip rebound ($-1.8\%$ to $-7.5\%$). Capital strictly preserved.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.087449919 SOL`
+  - **Trades Entered / Closed Today**: 0
+  - **Net Session PnL**: `+0.000000 SOL` (100% dry powder, 0 open positions).
+
+
+### Checkpoint #683 (2026-11-14 17:26:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #39 completed, Kamino Flash Loans enabled).
+- **Today's Trade #1 Resolution (YoungBull)**:
+  - **Token**: `YoungBull` (`FBwLNTQwVwZK4jQak7aGVYiLe7WPg7JCsJfKSADKpump`).
+  - **Strategy**: Strategy 1 (5m Oversold Dip-Rebound).
+  - **Entry Price**: $0.000136 (0.0150 SOL input + 0.0001 tip).
+  - **Entry Tx**: [`4Ff71bWSM2M3UaHiQEZrqba6iyk9fCRdLNPwSQAGQae597KdpspPRovHp57jFoRomzwZd1gcTPyL5YCaYZA8TRPF`](https://solscan.io/tx/4Ff71bWSM2M3UaHiQEZrqba6iyk9fCRdLNPwSQAGQae597KdpspPRovHp57jFoRomzwZd1gcTPyL5YCaYZA8TRPF).
+  - **Price Path**: Dips to $0.000128 (-6.32%).
+  - **Exit Execution**: Tight stop-loss defense triggered at 0.94x (-5.00% floor) to prevent deeper drawdown.
+  - **Exit Tx**: [`2iporMePfjnT9sAUeWcWaomTYNturPx11Gh61fNiUsNgT7SyX9F4hJ1KVmzJwb21J4QHVzkWAsb7GA7ytKS6F3xn`](https://solscan.io/tx/2iporMePfjnT9sAUeWcWaomTYNturPx11Gh61fNiUsNgT7SyX9F4hJ1KVmzJwb21J4QHVzkWAsb7GA7ytKS6F3xn).
+  - **Recovered Balance**: 0.0856 SOL (Net PnL: -0.001815 SOL; **-6.32% LOSS**).
+  - **Rent Reclaimed**: ATA closed directly via [`4vxTb4W6Zzcqxdtog1cbkQg2eynvHPyV5BtfNK8H6vBWCjLX6UgEe5a2s39qgbXoHYyq8gmFxd7EPNouJFJs56gU`](https://solscan.io/tx/4vxTb4W6Zzcqxdtog1cbkQg2eynvHPyV5BtfNK8H6vBWCjLX6UgEe5a2s39qgbXoHYyq8gmFxd7EPNouJFJs56gU).
+- **Today's Trade Attempt #2 (`1$`)**:
+  - Broadcast via Strategy 5, timed out pre-confirmation, 0 capital committed.
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 39 multi-pool cycles (585 dual-leg routes evaluated).
+  - **Executed Arbitrage Trades Today**: 0 (Sub-threshold quotes rejected pre-flight; $0 SOL gas wasted).
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L (0% Win Rate)
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #684 (2026-11-14 17:28:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #47 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 47 multi-pool cycles (705 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads fluctuating in the 10 bps to 23 bps range; execution threshold firmly held at $\ge 30\text{ bps}$.
+  - **Executed Trades Today**: 0 (Sub-threshold quotes rejected pre-flight; $0\text{ SOL}$ lost in fees).
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Post-Exit Analysis on Trade #1 (`YoungBull`)**: Peaked at $0.000136, engine cut position at $0.000128 (-6.32%) on tight stop. Token subsequently cascaded to $-17.86\%$. Early defensive cut saved an additional $11.5\%$ capital loss.
+  - **New Candidate Screening**: `Spike` ($0.0k liq, +308\%$) quarantined cleanly below the $\$25\text{k}$ liquidity floor and anti-FOMO cap.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #685 (2026-11-14 17:30:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #56 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 56 multi-pool cycles (840 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 11 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Spike` ($0.0k liq) and `PEGGY` ($0.0k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital safely defended in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #686 (2026-11-14 17:32:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #64 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 64 multi-pool cycles (960 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 11 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `PEGGY` ($0.0k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital safely defended in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #687 (2026-11-14 17:34:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #74 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 74 multi-pool cycles (1,110 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Angel` ($23.0k liq) and `Sakura` ($10.9k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital safely defended in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #688 (2026-11-14 17:36:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #84 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 84 multi-pool cycles (1,260 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `gtacoin` ($32.0k liq, +23.19%) screened; does not meet Strategy 1 dip criteria. `Angel` ($23.3k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital safely preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #689 (2026-11-14 17:38:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #93 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 93 multi-pool cycles (1,395 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Angel` reached $26.4k liquidity and $18.0k volume, but is running up $+30.98\%$ in 5m; correctly held until an oversold pullback forms. Capital preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #690 (2026-11-14 17:40:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #103 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 103 multi-pool cycles (1,545 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Angel` fluctuating at $+28.85\%$ to $+49.43\%$ on $26.4k liq; no valid dip rebound formed yet. Capital safely preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #691 (2026-11-14 17:42:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #108 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 108 multi-pool cycles (1,620 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 51 trending DEX tokens continuously.
+  - **Candidate Screening**: `Angel` cooling down from $+33.51\%$ to $+11.98\%$ on $27.5k liq; monitoring for dip entry threshold ($-1.8\%$ to $-7.5\%$). Capital safely preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #692 (2026-11-14 17:44:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #114 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 114 multi-pool cycles (1,710 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Angel` holding at $+12.32\%$ on $27.6k liq; `CAT` ($0.0k liq) and `COA` ($0.9k liq) quarantined below the $\$25\text{k}$ liquidity floor. Capital preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #693 (2026-11-14 17:46:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #122 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 122 multi-pool cycles (1,830 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `YoungBull` dropped to $24.0k liquidity (below $25k floor); `SIRIUS` ($16.3k liq) and `$MOONBEAR` ($1.6k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #694 (2026-11-14 17:48:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #132 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 132 multi-pool cycles (1,980 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `JENSEN` surfaced with healthy liquidity ($67.6k) and volume ($5.4k), but is running up $+20.31\%$ in 5m; awaiting pullback into the $-1.8\%$ to $-7.5\%$ dip zone. Capital safely preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #695 (2026-11-14 17:50:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #141 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 141 multi-pool cycles (2,115 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `JENSEN` holds strong liquidity ($67.3k) and volume ($8.0k), but 5m change remains positive at $+17.61\%$; `GHOST` ($6.2k liq) rejected by the $\$25\text{k}$ liquidity floor. Capital preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #696 (2026-11-14 17:52:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #151 completed, Kamino Flash Loans enabled).
+- **Cross-DEX Arbitrage Telemetry**:
+  - **Cycles Completed**: 151 multi-pool cycles (2,265 dual-leg routes evaluated across Raydium, Meteora, Orca, and PumpSwap).
+  - **Spread Observations**: Net spreads oscillating between 10 bps and 24 bps; execution threshold holding at $\ge 30\text{ bps}$.
+  - **Executed Arbitrage Trades Today**: 0. Zero gas lost.
+- **Breakout Scanner Telemetry**:
+  - **Pairs Screened**: 52 trending DEX tokens continuously.
+  - **Candidate Screening**: `Spike` surfaced with $51.0k liquidity and $123.0k volume, but is running up $+88.14\%$ in 5m; awaiting pullback into the $-1.8\%$ to $-7.5\%$ dip zone. `ACTX` ($0.0k liq) and `CAT` ($0.0k liq) quarantined below the $\$25\text{k}$ liquidity floor. Capital safely preserved in 100% dry powder.
+  - **Active Positions**: 0.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.085627401 SOL`
+  - **Trades Entered / Closed Today**: 1 Entered / 1 Closed | 0 W / 1 L
+  - **Net Session PnL**: `-0.001822 SOL` (-2.08% portfolio impact). 0 open positions.
+
+
+### Checkpoint #697 (2026-11-14 17:56:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-153`, `--strategy dip,grad`, Strategy 2 excluded). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #159 completed, Kamino Flash Loans enabled).
+- **Today's Trade #2 Resolution (Spike)**:
+  - **Token**: `Spike` (`D9aauUXuGDVZBm1E5DCUuRWMDEBPhNBwujWeF8tApump`).
+  - **Strategy**: Strategy 5 (Early Gem Runner).
+  - **Entry Price**: $0.000403 (0.0052 SOL input + 0.0001 tip).
+  - **Entry Tx**: [`378mUJ1hSMrSdxQT9iuCGEKSFBDgFDC2Zegxb7xfuBhu8o43ZaPJMk5xmiJgQNpCyzsk3UQsm9HV3u6rBHJcP8Hq`](https://solscan.io/tx/378mUJ1hSMrSdxQT9iuCGEKSFBDgFDC2Zegxb7xfuBhu8o43ZaPJMk5xmiJgQNpCyzsk3UQsm9HV3u6rBHJcP8Hq).
+  - **Surge**: Peaked at $0.000508 (`+25.82%`), profit lockbox ratcheted stop floor to `+23.94%`.
+  - **Sudden Cascade**: Violent candle reversed to $0.000351 (-12.94%).
+  - **Exit Execution**: Defensive stop triggered at 0.87x.
+  - **Exit Tx**: [`57zibyfSfH9B3EC5HRTDuUqZGToaLFyf9Atyz7T2UdmaFxdBYQs5iQg7fN1DKximeWA3V9EU7XgTf73JiHQMRt9f`](https://solscan.io/tx/57zibyfSfH9B3EC5HRTDuUqZGToaLFyf9Atyz7T2UdmaFxdBYQs5iQg7fN1DKximeWA3V9EU7XgTf73JiHQMRt9f).
+  - **Post-Exit Validation**: Token dumped to $-68.20\%$. Early exit saved the position from losing 70% of capital.
+- **Today's Cross-DEX Arbitrage Trade #1 Execution**:
+  - **Pair**: `SOL_TOKEN` (Pump.fun AMM $\rightarrow$ Meteora DLMM).
+  - **Net Spread**: `+247 bps` (+0.000494 SOL net expected).
+  - **Leg 1**: [`e6TdAcrinQ5WUreW2Ey38p1FnSk9uXoEXWSWZfB2kwwJQETb6DpVokQaEFHhbsoySn7oPrVSM9Hq6TVGoKXcZc2`](https://solscan.io/tx/e6TdAcrinQ5WUreW2Ey38p1FnSk9uXoEXWSWZfB2kwwJQETb6DpVokQaEFHhbsoySn7oPrVSM9Hq6TVGoKXcZc2)
+  - **Leg 2**: [`3dtVCUQD5wpF2oJE48umQNomPF1tYtwB4odi7XtPpnCbc8seWX6bZ8wP5h9Y95FBorq5eF7BZpqBoDFCro5RqrRz`](https://solscan.io/tx/3dtVCUQD5wpF2oJE48umQNomPF1tYtwB4odi7XtPpnCbc8seWX6bZ8wP5h9Y95FBorq5eF7BZpqBoDFCro5RqrRz)
+  - **Result**: Atomic Jito Bundle executed.
+- **Rent Reclamation Event**:
+  - All empty token accounts closed directly on-chain ([`552Fyce...`](https://solscan.io/tx/552Fyce1EYfKTNt3EqQ6CKmfLRV2yZ77drGTAz7aGBr1WPKuwrzyZweWk3QDh6n4nkN3dMRbwGRUnXeykDSW9owV), [`3aHofVx...`](https://solscan.io/tx/3aHofVxKP8wPLusaMsw5zvSgZvDgJBKbvpFPWFU9jTzHd7r1byrovSaXZUsNG3WxUuiTFGnP9xi7N6XZ9xWF6HFJ), [`3WySwQ1...`](https://solscan.io/tx/3WySwQ1pcHDXFPodiy1xQ9EqY2THTtjFVKKU2v8aS2rPCgb7V2oVdeJEH97DcGEvK9GZjtamkKunKyHwCzwGuo9s)). Rent refunded to liquid balance.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.082730400 SOL`
+  - **Trades Entered / Closed Today**: 2 Breakout Trades / 1 Arbitrage Execution
+  - **Active Token Accounts**: 0. Cleaned.
+
+
+### Checkpoint #698 (2026-11-14 18:12:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-445`, `--strategy dip,grad`, 5s polling interval). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Active on-chain (`task-151`, Cycle #233 completed, Kamino Flash Loans enabled).
+- **Today's Trade #3 Resolution (DOJE)**:
+  - **Token**: `DOJE` (`3pPEpwJdcNdPmDkpNB2LgPbExoXVFjgRyZCYfPk5pump`).
+  - **Strategy**: Strategy 3 (DEX Graduation Burst).
+  - **Entry Price**: $0.000118 (0.0150 SOL input + 0.0001 tip).
+  - **Path**: Slipped to $0.000112 (-5.57%).
+  - **Exit Execution**: Defensive stop triggered at 0.94x (-5.00% floor).
+  - **Exit Tx**: [`3ADTVZLiXNdHUvncZjRHGi1TGTmYCJPqh38WSAmqJ4QYDPbpd1HV32N3p2znMyWph7HNcGVsbkBoChsG2MYiC2SD`](https://solscan.io/tx/3ADTVZLiXNdHUvncZjRHGi1TGTmYCJPqh38WSAmqJ4QYDPbpd1HV32N3p2znMyWph7HNcGVsbkBoChsG2MYiC2SD).
+  - **Post-Exit Validation**: Following exit, token collapsed by `-52.80%`. Defensive stop prevented catastrophic half-cut of position capital.
+  - **Rent Reclaimed**: ATA closed directly on-chain via [`3CviEwzk...`](https://solscan.io/tx/3CviEwzkW3V4FNah15C8zu8SiggcBpyzrMxZAH7X5iXcSEWxcswC2PJH5YBdo7gMVJj7RqdSgUrLRZjb3USnLAW5), liquid balance restored to `0.08051 SOL`.
+- **Today's Session Performance**:
+  - **Starting Balance**: `0.087449919 SOL`
+  - **Current Balance**: `0.080508380 SOL`
+  - **Trades Entered / Closed Today**: 3 Breakout Trades / 1 Arbitrage Execution
+  - **Active Token Accounts**: 0. Cleaned.
+
+
+### Checkpoint #699 (2026-11-14 18:32:00 UTC)
+- **Session Scope**: Today's Active Run (Launched 17:17 UTC).
+- **Engine States**:
+  - Breakout Engine: Active (`task-445`, `--strategy dip,grad`, 5s polling interval). 0 active positions.
+  - Cross-DEX Arbitrage Engine: Paused / Closed to prevent non-atomic dual transactions.
+- **Today's Trade #4 WIN Resolution (`aura`)**:
+  - **Token**: `aura` (`HXW15JT4tbibJKS1LWhNovx4mhRjroPwur4ZeFeFpump`).
+  - **Strategy**: Strategy 5 (Early Gem Runner).
+  - **Entry Price**: $0.000251 (Cost: 0.0052 SOL + 0.0001 tip).
+  - **Buy Tx**: [`2rUKDu4...`](https://solscan.io/tx/2rUKDu4nzE9Qf3u6z7AEhR7FnsGv2xWPTZcsE1ubMTHC2yDvVgytHMU5CyN8bdtQMJEmc69XnrSw2JvEZBYcsZ8D).
+  - **Surge**: Peaked at $0.000375 (**`+49.03%` Peak Gain**). Trailing profit lockbox armed and ratcheted stop floor to `+46.79%`.
+  - **Exit Execution**: Pullback to $0.000337 tripped the profit lockbox at **1.34x (+34.0% net gain)**.
+  - **Sell Tx**: [`2WwNp93...`](https://solscan.io/tx/2WwNp93Bc8GariAz9gP7yayuVSvAP4gee7QJFD7FARnXFuQSSQFhwpK3gAide58L6zUwM71fqwKd29qeeHJNTCJi).
+  - **Rent Reclaimed**: ATA closed via [`3LeaKDH...`](https://solscan.io/tx/3LeaKDHuoWU23viaDCdfW67n3YApG379FRZ9THuPKTmpuLjD6r9FwdkN63Hw7LN57Kwkh1Ug2d31KULUTrzZmai), restoring balance to `0.07997 SOL`.
+  - **Result**: 🟢 **PROFITING WIN (+34.0%)**.

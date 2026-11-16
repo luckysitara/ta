@@ -432,42 +432,30 @@ impl ArbitrageEngine {
             min_required_out_lamports as f64 / 1_000_000_000.0
         );
 
-        // Execute Leg 1: Buy token on DEX A via Jupiter swap instruction
-        let trade_lamports = (opp.input_sol * 1_000_000_000.0) as u64;
-        let leg1_res = exec
-            .execute_jupiter_swap_jito(
-                SOL_MINT,
+        // Execute Leg 1 + Leg 2 in a SINGLE ATOMIC TRANSACTION with Zero-Loss Guarantee
+        let input_lamports = (opp.input_sol * 1_000_000_000.0) as u64;
+        let expected_tokens = opp.intermediate_tokens as u64;
+
+        let atomic_res = exec
+            .execute_atomic_arbitrage_single_tx(
                 &opp.token_address,
-                trade_lamports,
-                self.config.jito_tip_sol / 2.0,
-                25, // tight 25 bps slippage
+                &opp.buy_dex,
+                &opp.sell_dex,
+                input_lamports,
+                expected_tokens,
+                min_required_out_lamports,
+                self.config.jito_tip_sol,
             )
             .await?;
 
         info!(
-            "✅ Leg 1 Submitted: Buy {} via {} | Sig: {}",
-            opp.token_symbol, opp.buy_dex, leg1_res.signature
-        );
-
-        // Execute Leg 2: Sell token on DEX B via Jupiter swap instruction back to SOL
-        let leg2_res = exec
-            .execute_jupiter_swap_jito(
-                &opp.token_address,
-                SOL_MINT,
-                0, // 0 = entire ATA balance
-                self.config.jito_tip_sol / 2.0,
-                25,
-            )
-            .await?;
-
-        info!(
-            "✅ Leg 2 Submitted: Sell {} via {} back to SOL | Sig: {}",
-            opp.token_symbol, opp.sell_dex, leg2_res.signature
+            "🎉 [ATOMIC SINGLE-TX CONFIRMED] Cycle {} -> {} completed! Sig: {} | Bundle: {}",
+            opp.buy_dex, opp.sell_dex, atomic_res.signature, atomic_res.bundle_id
         );
 
         Ok(format!(
-            "Bundle Leg1: {} | Leg2: {}",
-            leg1_res.bundle_id, leg2_res.bundle_id
+            "Atomic Single-Tx: {} | Sig: {}",
+            atomic_res.bundle_id, atomic_res.signature
         ))
     }
 
