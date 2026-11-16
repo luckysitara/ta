@@ -669,6 +669,43 @@ impl BreakoutEngine {
             entered.insert(c.token_address.clone());
         }
 
+        // Bundler / Insider / Holder concentration pre-flight check via Rugcheck
+        if !self.settings.is_paper_trading {
+            let rugcheck_url = format!("https://api.rugcheck.xyz/v1/tokens/{}/report", c.token_address);
+            if let Ok(resp) = self.http_client.get(&rugcheck_url).send().await {
+                if resp.status().is_success() {
+                    if let Ok(body) = resp.json::<serde_json::Value>().await {
+                        // 1. Check risks for bundler / insider / single-holder concentration warnings
+                        if let Some(risks) = body.get("risks").and_then(|r| r.as_array()) {
+                            for r in risks {
+                                let name = r.get("name").and_then(|n| n.as_str()).unwrap_or("");
+                                let level = r.get("level").and_then(|l| l.as_str()).unwrap_or("");
+                                if level == "danger" || name.to_lowercase().contains("bundler") || name.to_lowercase().contains("single holder") {
+                                    warn!("🚨 [BUNDLER FILTER] Candidate {} rejected: Risk detected '{}' (level: {})", c.symbol, name, level);
+                                    return Ok(false);
+                                }
+                            }
+                        }
+                        // 2. Check top holders / creator concentration
+                        if let Some(holders) = body.get("topHolders").and_then(|h| h.as_array()) {
+                            let mut insider_pct = 0.0;
+                            for h in holders {
+                                let is_insider = h.get("insider").and_then(|i| i.as_bool()).unwrap_or(false);
+                                let pct = h.get("pct").and_then(|p| p.as_f64()).unwrap_or(0.0);
+                                if is_insider {
+                                    insider_pct += pct;
+                                }
+                            }
+                            if insider_pct > 20.0 {
+                                warn!("🚨 [BUNDLER FILTER] Candidate {} rejected: High bundler/insider holding ({:.1}% > 20%)", c.symbol, insider_pct);
+                                return Ok(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         let stop_price = c.price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
         let tokens_est = if c.price_native > 0.0 {
             ((buy_amount / c.price_native) * 1_000_000.0) as u64
