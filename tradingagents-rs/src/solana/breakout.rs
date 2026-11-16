@@ -950,7 +950,12 @@ impl BreakoutEngine {
                     );
 
                     // Check stop-loss / quick scalp / trailing profit trigger on live on-chain value
-                    if is_quick_scalp_hit {
+                    // USER CONSTRAINT: "whenever it each enters profit (net pnl) you close it each"
+                    let is_in_net_profit = live_multiplier >= 1.005; // >1.005x covers all slippage, Jupiter fees & rent
+                    if is_in_net_profit {
+                        let reason = format!("Instant Net Profit Close (+{:.2}%)", (live_multiplier - 1.0) * 100.0);
+                        exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
+                    } else if is_quick_scalp_hit {
                         let reason = format!("Quick Scalp Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0);
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     } else if is_stale_microcap {
