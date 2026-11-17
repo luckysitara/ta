@@ -877,14 +877,14 @@ impl BreakoutEngine {
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
                     // Dual-Tier Exit Logic:
-                    // 1) Quick Scalp: Take profit at ≥+3.0% gross gain across all positions (immediate lockbox!)
-                    // 2) Established / deep liq tokens: Trailing Take-Profit allowing multi-X runs if momentum accelerates past +3%
-                    let quick_scalp_target = 1.030; // +3.0% gross gain
+                    // 1) Quick Scalp: Take profit at ≥+2.0% gross gain or +2% pure net PnL (immediate lockbox per user instruction)
+                    // 2) Established / deep liq tokens: Trailing Take-Profit allowing multi-X runs if momentum accelerates past +2%
+                    let quick_scalp_target = 1.020; // +2.0% gain
                     let is_quick_scalp_hit = live_multiplier >= quick_scalp_target;
 
-                    // Stale time-stop for newly graduated tokens: if held > 120 secs without reaching +3%, cut risk
+                    // Stale time-stop for newly graduated tokens: if held > 120 secs without reaching target, cut risk
                     let hold_duration_secs = (Utc::now() - pos.entry_timestamp).num_seconds();
-                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.03;
+                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.02;
 
                     // Trailing take profit floor calculated on true multiplier
                     let stop_mult_floor = if is_quick_scalp_hit {
