@@ -4,7 +4,7 @@ use colored::Colorize;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::sync::{Arc, Mutex};
-use tracing::{info, warn};
+use tracing::{error, info, warn};
 
 use crate::solana::execution::OnChainExecutor;
 use crate::solana::sniper::PortfolioState;
@@ -408,15 +408,23 @@ impl MeanReversionEngine {
 
         if !self.settings.is_paper_trading {
             if let Some(ref executor) = self.executor {
-                let _ = executor
+                match executor
                     .execute_jupiter_swap_jito(
                         token_addr,
                         &SOL_MINT,
-                        (pos.tokens_held * 1_000_000_000.0) as u64,
+                        0, // 0 = automatic 100% full ATA balance on-chain
                         self.settings.jito_tip_sol,
                         500,
                     )
-                    .await;
+                    .await
+                {
+                    Ok(res) => {
+                        info!("[MEAN_REV] On-chain sell confirmed: {}", res.bundle_id);
+                    }
+                    Err(e) => {
+                        error!("[MEAN_REV] On-chain sell failed for {}: {}", pos.symbol, e);
+                    }
+                }
             }
         }
 
