@@ -914,14 +914,14 @@ impl BreakoutEngine {
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
                     // Dual-Tier Exit Logic:
-                    // 1) Quick Scalp: Take profit at ≥+2.0% gross gain or +2% pure net PnL (immediate lockbox per user instruction)
-                    // 2) Established / deep liq tokens: Trailing Take-Profit allowing multi-X runs if momentum accelerates past +2%
-                    let quick_scalp_target = 1.020; // +2.0% gain
+                    // 1) Quick Scalp: Take profit at ≥+1.2% gross gain (locks in quick wins, avoiding peak-reversals)
+                    // 2) Auto Break-Even Trailing: If peak reached +1.2%, floor raises to 1.005x (+0.5% guaranteed win)
+                    let quick_scalp_target = 1.012; // +1.2% gain (instant scalp exit)
                     let is_quick_scalp_hit = live_multiplier >= quick_scalp_target;
 
                     // Stale time-stop for newly graduated tokens: if held > 120 secs without reaching target, cut risk
                     let hold_duration_secs = (Utc::now() - pos.entry_timestamp).num_seconds();
-                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.02;
+                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.012;
 
                     // Trailing take profit floor calculated on true multiplier
                     let stop_mult_floor = if is_quick_scalp_hit {
@@ -933,6 +933,8 @@ impl BreakoutEngine {
                         1.05
                     } else if peak_mult >= 1.05 {
                         1.025
+                    } else if peak_mult >= 1.012 {
+                        1.005 // Auto Break-Even Floor: Once +1.2% reached, never allow trade to turn red
                     } else {
                         1.0 + (self.settings.stop_loss_pct / 100.0)
                     };
