@@ -1691,6 +1691,17 @@ async fn run_breakout_scanner(
         eprintln!("  ✖ Warning: Error syncing open wallet positions: {e}");
     }
 
+    // High-frequency fast position ticker: evaluate active positions every 1.5 seconds
+    // This allows sub-second +2.0% scalp lockbox and -3.0% stop-loss executions without waiting for scanner poll
+    let fast_monitor_engine = Arc::clone(&engine);
+    tokio::spawn(async move {
+        let mut interval = tokio::time::interval(std::time::Duration::from_millis(1500));
+        loop {
+            interval.tick().await;
+            let _ = fast_monitor_engine.update_and_manage_positions().await;
+        }
+    });
+
     let start_time = std::time::Instant::now();
     println!("  ⚡ Starting live DEX breakout scanner... (Press Ctrl+C to stop)\n");
 
