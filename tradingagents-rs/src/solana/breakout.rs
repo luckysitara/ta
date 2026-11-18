@@ -913,59 +913,40 @@ impl BreakoutEngine {
                     let peak_mult = pos.peak_multiplier;
                     let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
 
-                    // Dual-Tier Exit Logic:
-                    // 1) Quick Scalp: Take profit at ≥+1.2% gross gain (locks in quick wins, avoiding peak-reversals)
-                    // 2) Auto Break-Even Trailing: If peak reached +1.2%, floor raises to 1.005x (+0.5% guaranteed win)
-                    let quick_scalp_target = 1.012; // +1.2% gain (instant scalp exit)
-                    let is_quick_scalp_hit = live_multiplier >= quick_scalp_target;
-
-                    // Stale time-stop for newly graduated tokens: if held > 120 secs without reaching target, cut risk
+                    // Pure Trailing Scalp Mode (No Hard-Cap Early Sell):
+                    // 1) Auto Break-Even Lock: When token hits ≥+1.2% (1.012x), floor instantly locks at 1.005x (+0.5% guaranteed win).
+                    // 2) Micro Trailing Callback: Stop follows tight 0.8% below highest peak, letting green runners run indefinitely!
+                    // 3) Guaranteed Real Profit: Position never sold on flat 1.2% cap; instead it captures entire wave (+5%, +20%, +100%).
                     let hold_duration_secs = (Utc::now() - pos.entry_timestamp).num_seconds();
-                    let is_stale_microcap = pos.is_newly_graduated && hold_duration_secs >= 120 && live_multiplier < 1.012;
 
                     // Trailing take profit floor calculated on true multiplier
-                    let stop_mult_floor = if is_quick_scalp_hit {
-                        live_multiplier // Trigger immediate exit into current liquidity
-                    } else if peak_mult >= activation_mult {
-                        let ttp = peak_mult * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
-                        ttp.max(1.05) // Minimum +5% guaranteed real net SOL
-                    } else if peak_mult >= 1.08 {
-                        1.05
-                    } else if peak_mult >= 1.05 {
-                        1.025
-                    } else if peak_mult >= 1.012 {
-                        1.005 // Auto Break-Even Floor: Once +1.2% reached, never allow trade to turn red
+                    let stop_mult_floor = if peak_mult >= 1.012 {
+                        // Trail 0.8% below peak, never lower than guaranteed break-even 1.005x (+0.5%)
+                        let trailing_stop = peak_mult * (1.0 - 0.008);
+                        trailing_stop.max(1.005)
                     } else {
-                        1.0 + (self.settings.stop_loss_pct / 100.0)
+                        1.0 + (self.settings.stop_loss_pct / 100.0) // Initial tight -3.0% capital defense
                     };
+
+                    let is_trailing_exit_hit = peak_mult >= 1.012 && live_multiplier <= stop_mult_floor;
 
                     // Print continuous live position telemetry with live on-chain valuation
                     println!(
-                        "  📊 [POSITION TELEMETRY] {} | Live Mult: {:.3}x (Peak: {:.3}x) | Stop Floor: {:.3}x | Strategy: {} | Tier: {} | Status: {}",
+                        "  📊 [POSITION TELEMETRY] {} | Live Mult: {:.3}x (Peak: {:.3}x) | Stop Floor: {:.3}x | Strategy: {} | Tier: 🚀 Pure-Trailing | Status: {}",
                         pos.symbol,
                         live_multiplier,
                         pos.peak_multiplier,
                         stop_mult_floor,
                         pos.strategy,
-                        if pos.is_newly_graduated { "⚡ Quick-Scalp" } else { "🌊 Trailing-Runner" },
-                        if is_quick_scalp_hit { "⚡ SCALP TARGET HIT" } else if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
+                        if is_trailing_exit_hit { "⚡ TRAILING STOP HIT" } else if peak_mult >= 1.012 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
                     );
 
-                    // Check stop-loss / quick scalp / trailing profit trigger on live on-chain value
-                    if is_quick_scalp_hit {
-                        let reason = format!("Quick Scalp Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0);
-                        exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
-                    } else if is_stale_microcap {
-                        let reason = format!("Micro-Cap Stale Time Stop ({}s @ {:.2}x)", hold_duration_secs, live_multiplier);
+                    // Check stop-loss / trailing profit trigger on live on-chain value
+                    if is_trailing_exit_hit {
+                        let reason = format!("Trailing Scalp Profit Lock (+{:.1}% from peak {:.2}x)", (live_multiplier - 1.0) * 100.0, peak_mult);
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     } else if live_multiplier <= stop_mult_floor {
-                        let reason = if live_multiplier >= 1.025 {
-                            format!("Real Profit Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0)
-                        } else if live_multiplier >= 1.005 {
-                            format!("Real Break-Even Lockbox (+{:.1}%)", (live_multiplier - 1.0) * 100.0)
-                        } else {
-                            format!("Real Stop Loss Protection ({:.2}x)", live_multiplier)
-                        };
+                        let reason = format!("Real Stop Loss Protection ({:.2}x)", live_multiplier);
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     }
                 }
