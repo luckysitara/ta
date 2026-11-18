@@ -3,10 +3,19 @@ use serde::{Deserialize, Serialize};
 
 pub mod arbitrage;
 pub mod breakout;
+pub mod copy_trade;
 pub mod execution;
+pub mod graduation;
+pub mod ledger;
+pub mod liquidity_snipe;
+pub mod mean_reversion;
 pub mod prediction;
+pub mod route_arb;
 pub mod rug_filter;
 pub mod sniper;
+pub mod telegram;
+pub mod volume_spike;
+pub mod wallet_analyzer;
 pub mod yellowstone;
 
 #[allow(dead_code)]

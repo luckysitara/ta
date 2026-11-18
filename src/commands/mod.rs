@@ -1,0 +1,10 @@
+pub mod snipe;
+pub mod breakout;
+pub mod copy_trade;
+pub mod graduation;
+pub mod liquidate;
+pub mod liquidity_snipe;
+pub mod mean_reversion;
+pub mod route_arb;
+pub mod volume_spike;
+pub mod wallet_analyzer;

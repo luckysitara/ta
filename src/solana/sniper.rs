@@ -1615,10 +1615,36 @@ impl SolanaSniperEngine {
     }
 
     /// Return portfolio state copy
-    #[allow(dead_code)]
     pub fn get_portfolio_state(&self) -> PortfolioState {
         let port = self.portfolio.lock().unwrap();
         port.clone()
+    }
+
+    /// Restore state from a persisted ledger snapshot
+    pub fn restore_state(
+        &self,
+        portfolio: PortfolioState,
+        positions: HashMap<String, SnipedPosition>,
+    ) {
+        let mut port = self.portfolio.lock().unwrap();
+        *port = portfolio;
+
+        let mut pos = self.positions.lock().unwrap();
+        *pos = positions;
+
+        let mut entered = self.entered_pools.lock().unwrap();
+        for p in pos.values() {
+            entered.insert(p.pool_address.clone());
+        }
+    }
+
+    /// Save current state to ledger file
+    pub fn save_to_ledger(&self, ledger: &super::ledger::Ledger) {
+        let port = self.portfolio.lock().unwrap();
+        let positions = self.positions.lock().unwrap();
+        if let Err(e) = ledger.save_sniper_state(&port, &positions) {
+            tracing::warn!("Failed to save sniper ledger: {}", e);
+        }
     }
 }
 

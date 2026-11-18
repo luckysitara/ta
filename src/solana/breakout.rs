@@ -953,6 +953,38 @@ impl BreakoutEngine {
         Ok(())
     }
 
+    /// Return portfolio state copy
+    pub fn get_portfolio_state(&self) -> PortfolioState {
+        let port = self.portfolio.lock().unwrap();
+        port.clone()
+    }
+
+    /// Restore state from a persisted ledger snapshot
+    pub fn restore_state(
+        &self,
+        portfolio: PortfolioState,
+        positions: HashMap<String, BreakoutPosition>,
+    ) {
+        let mut port = self.portfolio.lock().unwrap();
+        *port = portfolio;
+
+        let mut pos = self.positions.lock().unwrap();
+        let mut entered = self.entered_tokens.lock().unwrap();
+        for p in positions.values() {
+            entered.insert(p.token_address.clone());
+        }
+        *pos = positions;
+    }
+
+    /// Save current state to ledger file
+    pub fn save_to_ledger(&self, ledger: &super::ledger::Ledger) {
+        let port = self.portfolio.lock().unwrap();
+        let positions = self.positions.lock().unwrap();
+        if let Err(e) = ledger.save_breakout_state(&port, &positions) {
+            tracing::warn!("Failed to save breakout ledger: {}", e);
+        }
+    }
+
     /// Single scan iteration
     pub async fn run_scan_cycle(&self) -> Result<usize> {
         // 1. Update and manage existing open positions

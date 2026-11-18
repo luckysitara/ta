@@ -1,0 +1,85 @@
+# TradingAgents-rs Configuration File
+# Copy to config.toml and customize. CLI args override these values.
+
+[general]
+paper = true                          # Paper trading mode (safe default)
+ledger_path = "~/.tradingagents/ledger.json"  # Persistent position state file
+
+[telegram]
+enabled = false
+# bot_token = "123456:ABC-DEF..."     # From @BotFather on Telegram
+# chat_id = "-1001234567890"          # Your chat/group ID (use @userinfobot)
+notify_entries = true
+notify_exits = true
+notify_rug_rejections = true
+notify_session_summary = true
+
+[solana]
+# rpc_url = "https://api.mainnet-beta.solana.com"
+# grpc_endpoint = "https://your-grpc-provider:443"
+# grpc_token = "YOUR_TOKEN"
+# keypair_path = "~/.config/solana/id.json"
+# jito_block_engine_url = "https://amsterdam.mainnet.block-engine.jito.wtf"
+
+[sniper]
+budget_sol = 0.5
+buy_amount_sol = 0.05
+max_positions = 5
+min_liquidity_sol = 1.0
+jito_tip_sol = 0.0003
+tp1_multiplier = 1.30                 # Sell 70% at 1.30x
+tp2_multiplier = 1.80                 # Sell 20% at 1.80x (10% moonbag)
+stop_loss_pct = -10.0
+break_even_mult = 1.10                # Lock break-even when peak >= 1.10x
+live_reserves = false
+require_socials = false
+require_dev_sold_out = true
+enable_raydium = true
+# mode = "5"                          # Preset: 1=Standard, 2=LiveReserves, 3=AntiRug, 4=HighConviction, 5=Scalper
+# max_dev_buy_sol = 0.25
+# min_dev_buy_sol = 0.40
+# min_curve_pct = 20.0
+# max_curve_pct = 25.0
+# min_unique_buyers = 12
+# min_buys_recent = 3
+# max_sells_recent = 0
+# velocity_window_secs = 15
+
+[breakout]
+budget_sol = 0.02
+buy_amount_sol = 0.008
+max_positions = 2
+jito_tip_sol = 0.0001
+min_liquidity_usd = 25000.0
+min_volume_24h_usd = 100000.0
+min_volume_5m_usd = 3000.0
+min_buys_5m = 10
+min_buy_ratio_5m = 0.55
+min_price_change_5m = 0.5
+max_price_change_24h = 250.0
+max_price_change_1h = 50.0
+stop_loss_pct = -5.0
+trailing_tp_activation_pct = 8.0      # Start trailing at +8%
+trailing_tp_callback_pct = 2.5        # Trail 2.5% from peak
+trailing_stop_pct = -10.0
+break_even_mult = 1.08
+poll_interval_secs = 10
+strategy = "multi"                    # multi, dip, graduation, breakout
+min_dip_pct = -7.5
+max_dip_pct = -1.8
+min_buy_ratio_1h = 0.52
+max_graduation_age_mins = 30.0
+min_graduation_liquidity_usd = 20000.0
+min_graduation_buy_ratio_5m = 0.58
+
+[arbitrage]
+budget_sol = 0.08
+trade_amount_sol = 0.02
+min_profit_bps = 30
+jito_tip_sol = 0.0001
+poll_interval_secs = 5
+
+[llm]
+provider = "auto"                     # auto, claude-code, ollama, openai, groq, mock
+# model = "gpt-4o"
+analysts = "technical,sentiment,news,fundamentals"
