@@ -369,8 +369,9 @@ impl MeanReversionEngine {
                     continue;
                 }
 
-                if pos.current_rsi >= self.settings.rsi_exit {
-                    to_close.push((mint.clone(), format!("RSI_EXIT {:.1}", pos.current_rsi)));
+                // Ensure positive net PnL on RSI exits: only exit if gain clears DEX fees + slippage (>= 1.5%), or if stop loss / max hold hit
+                if pos.current_rsi >= self.settings.rsi_exit && pnl_pct >= 1.5 {
+                    to_close.push((mint.clone(), format!("RSI_PROFIT {:.1}% (RSI {:.1})", pnl_pct, pos.current_rsi)));
                     continue;
                 }
 
