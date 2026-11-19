@@ -359,19 +359,25 @@ impl MeanReversionEngine {
             for (mint, pos) in positions.iter() {
                 let pnl_pct = (pos.current_multiplier - 1.0) * 100.0;
 
+                // Compute exact net PnL after all fees (DEX LP fee 0.30% entry + 0.30% exit + slippage ~0.20% + Jito tip & tx fees)
+                let round_trip_fee_sol = (self.settings.jito_tip_sol * 2.0) + 0.000030 + (pos.entry_amount_sol * 0.0080);
+                let current_sol_value = pos.entry_amount_sol * pos.current_multiplier;
+                let net_pnl_sol = current_sol_value - pos.entry_amount_sol - round_trip_fee_sol;
+                let net_pnl_pct = (net_pnl_sol / pos.entry_amount_sol) * 100.0;
+
                 if pnl_pct <= self.settings.stop_loss_pct {
-                    to_close.push((mint.clone(), "STOP_LOSS".to_string()));
+                    to_close.push((mint.clone(), format!("STOP_LOSS (Net: {:.2}%)", net_pnl_pct)));
                     continue;
                 }
 
-                if pnl_pct >= self.settings.take_profit_pct {
-                    to_close.push((mint.clone(), format!("TAKE_PROFIT {:.1}%", pnl_pct)));
+                if net_pnl_pct >= self.settings.take_profit_pct {
+                    to_close.push((mint.clone(), format!("TAKE_PROFIT Net +{:.1}%", net_pnl_pct)));
                     continue;
                 }
 
-                // Ensure positive net PnL on RSI exits: only exit if gain clears DEX fees + slippage (>= 1.5%), or if stop loss / max hold hit
-                if pos.current_rsi >= self.settings.rsi_exit && pnl_pct >= 1.5 {
-                    to_close.push((mint.clone(), format!("RSI_PROFIT {:.1}% (RSI {:.1})", pnl_pct, pos.current_rsi)));
+                // Only exit on RSI overbought if the trade is strictly NET positive after all fees
+                if pos.current_rsi >= self.settings.rsi_exit && net_pnl_sol > 0.0 {
+                    to_close.push((mint.clone(), format!("RSI_PROFIT Net +{:.2}% (+{:.6} SOL) (RSI {:.1})", net_pnl_pct, net_pnl_sol, pos.current_rsi)));
                     continue;
                 }
 
