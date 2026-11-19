@@ -767,50 +767,28 @@ impl BreakoutEngine {
                         pos.peak_multiplier = pos.current_multiplier;
                     }
 
-                    // 1. Granular Multi-Tier Profit Lockbox & Trailing Take-Profit:
-                    // Guarantees that once a trade is in profit, it can NEVER fall back into a loss!
+                    // 1. Guaranteed Net Profit Lockbox & Trailing Take-Profit:
+                    // Rule 1: Initial stop-loss is set at self.settings.stop_loss_pct (e.g. -5.0%).
+                    // Rule 2: When position hits net profit (e.g. peak >= +3.5%), trailing callback begins at -2.5% from peak.
+                    // Rule 3: Trailing floor is CLAMPED at a minimum of +2.0% gross price, guaranteeing positive NET PnL
+                    //         covering all LP swap fees (1% buy + 1% sell) and Jito tips. A position in profit NEVER exits in net loss!
                     let peak_mult = pos.peak_multiplier;
-                    let activation_mult = 1.0 + (self.settings.trailing_take_profit_activation_pct / 100.0);
+                    let initial_stop = pos.entry_price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
 
-                    if peak_mult >= activation_mult {
-                        // Tier 5: Active Trailing Take-Profit at >= activation_mult (default +7.0% / 1.07x)
-                        // Trail tight callback buffer (e.g. 1.5%) below highest peak watermark, min floor +4.5%
-                        let ttp_floor = pos.peak_price_usd * (1.0 - self.settings.trailing_take_profit_callback_pct / 100.0);
-                        let min_guaranteed_profit = pos.entry_price_usd * 1.045; // Minimum +4.5% locked floor
-                        let effective_floor = ttp_floor.max(min_guaranteed_profit);
+                    // Required gross price multiplier to cover ~2% round-trip fees + guaranteed positive net profit (+0.5%)
+                    let min_net_profit_mult = 1.025; // +2.5% gross price
+
+                    if peak_mult >= 1.035 {
+                        // Position has entered confirmed net profit zone: trail 2.5% from peak watermark
+                        let trailing_floor = pos.peak_price_usd * 0.975;
+                        let guaranteed_net_floor = pos.entry_price_usd * min_net_profit_mult;
+                        let effective_floor = trailing_floor.max(guaranteed_net_floor);
 
                         if effective_floor > pos.stop_loss_price_usd {
                             pos.stop_loss_price_usd = effective_floor;
                         }
-                    } else if peak_mult >= 1.06 {
-                        // Tier 4: Lockbox at +6.0% gain -> Locks +4.0% guaranteed profit floor!
-                        let tier4_floor = pos.entry_price_usd * 1.040;
-                        if tier4_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier4_floor;
-                        }
-                    } else if peak_mult >= 1.05 {
-                        // Tier 3: Lockbox at +5.0% gain -> Locks +3.0% guaranteed profit floor!
-                        // Prevents any +5% winner from retracing or losing profit.
-                        let tier3_floor = pos.entry_price_usd * 1.030;
-                        if tier3_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier3_floor;
-                        }
-                    } else if peak_mult >= 1.04 {
-                        // Tier 2: Lockbox at +4.0% gain -> Locks +2.0% guaranteed profit floor!
-                        let tier2_floor = pos.entry_price_usd * 1.020;
-                        if tier2_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = tier2_floor;
-                        }
-                    } else if peak_mult >= 1.025 {
-                        // Tier 1: Early Break-even Lockbox at +2.5% gain -> Locks +1.0% floor (covers all MEV tips and swap fees)
-                        // Once a trade touches +2.5%, it can NEVER turn into a loss!
-                        let be_floor = pos.entry_price_usd * 1.010;
-                        if be_floor > pos.stop_loss_price_usd {
-                            pos.stop_loss_price_usd = be_floor;
-                        }
                     } else {
-                        // Initial capital protection: tight -5.0% stop-loss from entry
-                        let initial_stop = pos.entry_price_usd * (1.0 + self.settings.stop_loss_pct / 100.0);
+                        // Before confirmed net profit zone: initial capital defense stop-loss (-5.0%)
                         if pos.stop_loss_price_usd == 0.0 || pos.stop_loss_price_usd < initial_stop {
                             pos.stop_loss_price_usd = initial_stop;
                         }
@@ -830,17 +808,15 @@ impl BreakoutEngine {
                         (pos.peak_multiplier - 1.0) * 100.0,
                         floor_pct,
                         pos.strategy,
-                        if peak_mult >= 1.03 { "🔒 PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
+                        if peak_mult >= 1.035 { "🔒 NET PROFIT LOCKED" } else { "🛡️ CAPITAL DEFENSE" }
                     );
 
                     // Check stop-loss / trailing profit trigger
                     if cand.price_usd <= pos.stop_loss_price_usd {
-                        let reason = if pos.current_multiplier >= 1.025 {
-                            format!("Profit Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
-                        } else if pos.current_multiplier >= 1.005 {
-                            format!("Break-Even Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
+                        let reason = if pos.current_multiplier >= min_net_profit_mult {
+                            format!("Guaranteed Net Profit Lockbox (+{:.1}%)", (pos.current_multiplier - 1.0) * 100.0)
                         } else {
-                            format!("Tight Stop Loss Protection ({:.2}x)", pos.current_multiplier)
+                            format!("Initial Stop Loss Protection ({:.2}x)", pos.current_multiplier)
                         };
                         exit_triggers.push((pos.token_address.clone(), cand.price_usd, reason));
                     }
