@@ -44,9 +44,15 @@ pub async fn run_liquidate(mint_filter: Option<String>) -> anyhow::Result<()> {
 
         match executor.execute_jupiter_swap_jito(m, "So11111111111111111111111111111111111111112", 0, 0.0003, 300).await {
             Ok(res) => {
-                println!("    Submitted Jupiter DEX swap: https://solscan.io/tx/{}", res.signature);
-                let _ = executor.poll_signature_confirmation(&res.signature, 8, 500).await;
-                sold = true;
+                println!("    Submitted Jupiter DEX swap: {}", res.signature);
+                if let Ok(confirmed) = executor.poll_signature_confirmation(&res.signature, 15, 1000).await {
+                    if confirmed {
+                        println!("    Swap confirmed successfully on-chain!");
+                        sold = true;
+                    } else {
+                        println!("    Swap pending confirmation...");
+                    }
+                }
             }
             Err(e) => {
                 println!("    Jupiter swap returned: {}. Trying Pump.fun bonding curve...", e);
@@ -56,8 +62,8 @@ pub async fn run_liquidate(mint_filter: Option<String>) -> anyhow::Result<()> {
         if !sold {
             match executor.execute_snipe_sell_jito(m, "", None, 0, 1, 0.0008, true).await {
                 Ok(res) => {
-                    println!("    Submitted Pump.fun sell: https://solscan.io/tx/{}", res.signature);
-                    let _ = executor.poll_signature_confirmation(&res.signature, 8, 500).await;
+                    println!("    Submitted Pump.fun sell: {}", res.signature);
+                    let _ = executor.poll_signature_confirmation(&res.signature, 10, 1000).await;
                 }
                 Err(e) => {
                     println!("    Pump.fun sell returned: {}. Proceeding to close ATA...", e);
@@ -65,15 +71,18 @@ pub async fn run_liquidate(mint_filter: Option<String>) -> anyhow::Result<()> {
             }
         }
 
+        // Wait briefly for balance to update before closing ATA
+        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+
         match executor.close_token_account_jito(m, 0.0003, false).await {
             Ok(res2) => {
-                println!("    SPL ATA closed, rent reclaimed: https://solscan.io/tx/{}", res2.signature);
-                let _ = executor.poll_signature_confirmation(&res2.signature, 8, 500).await;
+                println!("    SPL ATA closed, rent reclaimed: {}", res2.signature);
+                let _ = executor.poll_signature_confirmation(&res2.signature, 10, 500).await;
             }
             Err(_) => {
                 if let Ok(res2) = executor.close_token_account_jito(m, 0.0003, true).await {
-                    println!("    Token-2022 ATA closed, rent reclaimed: https://solscan.io/tx/{}", res2.signature);
-                    let _ = executor.poll_signature_confirmation(&res2.signature, 8, 500).await;
+                    println!("    Token-2022 ATA closed, rent reclaimed: {}", res2.signature);
+                    let _ = executor.poll_signature_confirmation(&res2.signature, 10, 500).await;
                 }
             }
         }

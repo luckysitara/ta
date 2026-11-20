@@ -1029,9 +1029,9 @@ impl OnChainExecutor {
             return Err(anyhow!("No tokens available to swap for {}", input_mint_str));
         }
 
-        // 1. Fetch swap quote from Jupiter API
+        // 1. Fetch swap quote from Jupiter API (requesting legacy transaction format for standard Transaction compatibility)
         let quote_url = format!(
-            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}",
+            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}&asLegacyTransaction=true",
             input_mint_str, output_mint_str, real_amount, slippage_bps
         );
         let quote_resp = self.client.get(&quote_url).send().await?;
@@ -1044,7 +1044,8 @@ impl OnChainExecutor {
         let swap_url = "https://api.jup.ag/swap/v1/swap-instructions";
         let body = serde_json::json!({
             "userPublicKey": self.pubkey().to_string(),
-            "quoteResponse": quote_json
+            "quoteResponse": quote_json,
+            "asLegacyTransaction": true
         });
         let swap_resp = self.client.post(swap_url).json(&body).send().await?;
         if !swap_resp.status().is_success() {

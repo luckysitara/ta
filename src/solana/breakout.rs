@@ -563,6 +563,16 @@ impl BreakoutEngine {
 
     /// Process a detected candidate: check active capacity and trigger entry
     pub async fn process_candidate(&self, c: &BreakoutCandidate) -> Result<bool> {
+        // Strict Blacklist Check: Exclude tokens blacklisted by user or risk protocol
+        if c.token_address == "7bCiddGLe5aM8HE2pigT9jsqkmC1HSPxyXN6GkHEpump" || c.symbol.to_uppercase() == "OGTA" {
+            return Ok(false);
+        }
+
+        // Venue Filter: Exclude ungraduated Pump.fun bonding curves to avoid predatory curve fees & thin liquidity
+        if c.dex_id.to_lowercase() == "pumpswap" || c.dex_id.to_lowercase() == "pumpfun" {
+            return Ok(false);
+        }
+
         let strat_label = match self.evaluate_candidate_strategy(c) {
             Some(s) => s,
             None => return Ok(false),
