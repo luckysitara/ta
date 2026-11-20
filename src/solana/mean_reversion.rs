@@ -382,7 +382,7 @@ impl MeanReversionEngine {
                 }
 
                 let hold_mins = (Utc::now() - pos.entry_time).num_minutes() as u64;
-                if hold_mins >= self.settings.max_hold_mins {
+                if self.settings.max_hold_mins > 0 && hold_mins >= self.settings.max_hold_mins {
                     to_close.push((mint.clone(), format!("MAX_HOLD {}m", hold_mins)));
                 }
             }
