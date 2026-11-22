@@ -3,10 +3,11 @@ use chrono::{DateTime, Utc};
 use colored::Colorize;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use tracing::{info, warn};
 
-use crate::solana::execution::OnChainExecutor;
+use crate::solana::execution::{OnChainExecutor, ASSOCIATED_TOKEN_PROGRAM, TOKEN_PROGRAM};
 use crate::solana::sniper::PortfolioState;
 use crate::solana::SOL_MINT;
 
@@ -132,7 +133,7 @@ impl RouteArbEngine {
         only_direct: bool,
     ) -> Result<RouteQuote> {
         let mut url = format!(
-            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}",
+            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}&dexes=Raydium,Raydium%20CLMM,Raydium%20CP,Meteora,Meteora%20DLMM,Whirlpool,Orca",
             input_mint, output_mint, amount_lamports, slippage_bps
         );
         if only_direct {
@@ -275,25 +276,75 @@ impl RouteArbEngine {
 
                 info!("[ROUTE_ARB] Buy leg: {}", buy_result.bundle_id);
 
-                tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+                // Wait for buy confirmation before executing sell leg
+                let buy_confirmed = executor
+                    .poll_signature_confirmation(&buy_result.signature, 15, 1000)
+                    .await
+                    .unwrap_or(false);
 
-                // For the sell leg we'd need the actual token balance; in a production
-                // version this would query the token account. For now, we re-quote.
-                let buy_quote = self.get_jupiter_quote(
-                    &SOL_MINT, &opp.token_mint, trade_lamports, 100, false
-                ).await?;
+                if !buy_confirmed {
+                    warn!("[ROUTE_ARB] Buy leg unconfirmed for {}: {}. Skipping sell leg.", opp.token_symbol, buy_result.signature);
+                    return Err(anyhow::anyhow!("Buy leg unconfirmed: {}", buy_result.signature));
+                }
 
-                let sell_result = executor
+                // Query exact on-chain balance of token to sell 100% of it
+                let token_pk = solana_sdk::pubkey::Pubkey::from_str(&opp.token_mint)?;
+                let token_prog = solana_sdk::pubkey::Pubkey::from_str(TOKEN_PROGRAM)?;
+                let ata_prog = solana_sdk::pubkey::Pubkey::from_str(ASSOCIATED_TOKEN_PROGRAM)?;
+                let (user_ata, _) = solana_sdk::pubkey::Pubkey::find_program_address(
+                    &[&executor.pubkey().to_bytes(), &token_prog.to_bytes(), &token_pk.to_bytes()],
+                    &ata_prog,
+                );
+
+                let mut actual_balance = executor.get_token_balance(&user_ata).await.unwrap_or(0);
+                if actual_balance == 0 {
+                    let token_2022_prog = solana_sdk::pubkey::Pubkey::from_str("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")?;
+                    let (user_ata_2022, _) = solana_sdk::pubkey::Pubkey::find_program_address(
+                        &[&executor.pubkey().to_bytes(), &token_2022_prog.to_bytes(), &token_pk.to_bytes()],
+                        &ata_prog,
+                    );
+                    actual_balance = executor.get_token_balance(&user_ata_2022).await.unwrap_or(0);
+                }
+
+                if actual_balance == 0 {
+                    warn!("[ROUTE_ARB] No token balance found on-chain after buy for {}", opp.token_symbol);
+                    return Err(anyhow::anyhow!("No tokens received from buy leg for {}", opp.token_symbol));
+                }
+
+                let sell_result = match executor
                     .execute_jupiter_swap_jito(
                         &opp.token_mint,
                         &SOL_MINT,
-                        buy_quote.output_amount,
+                        actual_balance,
                         self.settings.jito_tip_sol,
-                        100,
+                        150,
                     )
-                    .await?;
+                    .await
+                {
+                    Ok(res) => {
+                        info!("[ROUTE_ARB] Sell leg: {}", res.bundle_id);
+                        let _ = executor.poll_signature_confirmation(&res.signature, 15, 1000).await;
+                        Some(res)
+                    }
+                    Err(e) => {
+                        warn!("[ROUTE_ARB] Sell leg failed: {}. Attempting emergency liquidation...", e);
+                        // Fallback: emergency liquidation to SOL
+                        let _ = executor
+                            .execute_jupiter_swap_jito(
+                                &opp.token_mint,
+                                &SOL_MINT,
+                                0,
+                                self.settings.jito_tip_sol * 2.0,
+                                300,
+                            )
+                            .await;
+                        None
+                    }
+                };
 
-                info!("[ROUTE_ARB] Sell leg: {}", sell_result.bundle_id);
+                // Close ATA and reclaim rent
+                tokio::time::sleep(std::time::Duration::from_millis(1500)).await;
+                let _ = executor.close_token_account_jito(&opp.token_mint, 0.0001, false).await;
             }
         }
 
