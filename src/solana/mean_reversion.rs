@@ -47,6 +47,33 @@ impl Default for MeanReversionSettings {
                 TrackedToken { mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr".to_string(), symbol: "POPCAT".to_string() },
                 TrackedToken { mint: "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5".to_string(), symbol: "MEW".to_string() },
                 TrackedToken { mint: "A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump".to_string(), symbol: "FARTCOIN".to_string() },
+                TrackedToken { mint: "JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN".to_string(), symbol: "JUP".to_string() },
+                TrackedToken { mint: "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82".to_string(), symbol: "BOME".to_string() },
+                TrackedToken { mint: "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3".to_string(), symbol: "PYTH".to_string() },
+                TrackedToken { mint: "rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBXr".to_string(), symbol: "RENDER".to_string() },
+                TrackedToken { mint: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R".to_string(), symbol: "RAY".to_string() },
+                TrackedToken { mint: "orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE".to_string(), symbol: "ORCA".to_string() },
+                TrackedToken { mint: "KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS".to_string(), symbol: "KMNO".to_string() },
+                TrackedToken { mint: "DriFtupJYLTosbwoN8koMbEYSx54aFAVLddWsbksjwg7".to_string(), symbol: "DRIFT".to_string() },
+                TrackedToken { mint: "jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL".to_string(), symbol: "JTO".to_string() },
+                TrackedToken { mint: "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC".to_string(), symbol: "AI16Z".to_string() },
+                TrackedToken { mint: "CzLSujWBLFsSjncfkh59rUFqvafWcY5tzedWJSuypump".to_string(), symbol: "GOAT".to_string() },
+                TrackedToken { mint: "ED5nyyWEzpPPiWimP8vYm7sD7TD3LAt3Q3gRTWHzPJBY".to_string(), symbol: "MOODENG".to_string() },
+                TrackedToken { mint: "2qEHjDLDLbuBgRYvsxhc5RefwhumuAZgnusqWqb86476".to_string(), symbol: "PNUT".to_string() },
+                TrackedToken { mint: "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump".to_string(), symbol: "FIDA".to_string() },
+                TrackedToken { mint: "Grass7B4RdKfBCjTKgSqnXkqjwiGvQyFbuSCUJr3XXjs".to_string(), symbol: "GRASS".to_string() },
+                TrackedToken { mint: "ioNETvc5NiB92q6Zk3YvNsp1qZtQ6Yh9B8y7T78Kpump".to_string(), symbol: "IO".to_string() },
+                TrackedToken { mint: "TNSRxcUxoT9xBG3de7PiJyTDYu7kskLqcpddxnEJAS6".to_string(), symbol: "TNSR".to_string() },
+                TrackedToken { mint: "ZEUS1a8r3a5hxBRqaHG3ux7A5upF2d84JwEP3STyx3r".to_string(), symbol: "ZEUS".to_string() },
+                TrackedToken { mint: "WENWENvqqNya429ubCdXr81ZmD69brwQaaBYY6p3LCU".to_string(), symbol: "WEN".to_string() },
+                TrackedToken { mint: "hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux".to_string(), symbol: "HNT".to_string() },
+                TrackedToken { mint: "nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7".to_string(), symbol: "NOS".to_string() },
+                TrackedToken { mint: "SHDWyBxihqiCj6YekG2GUr7wqKLeLAMK1gHZck9pL6y".to_string(), symbol: "SHDW".to_string() },
+                TrackedToken { mint: "StepAscQoEioFxxWGnh2sLBDFp9d8rvKz2Yp39iDpyT".to_string(), symbol: "STEP".to_string() },
+                TrackedToken { mint: "SLNDpmoWTVADgEdndQI29yKitggsuSTvmYUjECzUUCV".to_string(), symbol: "SLND".to_string() },
+                TrackedToken { mint: "MNDEFzGvMt87ueuHvVU9VcTqsAP5b3fTGPsHuuPA5ey".to_string(), symbol: "MNDE".to_string() },
+                TrackedToken { mint: "BLZEEuZUBVqFhj8adcCFPJvPVCiCyVmh3hkJMrU8KuJA".to_string(), symbol: "BLZE".to_string() },
+                TrackedToken { mint: "RLBxxFkseAZ4RgJH3Sqn8jXxhmGoz9jWxDNJMh8LMTQ".to_string(), symbol: "RLB".to_string() },
             ],
             rsi_period: 14,
             rsi_oversold: 25.0,
@@ -497,6 +524,6 @@ mod tests {
         let s = MeanReversionSettings::default();
         assert_eq!(s.rsi_period, 14);
         assert_eq!(s.rsi_oversold, 25.0);
-        assert_eq!(s.tracked_tokens.len(), 5);
+        assert_eq!(s.tracked_tokens.len(), 32);
     }
 }

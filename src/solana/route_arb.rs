@@ -45,6 +45,18 @@ impl Default for RouteArbSettings {
                 ArbToken { mint: "7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr".to_string(), symbol: "POPCAT".to_string() },
                 ArbToken { mint: "MEW1gQWJ3nEXg2qgERiKu7FAFj79PHvQVREQUzScPP5".to_string(), symbol: "MEW".to_string() },
                 ArbToken { mint: "ukHH6c7mMyiWCf1b9pnWe25TSpkDDt3H5pQZgZ74J82".to_string(), symbol: "BOME".to_string() },
+                ArbToken { mint: "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3".to_string(), symbol: "PYTH".to_string() },
+                ArbToken { mint: "rndrizKT3MK1iimdxRdWabcF7Zg7AR5T4nud4EkHBXr".to_string(), symbol: "RENDER".to_string() },
+                ArbToken { mint: "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R".to_string(), symbol: "RAY".to_string() },
+                ArbToken { mint: "orcaEKTdK7LKz57vaAYr9QeNsVEPfiu6QeMU1kektZE".to_string(), symbol: "ORCA".to_string() },
+                ArbToken { mint: "KMNo3nJsBXfcpJTVhZcXLW7RmTwTt4GVFE7suUBo9sS".to_string(), symbol: "KMNO".to_string() },
+                ArbToken { mint: "DriFtupJYLTosbwoN8koMbEYSx54aFAVLddWsbksjwg7".to_string(), symbol: "DRIFT".to_string() },
+                ArbToken { mint: "jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL".to_string(), symbol: "JTO".to_string() },
+                ArbToken { mint: "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC".to_string(), symbol: "AI16Z".to_string() },
+                ArbToken { mint: "CzLSujWBLFsSjncfkh59rUFqvafWcY5tzedWJSuypump".to_string(), symbol: "GOAT".to_string() },
+                ArbToken { mint: "ED5nyyWEzpPPiWimP8vYm7sD7TD3LAt3Q3gRTWHzPJBY".to_string(), symbol: "MOODENG".to_string() },
+                ArbToken { mint: "2qEHjDLDLbuBgRYvsxhc5RefwhumuAZgnusqWqb86476".to_string(), symbol: "PNUT".to_string() },
+                ArbToken { mint: "A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump".to_string(), symbol: "FARTCOIN".to_string() },
             ],
             poll_interval_secs: 5,
             max_concurrent_arbs: 2,
@@ -439,7 +451,7 @@ mod tests {
     fn test_route_arb_defaults() {
         let s = RouteArbSettings::default();
         assert_eq!(s.min_spread_bps, 30);
-        assert_eq!(s.target_tokens.len(), 6);
+        assert_eq!(s.target_tokens.len(), 18);
     }
 
     #[test]
