@@ -19,6 +19,8 @@ pub async fn run_route_arb(
     keypair_path: Option<String>,
     rpc_url: Option<String>,
     jito_url: Option<String>,
+    use_flash_loan: bool,
+    flash_loan_amount: f64,
 ) -> Result<()> {
     println!("{}", "================================================================================".cyan());
     println!("{}", "  ⚡ JUPITER ROUTE ARBITRAGE ENGINE                                              ".bold().cyan());
@@ -45,6 +47,8 @@ pub async fn run_route_arb(
         target_tokens: target_tokens.clone(),
         poll_interval_secs,
         is_paper_trading: !onchain,
+        use_flash_loan,
+        flash_loan_amount_sol: flash_loan_amount,
         ..Default::default()
     };
 
@@ -66,6 +70,7 @@ pub async fn run_route_arb(
 
     let mode = if onchain { "LIVE" } else { "PAPER" };
     println!("  Mode:              {}", mode.bold());
+    println!("  Flash Loan:        {} ({:.2} SOL)", if use_flash_loan { "ENABLED (Kamino)".green().bold() } else { "DISABLED".yellow() }, flash_loan_amount);
     println!("  Budget:            {:.4} SOL", budget);
     println!("  Trade Size:        {:.4} SOL", trade_amount);
     println!("  Min Spread:        {} bps ({:.2}%)", min_spread_bps, min_spread_bps as f64 / 100.0);

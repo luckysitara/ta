@@ -22,6 +22,8 @@ pub struct RouteArbSettings {
     pub poll_interval_secs: u64,
     pub max_concurrent_arbs: usize,
     pub is_paper_trading: bool,
+    pub use_flash_loan: bool,
+    pub flash_loan_amount_sol: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -61,6 +63,8 @@ impl Default for RouteArbSettings {
             poll_interval_secs: 5,
             max_concurrent_arbs: 2,
             is_paper_trading: true,
+            use_flash_loan: false,
+            flash_loan_amount_sol: 5.0,
         }
     }
 }
@@ -205,7 +209,12 @@ impl RouteArbEngine {
     }
 
     async fn find_arb_opportunity(&self, token: &ArbToken) -> Option<ArbOpportunity> {
-        let trade_lamports = (self.settings.trade_amount_sol * 1_000_000_000.0) as u64;
+        let trade_sol = if self.settings.use_flash_loan {
+            self.settings.flash_loan_amount_sol
+        } else {
+            self.settings.trade_amount_sol
+        };
+        let trade_lamports = (trade_sol * 1_000_000_000.0) as u64;
 
         // Get buy quote: SOL -> Token (best route)
         let buy_quote = self.get_jupiter_quote(
@@ -229,9 +238,14 @@ impl RouteArbEngine {
 
         // Compare: best buy route -> best sell route roundtrip
         let roundtrip_output_sol = sell_quote.output_amount as f64 / 1_000_000_000.0;
-        let input_sol = self.settings.trade_amount_sol;
-        let net_after_tip = roundtrip_output_sol - self.settings.jito_tip_sol * 2.0;
-        let spread_bps = ((net_after_tip / input_sol) - 1.0) * 10_000.0;
+        let input_sol = trade_sol;
+        let flash_loan_fee_sol = if self.settings.use_flash_loan {
+            input_sol * 0.0005 // 5 bps Kamino flash loan fee
+        } else {
+            0.0
+        };
+        let net_after_costs = roundtrip_output_sol - (self.settings.jito_tip_sol * 2.0) - flash_loan_fee_sol;
+        let spread_bps = ((net_after_costs / input_sol) - 1.0) * 10_000.0;
 
         // Also check: direct buy -> aggregated sell (or vice versa)
         let mut best_spread = spread_bps;
@@ -243,7 +257,7 @@ impl RouteArbEngine {
                 &token.mint, &SOL_MINT, bd.output_amount, 50, false
             ).await {
                 let rt_sol = sell_from_direct.output_amount as f64 / 1_000_000_000.0;
-                let net = rt_sol - self.settings.jito_tip_sol * 2.0;
+                let net = rt_sol - (self.settings.jito_tip_sol * 2.0) - flash_loan_fee_sol;
                 let sp = ((net / input_sol) - 1.0) * 10_000.0;
                 if sp > best_spread {
                     best_spread = sp;
@@ -272,7 +286,11 @@ impl RouteArbEngine {
     }
 
     async fn execute_arb(&self, opp: &mut ArbOpportunity) -> Result<()> {
-        let trade_lamports = (self.settings.trade_amount_sol * 1_000_000_000.0) as u64;
+        let trade_lamports = if self.settings.use_flash_loan {
+            (self.settings.flash_loan_amount_sol * 1_000_000_000.0) as u64
+        } else {
+            (self.settings.trade_amount_sol * 1_000_000_000.0) as u64
+        };
 
         if !self.settings.is_paper_trading {
             if let Some(ref executor) = self.executor {
@@ -408,7 +426,7 @@ impl RouteArbEngine {
             }
         }
 
-        {
+        if !self.settings.use_flash_loan {
             let port = self.portfolio.lock().unwrap();
             if port.available_sol < self.settings.trade_amount_sol + self.settings.jito_tip_sol * 2.0 {
                 return Ok(0);

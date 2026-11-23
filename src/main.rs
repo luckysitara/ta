@@ -685,6 +685,12 @@ enum Commands {
         rpc_url: Option<String>,
         #[arg(long, env = "JITO_BLOCK_ENGINE_URL")]
         jito_url: Option<String>,
+        /// Enable Kamino Flash Loan for atomic zero-capital borrowing
+        #[arg(long, default_value_t = false)]
+        use_flash_loan: bool,
+        /// Flash loan borrow amount in SOL (e.g. 5.0 for 5 SOL)
+        #[arg(long, default_value_t = 5.0)]
+        flash_loan_amount: f64,
     },
     /// Analyze wallet transaction history and PnL from on-chain data (Helius API)
     AnalyzeWallets {
@@ -996,6 +1002,7 @@ async fn main() -> anyhow::Result<()> {
     if let Some(Commands::RouteArb {
         budget, trade_amount, min_spread_bps, jito_tip, tokens,
         poll_interval_secs, duration_secs, onchain, keypair_path, rpc_url, jito_url,
+        use_flash_loan, flash_loan_amount,
     }) = args.command
     {
         let token_list: Vec<String> = tokens
@@ -1004,6 +1011,7 @@ async fn main() -> anyhow::Result<()> {
         return commands::route_arb::run_route_arb(
             budget, trade_amount, min_spread_bps, jito_tip, token_list,
             poll_interval_secs, duration_secs, onchain, keypair_path, rpc_url, jito_url,
+            use_flash_loan, flash_loan_amount,
         ).await;
     }
 
