@@ -145,7 +145,7 @@ impl RouteArbEngine {
         only_direct: bool,
     ) -> Result<RouteQuote> {
         let mut url = format!(
-            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}&dexes=Raydium,Raydium%20CLMM,Raydium%20CP,Meteora,Meteora%20DLMM,Whirlpool,Orca",
+            "https://api.jup.ag/swap/v1/quote?inputMint={}&outputMint={}&amount={}&slippageBps={}&dexes=Raydium,Raydium%20CLMM,Raydium%20CP,Meteora,Meteora%20DLMM,Whirlpool,Orca,PancakeSwap",
             input_mint, output_mint, amount_lamports, slippage_bps
         );
         if only_direct {

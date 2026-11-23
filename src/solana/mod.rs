@@ -6,6 +6,7 @@ pub mod breakout;
 pub mod copy_trade;
 pub mod execution;
 pub mod graduation;
+pub mod kamino;
 pub mod ledger;
 pub mod liquidity_snipe;
 pub mod mean_reversion;
