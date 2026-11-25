@@ -213,7 +213,9 @@ impl MeanReversionEngine {
         let history = self.price_history.lock().unwrap();
         let entries = history.get(mint)?;
 
-        if entries.len() < self.settings.rsi_period + 1 {
+        // Require at least 2 full periods of data (e.g. 28 samples) to avoid startup noise
+        let min_samples = self.settings.rsi_period * 2;
+        if entries.len() < min_samples {
             return None;
         }
 
@@ -238,8 +240,19 @@ impl MeanReversionEngine {
         let avg_gain = gains / period;
         let avg_loss = losses / period;
 
+        // If price is completely flat or has zero price action, RSI is neutral 50, not oversold 0!
+        if avg_gain == 0.0 && avg_loss == 0.0 {
+            return Some(50.0);
+        }
+
         if avg_loss == 0.0 {
             return Some(100.0);
+        }
+
+        // If gains are zero but total loss is microscopic (< 0.5% total drop across window), return neutral 50 to avoid startup false triggers
+        let total_price = window.first().cloned().unwrap_or(1.0);
+        if avg_gain == 0.0 && (losses / total_price) < 0.015 {
+            return Some(50.0);
         }
 
         let rs = avg_gain / avg_loss;
@@ -491,8 +504,8 @@ mod tests {
         };
         let engine = MeanReversionEngine::new(settings, None);
 
-        // Record ascending prices: RSI should be high
-        let prices = vec![1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6];
+        // Record ascending prices: RSI should be high (need 2 * period = 10 samples)
+        let prices = vec![1.0, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6];
         for p in &prices {
             engine.record_price("test_token", *p);
         }
@@ -509,8 +522,8 @@ mod tests {
         };
         let engine = MeanReversionEngine::new(settings, None);
 
-        // Record descending prices: RSI should be low
-        let prices = vec![2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4];
+        // Record descending prices: RSI should be low (need 2 * period = 10 samples)
+        let prices = vec![2.0, 1.95, 1.9, 1.85, 1.8, 1.75, 1.7, 1.65, 1.6, 1.55, 1.5, 1.45, 1.4];
         for p in &prices {
             engine.record_price("test_token", *p);
         }
