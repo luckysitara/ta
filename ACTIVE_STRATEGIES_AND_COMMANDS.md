@@ -5,21 +5,23 @@ This document records the exact running commands, configurations, parameters, an
 ---
 
 ## 1. Patched Mean Reversion RSI Engine
-- **Task ID**: `task-37390`
+- **Task ID**: `task-37886`
 - **Binary**: `target/release/tradingagents-rs mean-rev`
 - **Key Enhancements Active**:
+  - Scaled to **10 maximum concurrent positions** and **0.40 SOL budget** following capital expansion.
   - Minimum 28 price samples required before signal calculation (prevents false startup entries).
   - Volatility clamp: clamped to neutral `50.0` when zero price movement occurs.
   - Unlimited hold time (`--max-hold-mins 0`) to prevent unprofitable time-based stopouts.
+  - Strict stop loss at `-8.0%`, take profit at `+15.0%`, RSI exit threshold `> 55.0`.
   - True All-In Net PnL accounting standards.
 - **Exact Command**:
 ```bash
 target/release/tradingagents-rs mean-rev \
   --onchain \
   --keypair-path /home/rootkit/.config/solana/id.json \
-  --budget 0.20 \
+  --budget 0.40 \
   --buy-amount 0.04 \
-  --max-positions 5 \
+  --max-positions 10 \
   --jito-tip 0.00003 \
   --rsi-period 14 \
   --rsi-oversold 25.0 \
@@ -75,9 +77,10 @@ target/release/tradingagents-rs mean-rev \
 ---
 
 ## 4. Yellowstone gRPC Real-Time Memecoin Sniper
-- **Task ID**: `task-37388`
+- **Task ID**: `task-37888`
 - **Binary**: `target/release/tradingagents-rs snipe`
 - **Key Enhancements Active**:
+  - Scaled to **10 maximum concurrent positions** and **0.40 SOL budget**.
   - Direct geyser Yellowstone gRPC feed over 1.48M+ mainnet transactions.
   - Bonding curve momentum sweet spot filter: `25.0% – 75.0%`.
   - Anti-rug defense: Creator dump detection and automated pool blacklisting.
@@ -88,9 +91,9 @@ target/release/tradingagents-rs mean-rev \
 ./target/release/tradingagents-rs snipe \
   --onchain \
   --keypair-path /home/rootkit/.config/solana/id.json \
-  --budget 0.20 \
+  --budget 0.40 \
   --buy-amount 0.04 \
-  --max-positions 5 \
+  --max-positions 10 \
   --jito-tip 0.00003 \
   --min-curve-pct 25.0 \
   --max-curve-pct 75.0 \
@@ -111,12 +114,14 @@ target/release/tradingagents-rs mean-rev \
 ---
 
 ## 5. Secondary Market DEX Breakout & Volume Surge Scalper
-- **Task ID**: `task-37387`
+- **Task ID**: `task-37891`
 - **Binary**: `target/release/tradingagents-rs breakout`
 - **Key Enhancements Active**:
+  - Scaled to **10 maximum concurrent positions** and **0.40 SOL budget**.
   - Minimum liquidity floor: `$40,000 USD`.
   - 5-minute volume surge detection ($10k+ volume, >= 60% buy ratio).
   - Trailing take-profit activation: `+3.5%` with `2.5%` callback.
+  - Trailing stop: `-8.0%`, Hard stop loss: `-5.0%`.
   - Break-even multiplier floor: `>= 1.025x`.
 - **Exact Command**:
 ```bash
@@ -124,9 +129,9 @@ target/release/tradingagents-rs breakout \
   --onchain \
   --keypair-path /home/rootkit/.config/solana/id.json \
   --strategy multi \
-  --budget 0.20 \
+  --budget 0.40 \
   --buy-amount 0.04 \
-  --max-positions 5 \
+  --max-positions 10 \
   --jito-tip 0.00003 \
   --min-liquidity-usd 40000 \
   --min-volume-24h-usd 250000 \
